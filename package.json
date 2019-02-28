@@ -1,0 +1,45 @@
+{
+  "name": "paprink-backend",
+  "version": "0.0.1",
+  "description": "This empowers paprink.com",
+  "private": true,
+  "scripts": {
+    "start": "nodemon -e js,graphql -x node src/index.js",
+    "dev": "nodemon -e js,graphql -x node --inspect src/index.js",
+    "test": "jest",
+    "deploy": "prisma deploy --env-file .env"
+  },
+  "dependencies": {
+    "babel-preset-env": "^1.7.0",
+    "bcryptjs": "2.4.3",
+    "cookie-parser": "^1.4.3",
+    "dotenv": "6.0.0",
+    "es6-promise": "^4.2.5",
+    "graphql": "14.1.1",
+    "graphql-cli": "^2.17.0",
+    "graphql-yoga": "1.16.2",
+    "isomorphic-fetch": "^2.2.1",
+    "jsonwebtoken": "8.3.0",
+    "nodemailer": "^4.6.8",
+    "nodemon": "^1.18.7",
+    "npm-run-all": "^4.1.5",
+    "prisma": "^1.21.1",
+    "prisma-binding": "2.1.6",
+    "prisma-client-lib": "^1.22.2"
+  },
+  "babel": {
+    "presets": [
+      "env"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KumarAbhirup/paprink-backend.git"
+  },
+  "author": "Kumar Abhirup",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KumarAbhirup/paprink-backend/issues"
+  },
+  "homepage": "https://github.com/KumarAbhirup/paprink-backend#readme"
+}
