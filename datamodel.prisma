@@ -7,17 +7,18 @@ enum Previledge {
 }
 
 type Post {
-  id: ID!
+  id: ID! @unique
   title: String!
   content: String!
   category: String!
   excerpt: String!
   updatedAt: DateTime!
   createdAt: DateTime!
+  author: [User]!
 }
 
 type User {
-  id: ID!
+  id: ID! @unique
   fname: String!
   lname: String!
   phone: String

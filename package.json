@@ -1,10 +1,10 @@
 {
   "name": "paprink-backend",
   "version": "0.0.1",
+  "description": "This empowers paprink.com",
   "private": true,
-  "description": "Backend for PaprInk.com",
   "scripts": {
-    "start": "nodemon -e js,graphql -x node src/index.js",
+    "start": "node src/index.js",
     "dev": "nodemon -e js,graphql -x node --inspect src/index.js",
     "test": "jest",
     "deploy": "prisma deploy --env-file .env"
@@ -31,5 +31,15 @@
     "presets": [
       "env"
     ]
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KumarAbhirup/paprink-backend.git"
+  },
+  "author": "Kumar Abhirup",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KumarAbhirup/paprink-backend/issues"
+  },
+  "homepage": "https://github.com/KumarAbhirup/paprink-backend#readme"
 }

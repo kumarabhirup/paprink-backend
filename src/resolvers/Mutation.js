@@ -3,10 +3,10 @@ require('isomorphic-fetch')
 
 const { validateEmail } = require('../utils')
 
-async function singUp(parent, args, context){
+async function signUp(parent, args, context){
   throw new Error('you cannot signup!')
 }
 
 module.exports = {
-  sendMessage
+  signUp
 }

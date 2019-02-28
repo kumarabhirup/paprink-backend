@@ -3,5 +3,5 @@ async function users(parent, args, context, info) {
 }
 
 module.exports = {
-  contacts
+  users
 }
