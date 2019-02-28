@@ -8,5 +8,5 @@ async function signUp(parent, args, context){
 }
 
 module.exports = {
-  sendMessage
+  signUp
 }
