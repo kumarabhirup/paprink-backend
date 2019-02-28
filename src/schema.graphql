@@ -1,3 +1,5 @@
+scalar DateTime
+
 enum Previledge {
   SUPERADMIN
   ADMIN
@@ -6,18 +8,33 @@ enum Previledge {
   READER
 }
 
+type Mutation {
+  signUp(
+    fname: String!,
+    lname: String!,
+    phone: String,
+    email: String!,
+    bio: String!
+  ): [User]!
+}
+
+type Query {
+  users: [User]!
+}
+
 type Post {
-  id: ID! @unique
+  id: ID!
   title: String!
   content: String!
   category: String!
   excerpt: String!
-  updatedAt: DateTime!
-  createdAt: DateTime!
+  updatedAt: String!
+  createdAt: String!
+  author: [User]!
 }
 
 type User {
-  id: ID! @unique
+  id: ID!
   fname: String!
   lname: String!
   phone: String
@@ -26,6 +43,6 @@ type User {
   posts: [Post]!
   followers: [User]!
   previledge: [Previledge]!
-  updatedAt: DateTime!
-  createdAt: DateTime!
+  updatedAt: String!
+  createdAt: String!
 }
