@@ -1,3 +1,5 @@
+# import * from './generated/prisma.graphql'
+
 scalar DateTime
 
 enum Previledge {
