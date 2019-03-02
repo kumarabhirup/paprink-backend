@@ -23,8 +23,8 @@ type User {
   fname: String!
   lname: String!
   name: String!
-  phone: String
-  email: String!
+  phone: String @unique
+  email: String! @unique
   gender: String
   birthday: String
   bio: String

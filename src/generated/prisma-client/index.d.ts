@@ -498,6 +498,8 @@ export interface PostWhereInput {
 
 export type UserWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
+  phone?: String;
+  email?: String;
 }>;
 
 export interface PostCreateInput {
