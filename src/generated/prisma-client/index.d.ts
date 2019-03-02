@@ -149,16 +149,28 @@ export interface ClientConstructor<T> {
 export type UserOrderByInput =
   | "id_ASC"
   | "id_DESC"
+  | "socialId_ASC"
+  | "socialId_DESC"
   | "fname_ASC"
   | "fname_DESC"
   | "lname_ASC"
   | "lname_DESC"
+  | "name_ASC"
+  | "name_DESC"
   | "phone_ASC"
   | "phone_DESC"
   | "email_ASC"
   | "email_DESC"
+  | "gender_ASC"
+  | "gender_DESC"
+  | "birthday_ASC"
+  | "birthday_DESC"
   | "bio_ASC"
   | "bio_DESC"
+  | "profilePicture_ASC"
+  | "profilePicture_DESC"
+  | "signUpMethod_ASC"
+  | "signUpMethod_DESC"
   | "updatedAt_ASC"
   | "updatedAt_DESC"
   | "createdAt_ASC"
@@ -208,6 +220,20 @@ export interface UserWhereInput {
   id_not_starts_with?: ID_Input;
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
+  socialId?: String;
+  socialId_not?: String;
+  socialId_in?: String[] | String;
+  socialId_not_in?: String[] | String;
+  socialId_lt?: String;
+  socialId_lte?: String;
+  socialId_gt?: String;
+  socialId_gte?: String;
+  socialId_contains?: String;
+  socialId_not_contains?: String;
+  socialId_starts_with?: String;
+  socialId_not_starts_with?: String;
+  socialId_ends_with?: String;
+  socialId_not_ends_with?: String;
   fname?: String;
   fname_not?: String;
   fname_in?: String[] | String;
@@ -236,6 +262,20 @@ export interface UserWhereInput {
   lname_not_starts_with?: String;
   lname_ends_with?: String;
   lname_not_ends_with?: String;
+  name?: String;
+  name_not?: String;
+  name_in?: String[] | String;
+  name_not_in?: String[] | String;
+  name_lt?: String;
+  name_lte?: String;
+  name_gt?: String;
+  name_gte?: String;
+  name_contains?: String;
+  name_not_contains?: String;
+  name_starts_with?: String;
+  name_not_starts_with?: String;
+  name_ends_with?: String;
+  name_not_ends_with?: String;
   phone?: String;
   phone_not?: String;
   phone_in?: String[] | String;
@@ -264,6 +304,34 @@ export interface UserWhereInput {
   email_not_starts_with?: String;
   email_ends_with?: String;
   email_not_ends_with?: String;
+  gender?: String;
+  gender_not?: String;
+  gender_in?: String[] | String;
+  gender_not_in?: String[] | String;
+  gender_lt?: String;
+  gender_lte?: String;
+  gender_gt?: String;
+  gender_gte?: String;
+  gender_contains?: String;
+  gender_not_contains?: String;
+  gender_starts_with?: String;
+  gender_not_starts_with?: String;
+  gender_ends_with?: String;
+  gender_not_ends_with?: String;
+  birthday?: String;
+  birthday_not?: String;
+  birthday_in?: String[] | String;
+  birthday_not_in?: String[] | String;
+  birthday_lt?: String;
+  birthday_lte?: String;
+  birthday_gt?: String;
+  birthday_gte?: String;
+  birthday_contains?: String;
+  birthday_not_contains?: String;
+  birthday_starts_with?: String;
+  birthday_not_starts_with?: String;
+  birthday_ends_with?: String;
+  birthday_not_ends_with?: String;
   bio?: String;
   bio_not?: String;
   bio_in?: String[] | String;
@@ -281,9 +349,37 @@ export interface UserWhereInput {
   posts_every?: PostWhereInput;
   posts_some?: PostWhereInput;
   posts_none?: PostWhereInput;
+  profilePicture?: String;
+  profilePicture_not?: String;
+  profilePicture_in?: String[] | String;
+  profilePicture_not_in?: String[] | String;
+  profilePicture_lt?: String;
+  profilePicture_lte?: String;
+  profilePicture_gt?: String;
+  profilePicture_gte?: String;
+  profilePicture_contains?: String;
+  profilePicture_not_contains?: String;
+  profilePicture_starts_with?: String;
+  profilePicture_not_starts_with?: String;
+  profilePicture_ends_with?: String;
+  profilePicture_not_ends_with?: String;
   followers_every?: UserWhereInput;
   followers_some?: UserWhereInput;
   followers_none?: UserWhereInput;
+  signUpMethod?: String;
+  signUpMethod_not?: String;
+  signUpMethod_in?: String[] | String;
+  signUpMethod_not_in?: String[] | String;
+  signUpMethod_lt?: String;
+  signUpMethod_lte?: String;
+  signUpMethod_gt?: String;
+  signUpMethod_gte?: String;
+  signUpMethod_contains?: String;
+  signUpMethod_not_contains?: String;
+  signUpMethod_starts_with?: String;
+  signUpMethod_not_starts_with?: String;
+  signUpMethod_ends_with?: String;
+  signUpMethod_not_ends_with?: String;
   updatedAt?: DateTimeInput;
   updatedAt_not?: DateTimeInput;
   updatedAt_in?: DateTimeInput[] | DateTimeInput;
@@ -418,13 +514,19 @@ export interface UserCreateManyWithoutPostsInput {
 }
 
 export interface UserCreateWithoutPostsInput {
+  socialId: String;
   fname: String;
   lname: String;
+  name: String;
   phone?: String;
   email: String;
-  bio: String;
+  gender?: String;
+  birthday?: String;
+  bio?: String;
+  profilePicture: String;
   followers?: UserCreateManyInput;
   previledge?: UserCreatepreviledgeInput;
+  signUpMethod: String;
 }
 
 export interface UserCreateManyInput {
@@ -433,14 +535,20 @@ export interface UserCreateManyInput {
 }
 
 export interface UserCreateInput {
+  socialId: String;
   fname: String;
   lname: String;
+  name: String;
   phone?: String;
   email: String;
-  bio: String;
+  gender?: String;
+  birthday?: String;
+  bio?: String;
   posts?: PostCreateManyWithoutAuthorInput;
+  profilePicture: String;
   followers?: UserCreateManyInput;
   previledge?: UserCreatepreviledgeInput;
+  signUpMethod: String;
 }
 
 export interface PostCreateManyWithoutAuthorInput {
@@ -491,13 +599,19 @@ export interface UserUpdateWithWhereUniqueWithoutPostsInput {
 }
 
 export interface UserUpdateWithoutPostsDataInput {
+  socialId?: String;
   fname?: String;
   lname?: String;
+  name?: String;
   phone?: String;
   email?: String;
+  gender?: String;
+  birthday?: String;
   bio?: String;
+  profilePicture?: String;
   followers?: UserUpdateManyInput;
   previledge?: UserUpdatepreviledgeInput;
+  signUpMethod?: String;
 }
 
 export interface UserUpdateManyInput {
@@ -524,14 +638,20 @@ export interface UserUpdateWithWhereUniqueNestedInput {
 }
 
 export interface UserUpdateDataInput {
+  socialId?: String;
   fname?: String;
   lname?: String;
+  name?: String;
   phone?: String;
   email?: String;
+  gender?: String;
+  birthday?: String;
   bio?: String;
   posts?: PostUpdateManyWithoutAuthorInput;
+  profilePicture?: String;
   followers?: UserUpdateManyInput;
   previledge?: UserUpdatepreviledgeInput;
+  signUpMethod?: String;
 }
 
 export interface PostUpdateManyWithoutAuthorInput {
@@ -699,6 +819,20 @@ export interface UserScalarWhereInput {
   id_not_starts_with?: ID_Input;
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
+  socialId?: String;
+  socialId_not?: String;
+  socialId_in?: String[] | String;
+  socialId_not_in?: String[] | String;
+  socialId_lt?: String;
+  socialId_lte?: String;
+  socialId_gt?: String;
+  socialId_gte?: String;
+  socialId_contains?: String;
+  socialId_not_contains?: String;
+  socialId_starts_with?: String;
+  socialId_not_starts_with?: String;
+  socialId_ends_with?: String;
+  socialId_not_ends_with?: String;
   fname?: String;
   fname_not?: String;
   fname_in?: String[] | String;
@@ -727,6 +861,20 @@ export interface UserScalarWhereInput {
   lname_not_starts_with?: String;
   lname_ends_with?: String;
   lname_not_ends_with?: String;
+  name?: String;
+  name_not?: String;
+  name_in?: String[] | String;
+  name_not_in?: String[] | String;
+  name_lt?: String;
+  name_lte?: String;
+  name_gt?: String;
+  name_gte?: String;
+  name_contains?: String;
+  name_not_contains?: String;
+  name_starts_with?: String;
+  name_not_starts_with?: String;
+  name_ends_with?: String;
+  name_not_ends_with?: String;
   phone?: String;
   phone_not?: String;
   phone_in?: String[] | String;
@@ -755,6 +903,34 @@ export interface UserScalarWhereInput {
   email_not_starts_with?: String;
   email_ends_with?: String;
   email_not_ends_with?: String;
+  gender?: String;
+  gender_not?: String;
+  gender_in?: String[] | String;
+  gender_not_in?: String[] | String;
+  gender_lt?: String;
+  gender_lte?: String;
+  gender_gt?: String;
+  gender_gte?: String;
+  gender_contains?: String;
+  gender_not_contains?: String;
+  gender_starts_with?: String;
+  gender_not_starts_with?: String;
+  gender_ends_with?: String;
+  gender_not_ends_with?: String;
+  birthday?: String;
+  birthday_not?: String;
+  birthday_in?: String[] | String;
+  birthday_not_in?: String[] | String;
+  birthday_lt?: String;
+  birthday_lte?: String;
+  birthday_gt?: String;
+  birthday_gte?: String;
+  birthday_contains?: String;
+  birthday_not_contains?: String;
+  birthday_starts_with?: String;
+  birthday_not_starts_with?: String;
+  birthday_ends_with?: String;
+  birthday_not_ends_with?: String;
   bio?: String;
   bio_not?: String;
   bio_in?: String[] | String;
@@ -769,6 +945,34 @@ export interface UserScalarWhereInput {
   bio_not_starts_with?: String;
   bio_ends_with?: String;
   bio_not_ends_with?: String;
+  profilePicture?: String;
+  profilePicture_not?: String;
+  profilePicture_in?: String[] | String;
+  profilePicture_not_in?: String[] | String;
+  profilePicture_lt?: String;
+  profilePicture_lte?: String;
+  profilePicture_gt?: String;
+  profilePicture_gte?: String;
+  profilePicture_contains?: String;
+  profilePicture_not_contains?: String;
+  profilePicture_starts_with?: String;
+  profilePicture_not_starts_with?: String;
+  profilePicture_ends_with?: String;
+  profilePicture_not_ends_with?: String;
+  signUpMethod?: String;
+  signUpMethod_not?: String;
+  signUpMethod_in?: String[] | String;
+  signUpMethod_not_in?: String[] | String;
+  signUpMethod_lt?: String;
+  signUpMethod_lte?: String;
+  signUpMethod_gt?: String;
+  signUpMethod_gte?: String;
+  signUpMethod_contains?: String;
+  signUpMethod_not_contains?: String;
+  signUpMethod_starts_with?: String;
+  signUpMethod_not_starts_with?: String;
+  signUpMethod_ends_with?: String;
+  signUpMethod_not_ends_with?: String;
   updatedAt?: DateTimeInput;
   updatedAt_not?: DateTimeInput;
   updatedAt_in?: DateTimeInput[] | DateTimeInput;
@@ -796,12 +1000,18 @@ export interface UserUpdateManyWithWhereNestedInput {
 }
 
 export interface UserUpdateManyDataInput {
+  socialId?: String;
   fname?: String;
   lname?: String;
+  name?: String;
   phone?: String;
   email?: String;
+  gender?: String;
+  birthday?: String;
   bio?: String;
+  profilePicture?: String;
   previledge?: UserUpdatepreviledgeInput;
+  signUpMethod?: String;
 }
 
 export interface UserUpsertWithWhereUniqueWithoutPostsInput {
@@ -818,23 +1028,35 @@ export interface PostUpdateManyMutationInput {
 }
 
 export interface UserUpdateInput {
+  socialId?: String;
   fname?: String;
   lname?: String;
+  name?: String;
   phone?: String;
   email?: String;
+  gender?: String;
+  birthday?: String;
   bio?: String;
   posts?: PostUpdateManyWithoutAuthorInput;
+  profilePicture?: String;
   followers?: UserUpdateManyInput;
   previledge?: UserUpdatepreviledgeInput;
+  signUpMethod?: String;
 }
 
 export interface UserUpdateManyMutationInput {
+  socialId?: String;
   fname?: String;
   lname?: String;
+  name?: String;
   phone?: String;
   email?: String;
+  gender?: String;
+  birthday?: String;
   bio?: String;
+  profilePicture?: String;
   previledge?: UserUpdatepreviledgeInput;
+  signUpMethod?: String;
 }
 
 export interface PostSubscriptionWhereInput {
@@ -919,22 +1141,32 @@ export interface PostSubscription
 
 export interface User {
   id: ID_Output;
+  socialId: String;
   fname: String;
   lname: String;
+  name: String;
   phone?: String;
   email: String;
-  bio: String;
+  gender?: String;
+  birthday?: String;
+  bio?: String;
+  profilePicture: String;
   previledge: Previledge[];
+  signUpMethod: String;
   updatedAt: DateTimeOutput;
   createdAt: DateTimeOutput;
 }
 
 export interface UserPromise extends Promise<User>, Fragmentable {
   id: () => Promise<ID_Output>;
+  socialId: () => Promise<String>;
   fname: () => Promise<String>;
   lname: () => Promise<String>;
+  name: () => Promise<String>;
   phone: () => Promise<String>;
   email: () => Promise<String>;
+  gender: () => Promise<String>;
+  birthday: () => Promise<String>;
   bio: () => Promise<String>;
   posts: <T = FragmentableArray<Post>>(
     args?: {
@@ -947,6 +1179,7 @@ export interface UserPromise extends Promise<User>, Fragmentable {
       last?: Int;
     }
   ) => T;
+  profilePicture: () => Promise<String>;
   followers: <T = FragmentableArray<User>>(
     args?: {
       where?: UserWhereInput;
@@ -959,6 +1192,7 @@ export interface UserPromise extends Promise<User>, Fragmentable {
     }
   ) => T;
   previledge: () => Promise<Previledge[]>;
+  signUpMethod: () => Promise<String>;
   updatedAt: () => Promise<DateTimeOutput>;
   createdAt: () => Promise<DateTimeOutput>;
 }
@@ -967,10 +1201,14 @@ export interface UserSubscription
   extends Promise<AsyncIterator<User>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  socialId: () => Promise<AsyncIterator<String>>;
   fname: () => Promise<AsyncIterator<String>>;
   lname: () => Promise<AsyncIterator<String>>;
+  name: () => Promise<AsyncIterator<String>>;
   phone: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
+  gender: () => Promise<AsyncIterator<String>>;
+  birthday: () => Promise<AsyncIterator<String>>;
   bio: () => Promise<AsyncIterator<String>>;
   posts: <T = Promise<AsyncIterator<PostSubscription>>>(
     args?: {
@@ -983,6 +1221,7 @@ export interface UserSubscription
       last?: Int;
     }
   ) => T;
+  profilePicture: () => Promise<AsyncIterator<String>>;
   followers: <T = Promise<AsyncIterator<UserSubscription>>>(
     args?: {
       where?: UserWhereInput;
@@ -995,6 +1234,7 @@ export interface UserSubscription
     }
   ) => T;
   previledge: () => Promise<AsyncIterator<Previledge[]>>;
+  signUpMethod: () => Promise<AsyncIterator<String>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
@@ -1232,12 +1472,18 @@ export interface UserSubscriptionPayloadSubscription
 
 export interface UserPreviousValues {
   id: ID_Output;
+  socialId: String;
   fname: String;
   lname: String;
+  name: String;
   phone?: String;
   email: String;
-  bio: String;
+  gender?: String;
+  birthday?: String;
+  bio?: String;
+  profilePicture: String;
   previledge: Previledge[];
+  signUpMethod: String;
   updatedAt: DateTimeOutput;
   createdAt: DateTimeOutput;
 }
@@ -1246,12 +1492,18 @@ export interface UserPreviousValuesPromise
   extends Promise<UserPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  socialId: () => Promise<String>;
   fname: () => Promise<String>;
   lname: () => Promise<String>;
+  name: () => Promise<String>;
   phone: () => Promise<String>;
   email: () => Promise<String>;
+  gender: () => Promise<String>;
+  birthday: () => Promise<String>;
   bio: () => Promise<String>;
+  profilePicture: () => Promise<String>;
   previledge: () => Promise<Previledge[]>;
+  signUpMethod: () => Promise<String>;
   updatedAt: () => Promise<DateTimeOutput>;
   createdAt: () => Promise<DateTimeOutput>;
 }
@@ -1260,12 +1512,18 @@ export interface UserPreviousValuesSubscription
   extends Promise<AsyncIterator<UserPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  socialId: () => Promise<AsyncIterator<String>>;
   fname: () => Promise<AsyncIterator<String>>;
   lname: () => Promise<AsyncIterator<String>>;
+  name: () => Promise<AsyncIterator<String>>;
   phone: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
+  gender: () => Promise<AsyncIterator<String>>;
+  birthday: () => Promise<AsyncIterator<String>>;
   bio: () => Promise<AsyncIterator<String>>;
+  profilePicture: () => Promise<AsyncIterator<String>>;
   previledge: () => Promise<AsyncIterator<Previledge[]>>;
+  signUpMethod: () => Promise<AsyncIterator<String>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }

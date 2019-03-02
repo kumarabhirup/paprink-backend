@@ -411,14 +411,20 @@ type Subscription {
 
 type User {
   id: ID!
+  socialId: String!
   fname: String!
   lname: String!
+  name: String!
   phone: String
   email: String!
-  bio: String!
+  gender: String
+  birthday: String
+  bio: String
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
+  profilePicture: String!
   followers(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   previledge: [Previledge!]!
+  signUpMethod: String!
   updatedAt: DateTime!
   createdAt: DateTime!
 }
@@ -430,14 +436,20 @@ type UserConnection {
 }
 
 input UserCreateInput {
+  socialId: String!
   fname: String!
   lname: String!
+  name: String!
   phone: String
   email: String!
-  bio: String!
+  gender: String
+  birthday: String
+  bio: String
   posts: PostCreateManyWithoutAuthorInput
+  profilePicture: String!
   followers: UserCreateManyInput
   previledge: UserCreatepreviledgeInput
+  signUpMethod: String!
 }
 
 input UserCreateManyInput {
@@ -455,13 +467,19 @@ input UserCreatepreviledgeInput {
 }
 
 input UserCreateWithoutPostsInput {
+  socialId: String!
   fname: String!
   lname: String!
+  name: String!
   phone: String
   email: String!
-  bio: String!
+  gender: String
+  birthday: String
+  bio: String
+  profilePicture: String!
   followers: UserCreateManyInput
   previledge: UserCreatepreviledgeInput
+  signUpMethod: String!
 }
 
 type UserEdge {
@@ -472,16 +490,28 @@ type UserEdge {
 enum UserOrderByInput {
   id_ASC
   id_DESC
+  socialId_ASC
+  socialId_DESC
   fname_ASC
   fname_DESC
   lname_ASC
   lname_DESC
+  name_ASC
+  name_DESC
   phone_ASC
   phone_DESC
   email_ASC
   email_DESC
+  gender_ASC
+  gender_DESC
+  birthday_ASC
+  birthday_DESC
   bio_ASC
   bio_DESC
+  profilePicture_ASC
+  profilePicture_DESC
+  signUpMethod_ASC
+  signUpMethod_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -490,12 +520,18 @@ enum UserOrderByInput {
 
 type UserPreviousValues {
   id: ID!
+  socialId: String!
   fname: String!
   lname: String!
+  name: String!
   phone: String
   email: String!
-  bio: String!
+  gender: String
+  birthday: String
+  bio: String
+  profilePicture: String!
   previledge: [Previledge!]!
+  signUpMethod: String!
   updatedAt: DateTime!
   createdAt: DateTime!
 }
@@ -515,6 +551,20 @@ input UserScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  socialId: String
+  socialId_not: String
+  socialId_in: [String!]
+  socialId_not_in: [String!]
+  socialId_lt: String
+  socialId_lte: String
+  socialId_gt: String
+  socialId_gte: String
+  socialId_contains: String
+  socialId_not_contains: String
+  socialId_starts_with: String
+  socialId_not_starts_with: String
+  socialId_ends_with: String
+  socialId_not_ends_with: String
   fname: String
   fname_not: String
   fname_in: [String!]
@@ -543,6 +593,20 @@ input UserScalarWhereInput {
   lname_not_starts_with: String
   lname_ends_with: String
   lname_not_ends_with: String
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
   phone: String
   phone_not: String
   phone_in: [String!]
@@ -571,6 +635,34 @@ input UserScalarWhereInput {
   email_not_starts_with: String
   email_ends_with: String
   email_not_ends_with: String
+  gender: String
+  gender_not: String
+  gender_in: [String!]
+  gender_not_in: [String!]
+  gender_lt: String
+  gender_lte: String
+  gender_gt: String
+  gender_gte: String
+  gender_contains: String
+  gender_not_contains: String
+  gender_starts_with: String
+  gender_not_starts_with: String
+  gender_ends_with: String
+  gender_not_ends_with: String
+  birthday: String
+  birthday_not: String
+  birthday_in: [String!]
+  birthday_not_in: [String!]
+  birthday_lt: String
+  birthday_lte: String
+  birthday_gt: String
+  birthday_gte: String
+  birthday_contains: String
+  birthday_not_contains: String
+  birthday_starts_with: String
+  birthday_not_starts_with: String
+  birthday_ends_with: String
+  birthday_not_ends_with: String
   bio: String
   bio_not: String
   bio_in: [String!]
@@ -585,6 +677,34 @@ input UserScalarWhereInput {
   bio_not_starts_with: String
   bio_ends_with: String
   bio_not_ends_with: String
+  profilePicture: String
+  profilePicture_not: String
+  profilePicture_in: [String!]
+  profilePicture_not_in: [String!]
+  profilePicture_lt: String
+  profilePicture_lte: String
+  profilePicture_gt: String
+  profilePicture_gte: String
+  profilePicture_contains: String
+  profilePicture_not_contains: String
+  profilePicture_starts_with: String
+  profilePicture_not_starts_with: String
+  profilePicture_ends_with: String
+  profilePicture_not_ends_with: String
+  signUpMethod: String
+  signUpMethod_not: String
+  signUpMethod_in: [String!]
+  signUpMethod_not_in: [String!]
+  signUpMethod_lt: String
+  signUpMethod_lte: String
+  signUpMethod_gt: String
+  signUpMethod_gte: String
+  signUpMethod_contains: String
+  signUpMethod_not_contains: String
+  signUpMethod_starts_with: String
+  signUpMethod_not_starts_with: String
+  signUpMethod_ends_with: String
+  signUpMethod_not_ends_with: String
   updatedAt: DateTime
   updatedAt_not: DateTime
   updatedAt_in: [DateTime!]
@@ -625,34 +745,52 @@ input UserSubscriptionWhereInput {
 }
 
 input UserUpdateDataInput {
+  socialId: String
   fname: String
   lname: String
+  name: String
   phone: String
   email: String
+  gender: String
+  birthday: String
   bio: String
   posts: PostUpdateManyWithoutAuthorInput
+  profilePicture: String
   followers: UserUpdateManyInput
   previledge: UserUpdatepreviledgeInput
+  signUpMethod: String
 }
 
 input UserUpdateInput {
+  socialId: String
   fname: String
   lname: String
+  name: String
   phone: String
   email: String
+  gender: String
+  birthday: String
   bio: String
   posts: PostUpdateManyWithoutAuthorInput
+  profilePicture: String
   followers: UserUpdateManyInput
   previledge: UserUpdatepreviledgeInput
+  signUpMethod: String
 }
 
 input UserUpdateManyDataInput {
+  socialId: String
   fname: String
   lname: String
+  name: String
   phone: String
   email: String
+  gender: String
+  birthday: String
   bio: String
+  profilePicture: String
   previledge: UserUpdatepreviledgeInput
+  signUpMethod: String
 }
 
 input UserUpdateManyInput {
@@ -668,12 +806,18 @@ input UserUpdateManyInput {
 }
 
 input UserUpdateManyMutationInput {
+  socialId: String
   fname: String
   lname: String
+  name: String
   phone: String
   email: String
+  gender: String
+  birthday: String
   bio: String
+  profilePicture: String
   previledge: UserUpdatepreviledgeInput
+  signUpMethod: String
 }
 
 input UserUpdateManyWithoutPostsInput {
@@ -698,13 +842,19 @@ input UserUpdatepreviledgeInput {
 }
 
 input UserUpdateWithoutPostsDataInput {
+  socialId: String
   fname: String
   lname: String
+  name: String
   phone: String
   email: String
+  gender: String
+  birthday: String
   bio: String
+  profilePicture: String
   followers: UserUpdateManyInput
   previledge: UserUpdatepreviledgeInput
+  signUpMethod: String
 }
 
 input UserUpdateWithWhereUniqueNestedInput {
@@ -744,6 +894,20 @@ input UserWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  socialId: String
+  socialId_not: String
+  socialId_in: [String!]
+  socialId_not_in: [String!]
+  socialId_lt: String
+  socialId_lte: String
+  socialId_gt: String
+  socialId_gte: String
+  socialId_contains: String
+  socialId_not_contains: String
+  socialId_starts_with: String
+  socialId_not_starts_with: String
+  socialId_ends_with: String
+  socialId_not_ends_with: String
   fname: String
   fname_not: String
   fname_in: [String!]
@@ -772,6 +936,20 @@ input UserWhereInput {
   lname_not_starts_with: String
   lname_ends_with: String
   lname_not_ends_with: String
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
   phone: String
   phone_not: String
   phone_in: [String!]
@@ -800,6 +978,34 @@ input UserWhereInput {
   email_not_starts_with: String
   email_ends_with: String
   email_not_ends_with: String
+  gender: String
+  gender_not: String
+  gender_in: [String!]
+  gender_not_in: [String!]
+  gender_lt: String
+  gender_lte: String
+  gender_gt: String
+  gender_gte: String
+  gender_contains: String
+  gender_not_contains: String
+  gender_starts_with: String
+  gender_not_starts_with: String
+  gender_ends_with: String
+  gender_not_ends_with: String
+  birthday: String
+  birthday_not: String
+  birthday_in: [String!]
+  birthday_not_in: [String!]
+  birthday_lt: String
+  birthday_lte: String
+  birthday_gt: String
+  birthday_gte: String
+  birthday_contains: String
+  birthday_not_contains: String
+  birthday_starts_with: String
+  birthday_not_starts_with: String
+  birthday_ends_with: String
+  birthday_not_ends_with: String
   bio: String
   bio_not: String
   bio_in: [String!]
@@ -817,9 +1023,37 @@ input UserWhereInput {
   posts_every: PostWhereInput
   posts_some: PostWhereInput
   posts_none: PostWhereInput
+  profilePicture: String
+  profilePicture_not: String
+  profilePicture_in: [String!]
+  profilePicture_not_in: [String!]
+  profilePicture_lt: String
+  profilePicture_lte: String
+  profilePicture_gt: String
+  profilePicture_gte: String
+  profilePicture_contains: String
+  profilePicture_not_contains: String
+  profilePicture_starts_with: String
+  profilePicture_not_starts_with: String
+  profilePicture_ends_with: String
+  profilePicture_not_ends_with: String
   followers_every: UserWhereInput
   followers_some: UserWhereInput
   followers_none: UserWhereInput
+  signUpMethod: String
+  signUpMethod_not: String
+  signUpMethod_in: [String!]
+  signUpMethod_not_in: [String!]
+  signUpMethod_lt: String
+  signUpMethod_lte: String
+  signUpMethod_gt: String
+  signUpMethod_gte: String
+  signUpMethod_contains: String
+  signUpMethod_not_contains: String
+  signUpMethod_starts_with: String
+  signUpMethod_not_starts_with: String
+  signUpMethod_ends_with: String
+  signUpMethod_not_ends_with: String
   updatedAt: DateTime
   updatedAt_not: DateTime
   updatedAt_in: [DateTime!]

@@ -19,14 +19,20 @@ type Post {
 
 type User {
   id: ID! @unique
+  socialId: String!
   fname: String!
   lname: String!
+  name: String!
   phone: String
   email: String!
-  bio: String!
+  gender: String
+  birthday: String
+  bio: String
   posts: [Post]!
+  profilePicture: String!
   followers: [User]!
   previledge: [Previledge]!
+  signUpMethod: String!
   updatedAt: DateTime!
   createdAt: DateTime!
 }

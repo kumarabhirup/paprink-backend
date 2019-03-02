@@ -24,27 +24,27 @@ type Query {
   users: [User]!
 }
 
-type Post {
-  id: ID!
-  title: String!
-  content: String!
-  category: String!
-  excerpt: String!
-  updatedAt: String!
-  createdAt: String!
-  author: [User]!
-}
+# type Post {
+#   id: ID!
+#   title: String!
+#   content: String!
+#   category: String!
+#   excerpt: String!
+#   updatedAt: String!
+#   createdAt: String!
+#   author: [User]!
+# }
 
-type User {
-  id: ID!
-  fname: String!
-  lname: String!
-  phone: String
-  email: String!
-  bio: String!
-  posts: [Post]!
-  followers: [User]!
-  previledge: [Previledge]!
-  updatedAt: String!
-  createdAt: String!
-}
+# type User {
+#   id: ID!
+#   fname: String!
+#   lname: String!
+#   phone: String
+#   email: String!
+#   bio: String!
+#   posts: [Post]!
+#   followers: [User]!
+#   previledge: [Previledge]!
+#   updatedAt: String!
+#   createdAt: String!
+# }
