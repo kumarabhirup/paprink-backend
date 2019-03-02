@@ -16,7 +16,7 @@ type Mutation {
     profilePicture: String!
     signUpMethod: String!
     accessToken: String!
-  ): [User]!
+  ): User!
 }
 
 type Query {
