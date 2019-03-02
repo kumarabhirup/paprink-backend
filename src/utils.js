@@ -11,14 +11,7 @@ async function isTokenValid(method, accessToken) {
 
   // Validate FB token
   if(method === "facebook") {
-    const isTokenValid = await fetch(`https://graph.facebook.com/debug_token`, {
-      method: 'get',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
-      },
-      body: `input_token=${accessToken}&access_token=${process.env.FB_APP_ID}|${process.env.FB_APP_SECRET}`
-    })
+    const isTokenValid = await fetch(`https://graph.facebook.com/debug_token?input_token=${accessToken}&access_token=${process.env.FB_APP_ID}|${process.env.FB_APP_SECRET}`)
     .then(res => (res.json()))
     .then(json => (json.data.is_valid))
     .catch(err => { throw new Error(`Error in Facebook API. ${err.message}`) })
@@ -27,14 +20,7 @@ async function isTokenValid(method, accessToken) {
 
   // Validate Google token
   if(method === "google") {
-    const isTokenValid = await fetch(`https://oauth2.googleapis.com/tokeninfo`, {
-      method: 'get',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
-      },
-      body: `access_token=${accessToken}`
-    })
+    const isTokenValid = await fetch(`https://oauth2.googleapis.com/tokeninfo?access_token=${accessToken}`)
     .then(res => (res.json()))
     .then(json => {
       if(json.email){
