@@ -1077,6 +1077,7 @@ input UserWhereInput {
 
 input UserWhereUniqueInput {
   id: ID
+  socialId: String
   phone: String
   email: String
 }

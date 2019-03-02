@@ -19,7 +19,7 @@ type Post {
 
 type User {
   id: ID! @unique
-  socialId: String!
+  socialId: String! @unique
   fname: String!
   lname: String!
   name: String!
