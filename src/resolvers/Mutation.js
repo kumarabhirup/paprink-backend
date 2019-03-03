@@ -12,7 +12,7 @@ async function signIn(parent, args, context){
   }
 
   // Check if user is already signedUp!
-  const signedUser = await context.prisma.user({socialId: args.socialId})
+  const signedUser = await context.prisma.user({socialId: data.socialId})
   if(!signedUser) {
 
     // Create user
@@ -27,6 +27,22 @@ async function signIn(parent, args, context){
     return newUser
 
   }
+
+  // Update user with new access token
+  await context.prisma.updateUser({
+    data: {
+      accessToken: data.accessToken,
+      fname: data.fname,
+      lname: data.lname,
+      name: data.name,
+      profilePicture: data.profilePicture,
+      email: data.email,
+      gender: data.gender,
+      birthday: data.birthday,
+      bio: data.bio
+    },
+    where: { id: signedUser.id }
+  })
 
   const token = jwt.sign({ userId: signedUser.id, /*accessToken: args.accessToken,*/ signUpMethod: args.signUpMethod }, process.env.JWT_SECRET)
   await context.response.cookie('paprinkToken', token, {
