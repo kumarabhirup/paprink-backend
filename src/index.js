@@ -1,11 +1,12 @@
 require('dotenv').config()
 
 const { GraphQLServer } = require('graphql-yoga')
-const { prisma } = require('./generated/prisma-client')
+const cookieParser = require('cookie-parser')
+const jwt = require('jsonwebtoken')
 
+const { prisma } = require('./generated/prisma-client')
 const Query = require('./resolvers/Query')
 const Mutation = require('./resolvers/Mutation')
-
 
 // start it
 const server = new GraphQLServer({
@@ -28,8 +29,35 @@ const errorHandler = (err, req, res, next) => {
   }
   const { status } = err;
   res.status(status).json(err);
-};
-server.use(errorHandler);
+}; server.use(errorHandler);
+
+// COOKIE PARSER
+server.express.use(cookieParser())
+
+// Decode the JWT
+server.express.use((req, res, next) => {
+    const { token } = req.cookies
+    if(token){
+        const { userId } = jwt.verify(token, process.env.JWT_SECRET)
+        req.userId = userId
+    }
+    next()
+})
+
+// Populate the user
+server.express.use(async (req, res, next) => {
+
+    // skip if they aren't logged in
+    if(!req.userId){
+        return next()
+    }
+
+    const user = await prisma.user({where: { id: req.userId } }, '{ id, fname, lname, name, email, previledge }')
+    req.user = user
+
+    next()
+
+})
 
 
 server.start(
