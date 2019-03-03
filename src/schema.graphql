@@ -2,6 +2,11 @@
 
 scalar DateTime
 
+type Message {
+  code: Int
+  message: String
+}
+
 type Mutation {
   signIn(
     socialId: String!
@@ -17,6 +22,7 @@ type Mutation {
     signUpMethod: String!
     accessToken: String!
   ): User!
+  signOut: Message
 }
 
 type Query {

@@ -17,19 +17,34 @@ async function signIn(parent, args, context){
   if(!signedUser) {
 
     // Create user
-    const user = await context.prisma.createUser({...data})
+    const newUser = await context.prisma.createUser({...data})
 
-    // TODO: Save cookies
+    const token = jwt.sign({ userId: newUser.id }, process.env.JWT_SECRET)
+    context.response.cookie('paprinkToken', token, {
+        httpOnly: true,
+        maxAge: 1000 * 60 * 60 * 24 * 365
+    })
 
-    return user
+    return newUser
 
   }
 
-  // TODO: Save cookies
-  throw new Error('YOU ARE SIGNED IN.')
+  const token = jwt.sign({ userId: signedUser.id }, process.env.JWT_SECRET)
+  await context.response.cookie('paprinkToken', token, {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 365
+  })
+
+  return signedUser
 
 }
 
+async function signOut(parent, args, context){
+  await context.response.clearCookie('paprinkToken')
+  return { code: 10, message: 'Signed out successfully.' }
+}
+
 module.exports = {
-  signIn
+  signIn,
+  signOut
 }
