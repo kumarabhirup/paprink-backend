@@ -4,7 +4,7 @@ async function users(parent, args, context, info) {
 
 async function me(parent, args, context){
   if(!context.request.userId){
-      return null
+    return null
   } return context.prisma.user({id: context.request.userId})
 }
 
