@@ -29,3 +29,22 @@ type Query {
   users: [User]!
   me: User
 }
+
+type User {
+  id: ID!
+  fname: String!
+  lname: String!
+  name: String!
+  phone: String
+  email: String!
+  gender: String
+  birthday: String
+  bio: String
+  posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
+  profilePicture: String!
+  followers(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  previledge: [Previledge]!
+  signUpMethod: String!
+  updatedAt: String!
+  createdAt: String!
+}

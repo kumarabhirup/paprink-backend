@@ -36,7 +36,7 @@ async function signIn(parent, args, context){
       lname: data.lname,
       name: data.name,
       profilePicture: data.profilePicture,
-      email: data.email,
+      email: data.email, // TODO: Handle email match conflicts if email got changed
       gender: data.gender,
       birthday: data.birthday,
       bio: data.bio
