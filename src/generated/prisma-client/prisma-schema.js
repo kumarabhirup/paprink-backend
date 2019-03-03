@@ -425,6 +425,7 @@ type User {
   followers(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   previledge: [Previledge!]!
   signUpMethod: String!
+  accessToken: String!
   updatedAt: DateTime!
   createdAt: DateTime!
 }
@@ -450,6 +451,7 @@ input UserCreateInput {
   followers: UserCreateManyInput
   previledge: UserCreatepreviledgeInput
   signUpMethod: String!
+  accessToken: String!
 }
 
 input UserCreateManyInput {
@@ -480,6 +482,7 @@ input UserCreateWithoutPostsInput {
   followers: UserCreateManyInput
   previledge: UserCreatepreviledgeInput
   signUpMethod: String!
+  accessToken: String!
 }
 
 type UserEdge {
@@ -512,6 +515,8 @@ enum UserOrderByInput {
   profilePicture_DESC
   signUpMethod_ASC
   signUpMethod_DESC
+  accessToken_ASC
+  accessToken_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -532,6 +537,7 @@ type UserPreviousValues {
   profilePicture: String!
   previledge: [Previledge!]!
   signUpMethod: String!
+  accessToken: String!
   updatedAt: DateTime!
   createdAt: DateTime!
 }
@@ -705,6 +711,20 @@ input UserScalarWhereInput {
   signUpMethod_not_starts_with: String
   signUpMethod_ends_with: String
   signUpMethod_not_ends_with: String
+  accessToken: String
+  accessToken_not: String
+  accessToken_in: [String!]
+  accessToken_not_in: [String!]
+  accessToken_lt: String
+  accessToken_lte: String
+  accessToken_gt: String
+  accessToken_gte: String
+  accessToken_contains: String
+  accessToken_not_contains: String
+  accessToken_starts_with: String
+  accessToken_not_starts_with: String
+  accessToken_ends_with: String
+  accessToken_not_ends_with: String
   updatedAt: DateTime
   updatedAt_not: DateTime
   updatedAt_in: [DateTime!]
@@ -759,6 +779,7 @@ input UserUpdateDataInput {
   followers: UserUpdateManyInput
   previledge: UserUpdatepreviledgeInput
   signUpMethod: String
+  accessToken: String
 }
 
 input UserUpdateInput {
@@ -776,6 +797,7 @@ input UserUpdateInput {
   followers: UserUpdateManyInput
   previledge: UserUpdatepreviledgeInput
   signUpMethod: String
+  accessToken: String
 }
 
 input UserUpdateManyDataInput {
@@ -791,6 +813,7 @@ input UserUpdateManyDataInput {
   profilePicture: String
   previledge: UserUpdatepreviledgeInput
   signUpMethod: String
+  accessToken: String
 }
 
 input UserUpdateManyInput {
@@ -818,6 +841,7 @@ input UserUpdateManyMutationInput {
   profilePicture: String
   previledge: UserUpdatepreviledgeInput
   signUpMethod: String
+  accessToken: String
 }
 
 input UserUpdateManyWithoutPostsInput {
@@ -855,6 +879,7 @@ input UserUpdateWithoutPostsDataInput {
   followers: UserUpdateManyInput
   previledge: UserUpdatepreviledgeInput
   signUpMethod: String
+  accessToken: String
 }
 
 input UserUpdateWithWhereUniqueNestedInput {
@@ -1054,6 +1079,20 @@ input UserWhereInput {
   signUpMethod_not_starts_with: String
   signUpMethod_ends_with: String
   signUpMethod_not_ends_with: String
+  accessToken: String
+  accessToken_not: String
+  accessToken_in: [String!]
+  accessToken_not_in: [String!]
+  accessToken_lt: String
+  accessToken_lte: String
+  accessToken_gt: String
+  accessToken_gte: String
+  accessToken_contains: String
+  accessToken_not_contains: String
+  accessToken_starts_with: String
+  accessToken_not_starts_with: String
+  accessToken_ends_with: String
+  accessToken_not_ends_with: String
   updatedAt: DateTime
   updatedAt_not: DateTime
   updatedAt_in: [DateTime!]

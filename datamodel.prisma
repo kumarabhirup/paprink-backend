@@ -33,6 +33,7 @@ type User {
   followers: [User]!
   previledge: [Previledge]!
   signUpMethod: String!
+  accessToken: String!
   updatedAt: DateTime!
   createdAt: DateTime!
 }

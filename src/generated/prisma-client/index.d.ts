@@ -171,6 +171,8 @@ export type UserOrderByInput =
   | "profilePicture_DESC"
   | "signUpMethod_ASC"
   | "signUpMethod_DESC"
+  | "accessToken_ASC"
+  | "accessToken_DESC"
   | "updatedAt_ASC"
   | "updatedAt_DESC"
   | "createdAt_ASC"
@@ -380,6 +382,20 @@ export interface UserWhereInput {
   signUpMethod_not_starts_with?: String;
   signUpMethod_ends_with?: String;
   signUpMethod_not_ends_with?: String;
+  accessToken?: String;
+  accessToken_not?: String;
+  accessToken_in?: String[] | String;
+  accessToken_not_in?: String[] | String;
+  accessToken_lt?: String;
+  accessToken_lte?: String;
+  accessToken_gt?: String;
+  accessToken_gte?: String;
+  accessToken_contains?: String;
+  accessToken_not_contains?: String;
+  accessToken_starts_with?: String;
+  accessToken_not_starts_with?: String;
+  accessToken_ends_with?: String;
+  accessToken_not_ends_with?: String;
   updatedAt?: DateTimeInput;
   updatedAt_not?: DateTimeInput;
   updatedAt_in?: DateTimeInput[] | DateTimeInput;
@@ -530,6 +546,7 @@ export interface UserCreateWithoutPostsInput {
   followers?: UserCreateManyInput;
   previledge?: UserCreatepreviledgeInput;
   signUpMethod: String;
+  accessToken: String;
 }
 
 export interface UserCreateManyInput {
@@ -552,6 +569,7 @@ export interface UserCreateInput {
   followers?: UserCreateManyInput;
   previledge?: UserCreatepreviledgeInput;
   signUpMethod: String;
+  accessToken: String;
 }
 
 export interface PostCreateManyWithoutAuthorInput {
@@ -615,6 +633,7 @@ export interface UserUpdateWithoutPostsDataInput {
   followers?: UserUpdateManyInput;
   previledge?: UserUpdatepreviledgeInput;
   signUpMethod?: String;
+  accessToken?: String;
 }
 
 export interface UserUpdateManyInput {
@@ -655,6 +674,7 @@ export interface UserUpdateDataInput {
   followers?: UserUpdateManyInput;
   previledge?: UserUpdatepreviledgeInput;
   signUpMethod?: String;
+  accessToken?: String;
 }
 
 export interface PostUpdateManyWithoutAuthorInput {
@@ -976,6 +996,20 @@ export interface UserScalarWhereInput {
   signUpMethod_not_starts_with?: String;
   signUpMethod_ends_with?: String;
   signUpMethod_not_ends_with?: String;
+  accessToken?: String;
+  accessToken_not?: String;
+  accessToken_in?: String[] | String;
+  accessToken_not_in?: String[] | String;
+  accessToken_lt?: String;
+  accessToken_lte?: String;
+  accessToken_gt?: String;
+  accessToken_gte?: String;
+  accessToken_contains?: String;
+  accessToken_not_contains?: String;
+  accessToken_starts_with?: String;
+  accessToken_not_starts_with?: String;
+  accessToken_ends_with?: String;
+  accessToken_not_ends_with?: String;
   updatedAt?: DateTimeInput;
   updatedAt_not?: DateTimeInput;
   updatedAt_in?: DateTimeInput[] | DateTimeInput;
@@ -1015,6 +1049,7 @@ export interface UserUpdateManyDataInput {
   profilePicture?: String;
   previledge?: UserUpdatepreviledgeInput;
   signUpMethod?: String;
+  accessToken?: String;
 }
 
 export interface UserUpsertWithWhereUniqueWithoutPostsInput {
@@ -1045,6 +1080,7 @@ export interface UserUpdateInput {
   followers?: UserUpdateManyInput;
   previledge?: UserUpdatepreviledgeInput;
   signUpMethod?: String;
+  accessToken?: String;
 }
 
 export interface UserUpdateManyMutationInput {
@@ -1060,6 +1096,7 @@ export interface UserUpdateManyMutationInput {
   profilePicture?: String;
   previledge?: UserUpdatepreviledgeInput;
   signUpMethod?: String;
+  accessToken?: String;
 }
 
 export interface PostSubscriptionWhereInput {
@@ -1156,6 +1193,7 @@ export interface User {
   profilePicture: String;
   previledge: Previledge[];
   signUpMethod: String;
+  accessToken: String;
   updatedAt: DateTimeOutput;
   createdAt: DateTimeOutput;
 }
@@ -1196,6 +1234,7 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   ) => T;
   previledge: () => Promise<Previledge[]>;
   signUpMethod: () => Promise<String>;
+  accessToken: () => Promise<String>;
   updatedAt: () => Promise<DateTimeOutput>;
   createdAt: () => Promise<DateTimeOutput>;
 }
@@ -1238,6 +1277,7 @@ export interface UserSubscription
   ) => T;
   previledge: () => Promise<AsyncIterator<Previledge[]>>;
   signUpMethod: () => Promise<AsyncIterator<String>>;
+  accessToken: () => Promise<AsyncIterator<String>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
@@ -1487,6 +1527,7 @@ export interface UserPreviousValues {
   profilePicture: String;
   previledge: Previledge[];
   signUpMethod: String;
+  accessToken: String;
   updatedAt: DateTimeOutput;
   createdAt: DateTimeOutput;
 }
@@ -1507,6 +1548,7 @@ export interface UserPreviousValuesPromise
   profilePicture: () => Promise<String>;
   previledge: () => Promise<Previledge[]>;
   signUpMethod: () => Promise<String>;
+  accessToken: () => Promise<String>;
   updatedAt: () => Promise<DateTimeOutput>;
   createdAt: () => Promise<DateTimeOutput>;
 }
@@ -1527,6 +1569,7 @@ export interface UserPreviousValuesSubscription
   profilePicture: () => Promise<AsyncIterator<String>>;
   previledge: () => Promise<AsyncIterator<Previledge[]>>;
   signUpMethod: () => Promise<AsyncIterator<String>>;
+  accessToken: () => Promise<AsyncIterator<String>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }

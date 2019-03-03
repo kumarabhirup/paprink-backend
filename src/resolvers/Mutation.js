@@ -4,7 +4,6 @@ const { isTokenValid } = require('../utils')
 async function signIn(parent, args, context){
 
   const data = { ...args }
-  delete data.accessToken
 
   // Verify token
   const isValid = await isTokenValid(args.signUpMethod, args.accessToken)
