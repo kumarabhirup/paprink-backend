@@ -52,7 +52,7 @@ server.express.use(async (req, res, next) => {
         return next()
     }
 
-    const user = await prisma.user({where: { id: req.userId } }, '{ id, fname, lname, name, email, previledge }')
+    const user = await prisma.user({ id: req.userId }, '{ id, fname, lname, name, email, previledge }')
     req.user = user
 
     next()
