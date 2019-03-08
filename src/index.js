@@ -38,8 +38,10 @@ server.express.use(cookieParser())
 server.express.use((req, res, next) => {
     const { paprinkToken } = req.cookies
     if(paprinkToken){
-        const { userId } = jwt.verify(paprinkToken, process.env.JWT_SECRET)
+      const { userId } = jwt.verify(paprinkToken, process.env.JWT_SECRET)
+      if(userId) {
         req.userId = userId
+      }
     }
     next()
 })
