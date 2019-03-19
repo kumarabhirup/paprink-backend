@@ -183,16 +183,18 @@ export type PostOrderByInput =
   | "id_DESC"
   | "title_ASC"
   | "title_DESC"
-  | "content_ASC"
-  | "content_DESC"
-  | "category_ASC"
-  | "category_DESC"
-  | "excerpt_ASC"
-  | "excerpt_DESC"
+  | "editorSerializedOutput_ASC"
+  | "editorSerializedOutput_DESC"
+  | "editorCurrentContent_ASC"
+  | "editorCurrentContent_DESC"
+  | "editorHtml_ASC"
+  | "editorHtml_DESC"
   | "updatedAt_ASC"
   | "updatedAt_DESC"
   | "createdAt_ASC"
-  | "createdAt_DESC";
+  | "createdAt_DESC"
+  | "thumbnail_ASC"
+  | "thumbnail_DESC";
 
 export type Previledge =
   | "SUPERADMIN"
@@ -200,6 +202,34 @@ export type Previledge =
   | "MODERATOR"
   | "AUTHOR"
   | "READER";
+
+export type Category =
+  | "TECH"
+  | "FIN"
+  | "DIGIMARK"
+  | "CODING"
+  | "TUTORIAL"
+  | "HOWTO"
+  | "WRITING"
+  | "INSPIRE"
+  | "SCIENCE"
+  | "POLITICS"
+  | "LIFESTYLE"
+  | "FOOD"
+  | "BUSSINESS"
+  | "ENTREPRENEUR"
+  | "HISTORY"
+  | "HEALTH"
+  | "PET"
+  | "PARENTHOOD"
+  | "TRAVEL"
+  | "INDIA"
+  | "CHINA"
+  | "US"
+  | "UK"
+  | "WORLD"
+  | "NEWS"
+  | "REVIEW";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
@@ -446,48 +476,20 @@ export interface PostWhereInput {
   title_not_starts_with?: String;
   title_ends_with?: String;
   title_not_ends_with?: String;
-  content?: String;
-  content_not?: String;
-  content_in?: String[] | String;
-  content_not_in?: String[] | String;
-  content_lt?: String;
-  content_lte?: String;
-  content_gt?: String;
-  content_gte?: String;
-  content_contains?: String;
-  content_not_contains?: String;
-  content_starts_with?: String;
-  content_not_starts_with?: String;
-  content_ends_with?: String;
-  content_not_ends_with?: String;
-  category?: String;
-  category_not?: String;
-  category_in?: String[] | String;
-  category_not_in?: String[] | String;
-  category_lt?: String;
-  category_lte?: String;
-  category_gt?: String;
-  category_gte?: String;
-  category_contains?: String;
-  category_not_contains?: String;
-  category_starts_with?: String;
-  category_not_starts_with?: String;
-  category_ends_with?: String;
-  category_not_ends_with?: String;
-  excerpt?: String;
-  excerpt_not?: String;
-  excerpt_in?: String[] | String;
-  excerpt_not_in?: String[] | String;
-  excerpt_lt?: String;
-  excerpt_lte?: String;
-  excerpt_gt?: String;
-  excerpt_gte?: String;
-  excerpt_contains?: String;
-  excerpt_not_contains?: String;
-  excerpt_starts_with?: String;
-  excerpt_not_starts_with?: String;
-  excerpt_ends_with?: String;
-  excerpt_not_ends_with?: String;
+  editorHtml?: String;
+  editorHtml_not?: String;
+  editorHtml_in?: String[] | String;
+  editorHtml_not_in?: String[] | String;
+  editorHtml_lt?: String;
+  editorHtml_lte?: String;
+  editorHtml_gt?: String;
+  editorHtml_gte?: String;
+  editorHtml_contains?: String;
+  editorHtml_not_contains?: String;
+  editorHtml_starts_with?: String;
+  editorHtml_not_starts_with?: String;
+  editorHtml_ends_with?: String;
+  editorHtml_not_ends_with?: String;
   updatedAt?: DateTimeInput;
   updatedAt_not?: DateTimeInput;
   updatedAt_in?: DateTimeInput[] | DateTimeInput;
@@ -521,10 +523,12 @@ export type UserWhereUniqueInput = AtLeastOne<{
 
 export interface PostCreateInput {
   title: String;
-  content: String;
-  category: String;
-  excerpt: String;
+  editorSerializedOutput: Json;
+  editorCurrentContent: Json;
+  editorHtml: String;
   author?: UserCreateManyWithoutPostsInput;
+  categories?: PostCreatecategoriesInput;
+  thumbnail: Json;
 }
 
 export interface UserCreateManyWithoutPostsInput {
@@ -579,9 +583,15 @@ export interface PostCreateManyWithoutAuthorInput {
 
 export interface PostCreateWithoutAuthorInput {
   title: String;
-  content: String;
-  category: String;
-  excerpt: String;
+  editorSerializedOutput: Json;
+  editorCurrentContent: Json;
+  editorHtml: String;
+  categories?: PostCreatecategoriesInput;
+  thumbnail: Json;
+}
+
+export interface PostCreatecategoriesInput {
+  set?: Category[] | Category;
 }
 
 export interface UserCreatepreviledgeInput {
@@ -590,10 +600,12 @@ export interface UserCreatepreviledgeInput {
 
 export interface PostUpdateInput {
   title?: String;
-  content?: String;
-  category?: String;
-  excerpt?: String;
+  editorSerializedOutput?: Json;
+  editorCurrentContent?: Json;
+  editorHtml?: String;
   author?: UserUpdateManyWithoutPostsInput;
+  categories?: PostUpdatecategoriesInput;
+  thumbnail?: Json;
 }
 
 export interface UserUpdateManyWithoutPostsInput {
@@ -702,9 +714,15 @@ export interface PostUpdateWithWhereUniqueWithoutAuthorInput {
 
 export interface PostUpdateWithoutAuthorDataInput {
   title?: String;
-  content?: String;
-  category?: String;
-  excerpt?: String;
+  editorSerializedOutput?: Json;
+  editorCurrentContent?: Json;
+  editorHtml?: String;
+  categories?: PostUpdatecategoriesInput;
+  thumbnail?: Json;
+}
+
+export interface PostUpdatecategoriesInput {
+  set?: Category[] | Category;
 }
 
 export interface PostUpsertWithWhereUniqueWithoutAuthorInput {
@@ -742,48 +760,20 @@ export interface PostScalarWhereInput {
   title_not_starts_with?: String;
   title_ends_with?: String;
   title_not_ends_with?: String;
-  content?: String;
-  content_not?: String;
-  content_in?: String[] | String;
-  content_not_in?: String[] | String;
-  content_lt?: String;
-  content_lte?: String;
-  content_gt?: String;
-  content_gte?: String;
-  content_contains?: String;
-  content_not_contains?: String;
-  content_starts_with?: String;
-  content_not_starts_with?: String;
-  content_ends_with?: String;
-  content_not_ends_with?: String;
-  category?: String;
-  category_not?: String;
-  category_in?: String[] | String;
-  category_not_in?: String[] | String;
-  category_lt?: String;
-  category_lte?: String;
-  category_gt?: String;
-  category_gte?: String;
-  category_contains?: String;
-  category_not_contains?: String;
-  category_starts_with?: String;
-  category_not_starts_with?: String;
-  category_ends_with?: String;
-  category_not_ends_with?: String;
-  excerpt?: String;
-  excerpt_not?: String;
-  excerpt_in?: String[] | String;
-  excerpt_not_in?: String[] | String;
-  excerpt_lt?: String;
-  excerpt_lte?: String;
-  excerpt_gt?: String;
-  excerpt_gte?: String;
-  excerpt_contains?: String;
-  excerpt_not_contains?: String;
-  excerpt_starts_with?: String;
-  excerpt_not_starts_with?: String;
-  excerpt_ends_with?: String;
-  excerpt_not_ends_with?: String;
+  editorHtml?: String;
+  editorHtml_not?: String;
+  editorHtml_in?: String[] | String;
+  editorHtml_not_in?: String[] | String;
+  editorHtml_lt?: String;
+  editorHtml_lte?: String;
+  editorHtml_gt?: String;
+  editorHtml_gte?: String;
+  editorHtml_contains?: String;
+  editorHtml_not_contains?: String;
+  editorHtml_starts_with?: String;
+  editorHtml_not_starts_with?: String;
+  editorHtml_ends_with?: String;
+  editorHtml_not_ends_with?: String;
   updatedAt?: DateTimeInput;
   updatedAt_not?: DateTimeInput;
   updatedAt_in?: DateTimeInput[] | DateTimeInput;
@@ -812,9 +802,11 @@ export interface PostUpdateManyWithWhereNestedInput {
 
 export interface PostUpdateManyDataInput {
   title?: String;
-  content?: String;
-  category?: String;
-  excerpt?: String;
+  editorSerializedOutput?: Json;
+  editorCurrentContent?: Json;
+  editorHtml?: String;
+  categories?: PostUpdatecategoriesInput;
+  thumbnail?: Json;
 }
 
 export interface UserUpdatepreviledgeInput {
@@ -1060,9 +1052,11 @@ export interface UserUpsertWithWhereUniqueWithoutPostsInput {
 
 export interface PostUpdateManyMutationInput {
   title?: String;
-  content?: String;
-  category?: String;
-  excerpt?: String;
+  editorSerializedOutput?: Json;
+  editorCurrentContent?: Json;
+  editorHtml?: String;
+  categories?: PostUpdatecategoriesInput;
+  thumbnail?: Json;
 }
 
 export interface UserUpdateInput {
@@ -1128,19 +1122,21 @@ export interface NodeNode {
 export interface Post {
   id: ID_Output;
   title: String;
-  content: String;
-  category: String;
-  excerpt: String;
+  editorSerializedOutput: Json;
+  editorCurrentContent: Json;
+  editorHtml: String;
   updatedAt: DateTimeOutput;
   createdAt: DateTimeOutput;
+  categories: Category[];
+  thumbnail: Json;
 }
 
 export interface PostPromise extends Promise<Post>, Fragmentable {
   id: () => Promise<ID_Output>;
   title: () => Promise<String>;
-  content: () => Promise<String>;
-  category: () => Promise<String>;
-  excerpt: () => Promise<String>;
+  editorSerializedOutput: () => Promise<Json>;
+  editorCurrentContent: () => Promise<Json>;
+  editorHtml: () => Promise<String>;
   updatedAt: () => Promise<DateTimeOutput>;
   createdAt: () => Promise<DateTimeOutput>;
   author: <T = FragmentableArray<User>>(
@@ -1154,6 +1150,8 @@ export interface PostPromise extends Promise<Post>, Fragmentable {
       last?: Int;
     }
   ) => T;
+  categories: () => Promise<Category[]>;
+  thumbnail: () => Promise<Json>;
 }
 
 export interface PostSubscription
@@ -1161,9 +1159,9 @@ export interface PostSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   title: () => Promise<AsyncIterator<String>>;
-  content: () => Promise<AsyncIterator<String>>;
-  category: () => Promise<AsyncIterator<String>>;
-  excerpt: () => Promise<AsyncIterator<String>>;
+  editorSerializedOutput: () => Promise<AsyncIterator<Json>>;
+  editorCurrentContent: () => Promise<AsyncIterator<Json>>;
+  editorHtml: () => Promise<AsyncIterator<String>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   author: <T = Promise<AsyncIterator<UserSubscription>>>(
@@ -1177,6 +1175,8 @@ export interface PostSubscription
       last?: Int;
     }
   ) => T;
+  categories: () => Promise<AsyncIterator<Category[]>>;
+  thumbnail: () => Promise<AsyncIterator<Json>>;
 }
 
 export interface User {
@@ -1457,11 +1457,13 @@ export interface PostSubscriptionPayloadSubscription
 export interface PostPreviousValues {
   id: ID_Output;
   title: String;
-  content: String;
-  category: String;
-  excerpt: String;
+  editorSerializedOutput: Json;
+  editorCurrentContent: Json;
+  editorHtml: String;
   updatedAt: DateTimeOutput;
   createdAt: DateTimeOutput;
+  categories: Category[];
+  thumbnail: Json;
 }
 
 export interface PostPreviousValuesPromise
@@ -1469,11 +1471,13 @@ export interface PostPreviousValuesPromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   title: () => Promise<String>;
-  content: () => Promise<String>;
-  category: () => Promise<String>;
-  excerpt: () => Promise<String>;
+  editorSerializedOutput: () => Promise<Json>;
+  editorCurrentContent: () => Promise<Json>;
+  editorHtml: () => Promise<String>;
   updatedAt: () => Promise<DateTimeOutput>;
   createdAt: () => Promise<DateTimeOutput>;
+  categories: () => Promise<Category[]>;
+  thumbnail: () => Promise<Json>;
 }
 
 export interface PostPreviousValuesSubscription
@@ -1481,11 +1485,13 @@ export interface PostPreviousValuesSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   title: () => Promise<AsyncIterator<String>>;
-  content: () => Promise<AsyncIterator<String>>;
-  category: () => Promise<AsyncIterator<String>>;
-  excerpt: () => Promise<AsyncIterator<String>>;
+  editorSerializedOutput: () => Promise<AsyncIterator<Json>>;
+  editorCurrentContent: () => Promise<AsyncIterator<Json>>;
+  editorHtml: () => Promise<AsyncIterator<String>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  categories: () => Promise<AsyncIterator<Category[]>>;
+  thumbnail: () => Promise<AsyncIterator<Json>>;
 }
 
 export interface UserSubscriptionPayload {
@@ -1585,6 +1591,8 @@ The `String` scalar type represents textual data, represented as UTF-8 character
 */
 export type String = string;
 
+export type Json = any;
+
 /*
 DateTime scalar input type, allowing Date
 */
@@ -1622,6 +1630,10 @@ export const models: Model[] = [
   },
   {
     name: "Previledge",
+    embedded: false
+  },
+  {
+    name: "Category",
     embedded: false
   }
 ];

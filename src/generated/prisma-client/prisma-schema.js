@@ -15,7 +15,38 @@ type BatchPayload {
   count: Long!
 }
 
+enum Category {
+  TECH
+  FIN
+  DIGIMARK
+  CODING
+  TUTORIAL
+  HOWTO
+  WRITING
+  INSPIRE
+  SCIENCE
+  POLITICS
+  LIFESTYLE
+  FOOD
+  BUSSINESS
+  ENTREPRENEUR
+  HISTORY
+  HEALTH
+  PET
+  PARENTHOOD
+  TRAVEL
+  INDIA
+  CHINA
+  US
+  UK
+  WORLD
+  NEWS
+  REVIEW
+}
+
 scalar DateTime
+
+scalar Json
 
 scalar Long
 
@@ -54,12 +85,14 @@ type PageInfo {
 type Post {
   id: ID!
   title: String!
-  content: String!
-  category: String!
-  excerpt: String!
+  editorSerializedOutput: Json!
+  editorCurrentContent: Json!
+  editorHtml: String!
   updatedAt: DateTime!
   createdAt: DateTime!
   author(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  categories: [Category!]!
+  thumbnail: Json!
 }
 
 type PostConnection {
@@ -68,12 +101,18 @@ type PostConnection {
   aggregate: AggregatePost!
 }
 
+input PostCreatecategoriesInput {
+  set: [Category!]
+}
+
 input PostCreateInput {
   title: String!
-  content: String!
-  category: String!
-  excerpt: String!
+  editorSerializedOutput: Json!
+  editorCurrentContent: Json!
+  editorHtml: String!
   author: UserCreateManyWithoutPostsInput
+  categories: PostCreatecategoriesInput
+  thumbnail: Json!
 }
 
 input PostCreateManyWithoutAuthorInput {
@@ -83,9 +122,11 @@ input PostCreateManyWithoutAuthorInput {
 
 input PostCreateWithoutAuthorInput {
   title: String!
-  content: String!
-  category: String!
-  excerpt: String!
+  editorSerializedOutput: Json!
+  editorCurrentContent: Json!
+  editorHtml: String!
+  categories: PostCreatecategoriesInput
+  thumbnail: Json!
 }
 
 type PostEdge {
@@ -98,26 +139,30 @@ enum PostOrderByInput {
   id_DESC
   title_ASC
   title_DESC
-  content_ASC
-  content_DESC
-  category_ASC
-  category_DESC
-  excerpt_ASC
-  excerpt_DESC
+  editorSerializedOutput_ASC
+  editorSerializedOutput_DESC
+  editorCurrentContent_ASC
+  editorCurrentContent_DESC
+  editorHtml_ASC
+  editorHtml_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
   createdAt_DESC
+  thumbnail_ASC
+  thumbnail_DESC
 }
 
 type PostPreviousValues {
   id: ID!
   title: String!
-  content: String!
-  category: String!
-  excerpt: String!
+  editorSerializedOutput: Json!
+  editorCurrentContent: Json!
+  editorHtml: String!
   updatedAt: DateTime!
   createdAt: DateTime!
+  categories: [Category!]!
+  thumbnail: Json!
 }
 
 input PostScalarWhereInput {
@@ -149,48 +194,20 @@ input PostScalarWhereInput {
   title_not_starts_with: String
   title_ends_with: String
   title_not_ends_with: String
-  content: String
-  content_not: String
-  content_in: [String!]
-  content_not_in: [String!]
-  content_lt: String
-  content_lte: String
-  content_gt: String
-  content_gte: String
-  content_contains: String
-  content_not_contains: String
-  content_starts_with: String
-  content_not_starts_with: String
-  content_ends_with: String
-  content_not_ends_with: String
-  category: String
-  category_not: String
-  category_in: [String!]
-  category_not_in: [String!]
-  category_lt: String
-  category_lte: String
-  category_gt: String
-  category_gte: String
-  category_contains: String
-  category_not_contains: String
-  category_starts_with: String
-  category_not_starts_with: String
-  category_ends_with: String
-  category_not_ends_with: String
-  excerpt: String
-  excerpt_not: String
-  excerpt_in: [String!]
-  excerpt_not_in: [String!]
-  excerpt_lt: String
-  excerpt_lte: String
-  excerpt_gt: String
-  excerpt_gte: String
-  excerpt_contains: String
-  excerpt_not_contains: String
-  excerpt_starts_with: String
-  excerpt_not_starts_with: String
-  excerpt_ends_with: String
-  excerpt_not_ends_with: String
+  editorHtml: String
+  editorHtml_not: String
+  editorHtml_in: [String!]
+  editorHtml_not_in: [String!]
+  editorHtml_lt: String
+  editorHtml_lte: String
+  editorHtml_gt: String
+  editorHtml_gte: String
+  editorHtml_contains: String
+  editorHtml_not_contains: String
+  editorHtml_starts_with: String
+  editorHtml_not_starts_with: String
+  editorHtml_ends_with: String
+  editorHtml_not_ends_with: String
   updatedAt: DateTime
   updatedAt_not: DateTime
   updatedAt_in: [DateTime!]
@@ -230,26 +247,36 @@ input PostSubscriptionWhereInput {
   NOT: [PostSubscriptionWhereInput!]
 }
 
+input PostUpdatecategoriesInput {
+  set: [Category!]
+}
+
 input PostUpdateInput {
   title: String
-  content: String
-  category: String
-  excerpt: String
+  editorSerializedOutput: Json
+  editorCurrentContent: Json
+  editorHtml: String
   author: UserUpdateManyWithoutPostsInput
+  categories: PostUpdatecategoriesInput
+  thumbnail: Json
 }
 
 input PostUpdateManyDataInput {
   title: String
-  content: String
-  category: String
-  excerpt: String
+  editorSerializedOutput: Json
+  editorCurrentContent: Json
+  editorHtml: String
+  categories: PostUpdatecategoriesInput
+  thumbnail: Json
 }
 
 input PostUpdateManyMutationInput {
   title: String
-  content: String
-  category: String
-  excerpt: String
+  editorSerializedOutput: Json
+  editorCurrentContent: Json
+  editorHtml: String
+  categories: PostUpdatecategoriesInput
+  thumbnail: Json
 }
 
 input PostUpdateManyWithoutAuthorInput {
@@ -271,9 +298,11 @@ input PostUpdateManyWithWhereNestedInput {
 
 input PostUpdateWithoutAuthorDataInput {
   title: String
-  content: String
-  category: String
-  excerpt: String
+  editorSerializedOutput: Json
+  editorCurrentContent: Json
+  editorHtml: String
+  categories: PostUpdatecategoriesInput
+  thumbnail: Json
 }
 
 input PostUpdateWithWhereUniqueWithoutAuthorInput {
@@ -316,48 +345,20 @@ input PostWhereInput {
   title_not_starts_with: String
   title_ends_with: String
   title_not_ends_with: String
-  content: String
-  content_not: String
-  content_in: [String!]
-  content_not_in: [String!]
-  content_lt: String
-  content_lte: String
-  content_gt: String
-  content_gte: String
-  content_contains: String
-  content_not_contains: String
-  content_starts_with: String
-  content_not_starts_with: String
-  content_ends_with: String
-  content_not_ends_with: String
-  category: String
-  category_not: String
-  category_in: [String!]
-  category_not_in: [String!]
-  category_lt: String
-  category_lte: String
-  category_gt: String
-  category_gte: String
-  category_contains: String
-  category_not_contains: String
-  category_starts_with: String
-  category_not_starts_with: String
-  category_ends_with: String
-  category_not_ends_with: String
-  excerpt: String
-  excerpt_not: String
-  excerpt_in: [String!]
-  excerpt_not_in: [String!]
-  excerpt_lt: String
-  excerpt_lte: String
-  excerpt_gt: String
-  excerpt_gte: String
-  excerpt_contains: String
-  excerpt_not_contains: String
-  excerpt_starts_with: String
-  excerpt_not_starts_with: String
-  excerpt_ends_with: String
-  excerpt_not_ends_with: String
+  editorHtml: String
+  editorHtml_not: String
+  editorHtml_in: [String!]
+  editorHtml_not_in: [String!]
+  editorHtml_lt: String
+  editorHtml_lte: String
+  editorHtml_gt: String
+  editorHtml_gte: String
+  editorHtml_contains: String
+  editorHtml_not_contains: String
+  editorHtml_starts_with: String
+  editorHtml_not_starts_with: String
+  editorHtml_ends_with: String
+  editorHtml_not_ends_with: String
   updatedAt: DateTime
   updatedAt_not: DateTime
   updatedAt_in: [DateTime!]

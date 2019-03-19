@@ -6,15 +6,46 @@ enum Previledge {
   READER
 }
 
+enum Category {
+  TECH
+  FIN
+  DIGIMARK
+  CODING
+  TUTORIAL
+  HOWTO
+  WRITING
+  INSPIRE
+  SCIENCE
+  POLITICS
+  LIFESTYLE
+  FOOD
+  BUSSINESS
+  ENTREPRENEUR
+  HISTORY
+  HEALTH
+  PET
+  PARENTHOOD
+  TRAVEL
+  INDIA
+  CHINA
+  US
+  UK
+  WORLD
+  NEWS
+  REVIEW
+}
+
 type Post {
   id: ID! @unique
   title: String!
-  content: String!
-  category: String!
-  excerpt: String!
+  editorSerializedOutput: Json!
+  editorCurrentContent: Json!
+  editorHtml: String!
   updatedAt: DateTime!
   createdAt: DateTime!
   author: [User]!
+  categories: [Category]!
+  thumbnail: Json!
 }
 
 type User {
