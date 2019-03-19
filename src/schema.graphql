@@ -23,6 +23,14 @@ type Mutation {
     accessToken: String!
   ): User!
   signOut: Message
+  savePost(
+    title: String!
+    editorSerializedOutput: Json!
+    editorCurrentContent: Json!
+    editorHtml: String!
+    categories: [Category]!
+    thumbnail: Json!
+  ): Post
 }
 
 type Query {

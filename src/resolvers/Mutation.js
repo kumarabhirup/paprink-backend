@@ -66,7 +66,14 @@ async function signOut(parent, args, context){
 
 }
 
+async function savePost(parent, args, context){
+  if (!context.request.userId) {
+    throw new Error('Please SignIn to continue.')
+  }
+}
+
 module.exports = {
   signIn,
-  signOut
+  signOut,
+  savePost
 }
