@@ -146,6 +146,8 @@ export interface ClientConstructor<T> {
  * Types
  */
 
+export type PostStatus = "PUBLISHED" | "DRAFT" | "DELETED";
+
 export type UserOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -194,7 +196,9 @@ export type PostOrderByInput =
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "thumbnail_ASC"
-  | "thumbnail_DESC";
+  | "thumbnail_DESC"
+  | "status_ASC"
+  | "status_DESC";
 
 export type Previledge =
   | "SUPERADMIN"
@@ -509,6 +513,10 @@ export interface PostWhereInput {
   author_every?: UserWhereInput;
   author_some?: UserWhereInput;
   author_none?: UserWhereInput;
+  status?: PostStatus;
+  status_not?: PostStatus;
+  status_in?: PostStatus[] | PostStatus;
+  status_not_in?: PostStatus[] | PostStatus;
   AND?: PostWhereInput[] | PostWhereInput;
   OR?: PostWhereInput[] | PostWhereInput;
   NOT?: PostWhereInput[] | PostWhereInput;
@@ -529,6 +537,7 @@ export interface PostCreateInput {
   author?: UserCreateManyWithoutPostsInput;
   categories?: PostCreatecategoriesInput;
   thumbnail: Json;
+  status: PostStatus;
 }
 
 export interface UserCreateManyWithoutPostsInput {
@@ -588,6 +597,7 @@ export interface PostCreateWithoutAuthorInput {
   editorHtml: String;
   categories?: PostCreatecategoriesInput;
   thumbnail: Json;
+  status: PostStatus;
 }
 
 export interface PostCreatecategoriesInput {
@@ -606,6 +616,7 @@ export interface PostUpdateInput {
   author?: UserUpdateManyWithoutPostsInput;
   categories?: PostUpdatecategoriesInput;
   thumbnail?: Json;
+  status?: PostStatus;
 }
 
 export interface UserUpdateManyWithoutPostsInput {
@@ -719,6 +730,7 @@ export interface PostUpdateWithoutAuthorDataInput {
   editorHtml?: String;
   categories?: PostUpdatecategoriesInput;
   thumbnail?: Json;
+  status?: PostStatus;
 }
 
 export interface PostUpdatecategoriesInput {
@@ -790,6 +802,10 @@ export interface PostScalarWhereInput {
   createdAt_lte?: DateTimeInput;
   createdAt_gt?: DateTimeInput;
   createdAt_gte?: DateTimeInput;
+  status?: PostStatus;
+  status_not?: PostStatus;
+  status_in?: PostStatus[] | PostStatus;
+  status_not_in?: PostStatus[] | PostStatus;
   AND?: PostScalarWhereInput[] | PostScalarWhereInput;
   OR?: PostScalarWhereInput[] | PostScalarWhereInput;
   NOT?: PostScalarWhereInput[] | PostScalarWhereInput;
@@ -807,6 +823,7 @@ export interface PostUpdateManyDataInput {
   editorHtml?: String;
   categories?: PostUpdatecategoriesInput;
   thumbnail?: Json;
+  status?: PostStatus;
 }
 
 export interface UserUpdatepreviledgeInput {
@@ -1057,6 +1074,7 @@ export interface PostUpdateManyMutationInput {
   editorHtml?: String;
   categories?: PostUpdatecategoriesInput;
   thumbnail?: Json;
+  status?: PostStatus;
 }
 
 export interface UserUpdateInput {
@@ -1129,6 +1147,7 @@ export interface Post {
   createdAt: DateTimeOutput;
   categories: Category[];
   thumbnail: Json;
+  status: PostStatus;
 }
 
 export interface PostPromise extends Promise<Post>, Fragmentable {
@@ -1152,6 +1171,7 @@ export interface PostPromise extends Promise<Post>, Fragmentable {
   ) => T;
   categories: () => Promise<Category[]>;
   thumbnail: () => Promise<Json>;
+  status: () => Promise<PostStatus>;
 }
 
 export interface PostSubscription
@@ -1177,6 +1197,7 @@ export interface PostSubscription
   ) => T;
   categories: () => Promise<AsyncIterator<Category[]>>;
   thumbnail: () => Promise<AsyncIterator<Json>>;
+  status: () => Promise<AsyncIterator<PostStatus>>;
 }
 
 export interface User {
@@ -1464,6 +1485,7 @@ export interface PostPreviousValues {
   createdAt: DateTimeOutput;
   categories: Category[];
   thumbnail: Json;
+  status: PostStatus;
 }
 
 export interface PostPreviousValuesPromise
@@ -1478,6 +1500,7 @@ export interface PostPreviousValuesPromise
   createdAt: () => Promise<DateTimeOutput>;
   categories: () => Promise<Category[]>;
   thumbnail: () => Promise<Json>;
+  status: () => Promise<PostStatus>;
 }
 
 export interface PostPreviousValuesSubscription
@@ -1492,6 +1515,7 @@ export interface PostPreviousValuesSubscription
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   categories: () => Promise<AsyncIterator<Category[]>>;
   thumbnail: () => Promise<AsyncIterator<Json>>;
+  status: () => Promise<AsyncIterator<PostStatus>>;
 }
 
 export interface UserSubscriptionPayload {
@@ -1634,6 +1658,10 @@ export const models: Model[] = [
   },
   {
     name: "Category",
+    embedded: false
+  },
+  {
+    name: "PostStatus",
     embedded: false
   }
 ];

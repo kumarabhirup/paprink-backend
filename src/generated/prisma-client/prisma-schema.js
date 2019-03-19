@@ -93,6 +93,7 @@ type Post {
   author(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   categories: [Category!]!
   thumbnail: Json!
+  status: PostStatus!
 }
 
 type PostConnection {
@@ -113,6 +114,7 @@ input PostCreateInput {
   author: UserCreateManyWithoutPostsInput
   categories: PostCreatecategoriesInput
   thumbnail: Json!
+  status: PostStatus!
 }
 
 input PostCreateManyWithoutAuthorInput {
@@ -127,6 +129,7 @@ input PostCreateWithoutAuthorInput {
   editorHtml: String!
   categories: PostCreatecategoriesInput
   thumbnail: Json!
+  status: PostStatus!
 }
 
 type PostEdge {
@@ -151,6 +154,8 @@ enum PostOrderByInput {
   createdAt_DESC
   thumbnail_ASC
   thumbnail_DESC
+  status_ASC
+  status_DESC
 }
 
 type PostPreviousValues {
@@ -163,6 +168,7 @@ type PostPreviousValues {
   createdAt: DateTime!
   categories: [Category!]!
   thumbnail: Json!
+  status: PostStatus!
 }
 
 input PostScalarWhereInput {
@@ -224,9 +230,19 @@ input PostScalarWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
+  status: PostStatus
+  status_not: PostStatus
+  status_in: [PostStatus!]
+  status_not_in: [PostStatus!]
   AND: [PostScalarWhereInput!]
   OR: [PostScalarWhereInput!]
   NOT: [PostScalarWhereInput!]
+}
+
+enum PostStatus {
+  PUBLISHED
+  DRAFT
+  DELETED
 }
 
 type PostSubscriptionPayload {
@@ -259,6 +275,7 @@ input PostUpdateInput {
   author: UserUpdateManyWithoutPostsInput
   categories: PostUpdatecategoriesInput
   thumbnail: Json
+  status: PostStatus
 }
 
 input PostUpdateManyDataInput {
@@ -268,6 +285,7 @@ input PostUpdateManyDataInput {
   editorHtml: String
   categories: PostUpdatecategoriesInput
   thumbnail: Json
+  status: PostStatus
 }
 
 input PostUpdateManyMutationInput {
@@ -277,6 +295,7 @@ input PostUpdateManyMutationInput {
   editorHtml: String
   categories: PostUpdatecategoriesInput
   thumbnail: Json
+  status: PostStatus
 }
 
 input PostUpdateManyWithoutAuthorInput {
@@ -303,6 +322,7 @@ input PostUpdateWithoutAuthorDataInput {
   editorHtml: String
   categories: PostUpdatecategoriesInput
   thumbnail: Json
+  status: PostStatus
 }
 
 input PostUpdateWithWhereUniqueWithoutAuthorInput {
@@ -378,6 +398,10 @@ input PostWhereInput {
   author_every: UserWhereInput
   author_some: UserWhereInput
   author_none: UserWhereInput
+  status: PostStatus
+  status_not: PostStatus
+  status_in: [PostStatus!]
+  status_not_in: [PostStatus!]
   AND: [PostWhereInput!]
   OR: [PostWhereInput!]
   NOT: [PostWhereInput!]

@@ -35,6 +35,12 @@ enum Category {
   REVIEW
 }
 
+enum PostStatus {
+  PUBLISHED
+  DRAFT
+  DELETED
+}
+
 type Post {
   id: ID! @unique
   title: String!
@@ -46,6 +52,7 @@ type Post {
   author: [User]!
   categories: [Category]!
   thumbnail: Json!
+  status: PostStatus!
 }
 
 type User {
