@@ -148,6 +148,26 @@ export interface ClientConstructor<T> {
 
 export type PostStatus = "PUBLISHED" | "DRAFT" | "DELETED";
 
+export type PostOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "title_ASC"
+  | "title_DESC"
+  | "editorSerializedOutput_ASC"
+  | "editorSerializedOutput_DESC"
+  | "editorCurrentContent_ASC"
+  | "editorCurrentContent_DESC"
+  | "editorHtml_ASC"
+  | "editorHtml_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "thumbnail_ASC"
+  | "thumbnail_DESC"
+  | "status_ASC"
+  | "status_DESC";
+
 export type UserOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -179,26 +199,6 @@ export type UserOrderByInput =
   | "updatedAt_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC";
-
-export type PostOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "title_ASC"
-  | "title_DESC"
-  | "editorSerializedOutput_ASC"
-  | "editorSerializedOutput_DESC"
-  | "editorCurrentContent_ASC"
-  | "editorCurrentContent_DESC"
-  | "editorHtml_ASC"
-  | "editorHtml_DESC"
-  | "updatedAt_ASC"
-  | "updatedAt_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC"
-  | "thumbnail_ASC"
-  | "thumbnail_DESC"
-  | "status_ASC"
-  | "status_DESC";
 
 export type Previledge =
   | "SUPERADMIN"
@@ -240,6 +240,75 @@ export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 export type PostWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
+
+export interface PostWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  title?: String;
+  title_not?: String;
+  title_in?: String[] | String;
+  title_not_in?: String[] | String;
+  title_lt?: String;
+  title_lte?: String;
+  title_gt?: String;
+  title_gte?: String;
+  title_contains?: String;
+  title_not_contains?: String;
+  title_starts_with?: String;
+  title_not_starts_with?: String;
+  title_ends_with?: String;
+  title_not_ends_with?: String;
+  editorHtml?: String;
+  editorHtml_not?: String;
+  editorHtml_in?: String[] | String;
+  editorHtml_not_in?: String[] | String;
+  editorHtml_lt?: String;
+  editorHtml_lte?: String;
+  editorHtml_gt?: String;
+  editorHtml_gte?: String;
+  editorHtml_contains?: String;
+  editorHtml_not_contains?: String;
+  editorHtml_starts_with?: String;
+  editorHtml_not_starts_with?: String;
+  editorHtml_ends_with?: String;
+  editorHtml_not_ends_with?: String;
+  updatedAt?: DateTimeInput;
+  updatedAt_not?: DateTimeInput;
+  updatedAt_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
+  updatedAt_lt?: DateTimeInput;
+  updatedAt_lte?: DateTimeInput;
+  updatedAt_gt?: DateTimeInput;
+  updatedAt_gte?: DateTimeInput;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  author?: UserWhereInput;
+  status?: PostStatus;
+  status_not?: PostStatus;
+  status_in?: PostStatus[] | PostStatus;
+  status_not_in?: PostStatus[] | PostStatus;
+  AND?: PostWhereInput[] | PostWhereInput;
+  OR?: PostWhereInput[] | PostWhereInput;
+  NOT?: PostWhereInput[] | PostWhereInput;
+}
 
 export interface UserWhereInput {
   id?: ID_Input;
@@ -451,77 +520,6 @@ export interface UserWhereInput {
   NOT?: UserWhereInput[] | UserWhereInput;
 }
 
-export interface PostWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  title?: String;
-  title_not?: String;
-  title_in?: String[] | String;
-  title_not_in?: String[] | String;
-  title_lt?: String;
-  title_lte?: String;
-  title_gt?: String;
-  title_gte?: String;
-  title_contains?: String;
-  title_not_contains?: String;
-  title_starts_with?: String;
-  title_not_starts_with?: String;
-  title_ends_with?: String;
-  title_not_ends_with?: String;
-  editorHtml?: String;
-  editorHtml_not?: String;
-  editorHtml_in?: String[] | String;
-  editorHtml_not_in?: String[] | String;
-  editorHtml_lt?: String;
-  editorHtml_lte?: String;
-  editorHtml_gt?: String;
-  editorHtml_gte?: String;
-  editorHtml_contains?: String;
-  editorHtml_not_contains?: String;
-  editorHtml_starts_with?: String;
-  editorHtml_not_starts_with?: String;
-  editorHtml_ends_with?: String;
-  editorHtml_not_ends_with?: String;
-  updatedAt?: DateTimeInput;
-  updatedAt_not?: DateTimeInput;
-  updatedAt_in?: DateTimeInput[] | DateTimeInput;
-  updatedAt_not_in?: DateTimeInput[] | DateTimeInput;
-  updatedAt_lt?: DateTimeInput;
-  updatedAt_lte?: DateTimeInput;
-  updatedAt_gt?: DateTimeInput;
-  updatedAt_gte?: DateTimeInput;
-  createdAt?: DateTimeInput;
-  createdAt_not?: DateTimeInput;
-  createdAt_in?: DateTimeInput[] | DateTimeInput;
-  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
-  createdAt_lt?: DateTimeInput;
-  createdAt_lte?: DateTimeInput;
-  createdAt_gt?: DateTimeInput;
-  createdAt_gte?: DateTimeInput;
-  author_every?: UserWhereInput;
-  author_some?: UserWhereInput;
-  author_none?: UserWhereInput;
-  status?: PostStatus;
-  status_not?: PostStatus;
-  status_in?: PostStatus[] | PostStatus;
-  status_not_in?: PostStatus[] | PostStatus;
-  AND?: PostWhereInput[] | PostWhereInput;
-  OR?: PostWhereInput[] | PostWhereInput;
-  NOT?: PostWhereInput[] | PostWhereInput;
-}
-
 export type UserWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
   socialId?: String;
@@ -534,15 +532,15 @@ export interface PostCreateInput {
   editorSerializedOutput: Json;
   editorCurrentContent: Json;
   editorHtml: String;
-  author?: UserCreateManyWithoutPostsInput;
+  author?: UserCreateOneWithoutPostsInput;
   categories?: PostCreatecategoriesInput;
   thumbnail: Json;
   status: PostStatus;
 }
 
-export interface UserCreateManyWithoutPostsInput {
-  create?: UserCreateWithoutPostsInput[] | UserCreateWithoutPostsInput;
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
+export interface UserCreateOneWithoutPostsInput {
+  create?: UserCreateWithoutPostsInput;
+  connect?: UserWhereUniqueInput;
 }
 
 export interface UserCreateWithoutPostsInput {
@@ -613,33 +611,19 @@ export interface PostUpdateInput {
   editorSerializedOutput?: Json;
   editorCurrentContent?: Json;
   editorHtml?: String;
-  author?: UserUpdateManyWithoutPostsInput;
+  author?: UserUpdateOneWithoutPostsInput;
   categories?: PostUpdatecategoriesInput;
   thumbnail?: Json;
   status?: PostStatus;
 }
 
-export interface UserUpdateManyWithoutPostsInput {
-  create?: UserCreateWithoutPostsInput[] | UserCreateWithoutPostsInput;
-  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  set?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput;
-  update?:
-    | UserUpdateWithWhereUniqueWithoutPostsInput[]
-    | UserUpdateWithWhereUniqueWithoutPostsInput;
-  upsert?:
-    | UserUpsertWithWhereUniqueWithoutPostsInput[]
-    | UserUpsertWithWhereUniqueWithoutPostsInput;
-  deleteMany?: UserScalarWhereInput[] | UserScalarWhereInput;
-  updateMany?:
-    | UserUpdateManyWithWhereNestedInput[]
-    | UserUpdateManyWithWhereNestedInput;
-}
-
-export interface UserUpdateWithWhereUniqueWithoutPostsInput {
-  where: UserWhereUniqueInput;
-  data: UserUpdateWithoutPostsDataInput;
+export interface UserUpdateOneWithoutPostsInput {
+  create?: UserCreateWithoutPostsInput;
+  update?: UserUpdateWithoutPostsDataInput;
+  upsert?: UserUpsertWithoutPostsInput;
+  delete?: Boolean;
+  disconnect?: Boolean;
+  connect?: UserWhereUniqueInput;
 }
 
 export interface UserUpdateWithoutPostsDataInput {
@@ -1061,8 +1045,7 @@ export interface UserUpdateManyDataInput {
   accessToken?: String;
 }
 
-export interface UserUpsertWithWhereUniqueWithoutPostsInput {
-  where: UserWhereUniqueInput;
+export interface UserUpsertWithoutPostsInput {
   update: UserUpdateWithoutPostsDataInput;
   create: UserCreateWithoutPostsInput;
 }
@@ -1158,17 +1141,7 @@ export interface PostPromise extends Promise<Post>, Fragmentable {
   editorHtml: () => Promise<String>;
   updatedAt: () => Promise<DateTimeOutput>;
   createdAt: () => Promise<DateTimeOutput>;
-  author: <T = FragmentableArray<User>>(
-    args?: {
-      where?: UserWhereInput;
-      orderBy?: UserOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
+  author: <T = UserPromise>() => T;
   categories: () => Promise<Category[]>;
   thumbnail: () => Promise<Json>;
   status: () => Promise<PostStatus>;
@@ -1184,17 +1157,7 @@ export interface PostSubscription
   editorHtml: () => Promise<AsyncIterator<String>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  author: <T = Promise<AsyncIterator<UserSubscription>>>(
-    args?: {
-      where?: UserWhereInput;
-      orderBy?: UserOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
+  author: <T = UserSubscription>() => T;
   categories: () => Promise<AsyncIterator<Category[]>>;
   thumbnail: () => Promise<AsyncIterator<Json>>;
   status: () => Promise<AsyncIterator<PostStatus>>;

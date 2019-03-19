@@ -30,7 +30,8 @@ type Mutation {
     editorHtml: String!
     categories: [Category]!
     thumbnail: Json!
-  ): Post
+    status: PostStatus!
+  ): Post!
 }
 
 type Query {

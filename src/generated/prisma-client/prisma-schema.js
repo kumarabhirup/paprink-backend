@@ -90,7 +90,7 @@ type Post {
   editorHtml: String!
   updatedAt: DateTime!
   createdAt: DateTime!
-  author(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  author: User
   categories: [Category!]!
   thumbnail: Json!
   status: PostStatus!
@@ -111,7 +111,7 @@ input PostCreateInput {
   editorSerializedOutput: Json!
   editorCurrentContent: Json!
   editorHtml: String!
-  author: UserCreateManyWithoutPostsInput
+  author: UserCreateOneWithoutPostsInput
   categories: PostCreatecategoriesInput
   thumbnail: Json!
   status: PostStatus!
@@ -272,7 +272,7 @@ input PostUpdateInput {
   editorSerializedOutput: Json
   editorCurrentContent: Json
   editorHtml: String
-  author: UserUpdateManyWithoutPostsInput
+  author: UserUpdateOneWithoutPostsInput
   categories: PostUpdatecategoriesInput
   thumbnail: Json
   status: PostStatus
@@ -395,9 +395,7 @@ input PostWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
-  author_every: UserWhereInput
-  author_some: UserWhereInput
-  author_none: UserWhereInput
+  author: UserWhereInput
   status: PostStatus
   status_not: PostStatus
   status_in: [PostStatus!]
@@ -484,9 +482,9 @@ input UserCreateManyInput {
   connect: [UserWhereUniqueInput!]
 }
 
-input UserCreateManyWithoutPostsInput {
-  create: [UserCreateWithoutPostsInput!]
-  connect: [UserWhereUniqueInput!]
+input UserCreateOneWithoutPostsInput {
+  create: UserCreateWithoutPostsInput
+  connect: UserWhereUniqueInput
 }
 
 input UserCreatepreviledgeInput {
@@ -869,21 +867,18 @@ input UserUpdateManyMutationInput {
   accessToken: String
 }
 
-input UserUpdateManyWithoutPostsInput {
-  create: [UserCreateWithoutPostsInput!]
-  delete: [UserWhereUniqueInput!]
-  connect: [UserWhereUniqueInput!]
-  set: [UserWhereUniqueInput!]
-  disconnect: [UserWhereUniqueInput!]
-  update: [UserUpdateWithWhereUniqueWithoutPostsInput!]
-  upsert: [UserUpsertWithWhereUniqueWithoutPostsInput!]
-  deleteMany: [UserScalarWhereInput!]
-  updateMany: [UserUpdateManyWithWhereNestedInput!]
-}
-
 input UserUpdateManyWithWhereNestedInput {
   where: UserScalarWhereInput!
   data: UserUpdateManyDataInput!
+}
+
+input UserUpdateOneWithoutPostsInput {
+  create: UserCreateWithoutPostsInput
+  update: UserUpdateWithoutPostsDataInput
+  upsert: UserUpsertWithoutPostsInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: UserWhereUniqueInput
 }
 
 input UserUpdatepreviledgeInput {
@@ -912,21 +907,15 @@ input UserUpdateWithWhereUniqueNestedInput {
   data: UserUpdateDataInput!
 }
 
-input UserUpdateWithWhereUniqueWithoutPostsInput {
-  where: UserWhereUniqueInput!
-  data: UserUpdateWithoutPostsDataInput!
+input UserUpsertWithoutPostsInput {
+  update: UserUpdateWithoutPostsDataInput!
+  create: UserCreateWithoutPostsInput!
 }
 
 input UserUpsertWithWhereUniqueNestedInput {
   where: UserWhereUniqueInput!
   update: UserUpdateDataInput!
   create: UserCreateInput!
-}
-
-input UserUpsertWithWhereUniqueWithoutPostsInput {
-  where: UserWhereUniqueInput!
-  update: UserUpdateWithoutPostsDataInput!
-  create: UserCreateWithoutPostsInput!
 }
 
 input UserWhereInput {

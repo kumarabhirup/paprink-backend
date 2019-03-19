@@ -66,10 +66,31 @@ async function signOut(parent, args, context){
 
 }
 
-async function savePost(parent, args, context){
+async function savePost(parent, args, context, info){
+
+  let data = {...args}
+  delete data.categories
+  delete data.status
+
   if (!context.request.userId) {
     throw new Error('Please SignIn to continue.')
   }
+
+  const post = await context.prisma.createPost({
+    author: {
+      connect: {
+        id: context.request.userId
+      }
+    },
+    categories: {
+      set: args.categories,
+    },
+    status: args.status,
+    ...data
+  })
+
+  return post
+
 }
 
 module.exports = {
