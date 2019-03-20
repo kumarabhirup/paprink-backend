@@ -37,6 +37,7 @@ type Mutation {
 type Query {
   users: [User]!
   me: User
+  canUpdatePost(id: ID!): Post
 }
 
 type User {
