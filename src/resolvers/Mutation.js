@@ -76,11 +76,9 @@ async function savePost(parent, args, context, info){
     throw new Error('Please SignIn to continue.')
   }
 
-  const loggedInUser = await context.prisma.user({ id: context.request.userId })
-  console.log(loggedInUser)
-
   const post = await context.prisma.createPost({
-    author: { connect: { id: loggedInUser.id } },
+    author: { connect: { id: context.request.userId } },
+    authorId: context.request.userId,
     categories: {
       set: args.categories,
     },
