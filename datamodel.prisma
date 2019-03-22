@@ -67,7 +67,7 @@ type User {
   gender: String
   birthday: String
   bio: String
-  posts: [Post]! @relation(name: "PostsAndUser")
+  posts: [Post] @relation(name: "PostsAndUser")
   profilePicture: String!
   followers: [User]!
   previledge: [Previledge]!

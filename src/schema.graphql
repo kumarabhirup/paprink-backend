@@ -66,7 +66,7 @@ type User {
   gender: String
   birthday: String
   bio: String
-  posts: [Post]!
+  posts: [Post]
   profilePicture: String!
   followers(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   previledge: [Previledge]!
