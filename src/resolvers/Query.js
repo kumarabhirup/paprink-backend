@@ -21,11 +21,9 @@ async function canUpdatePost(parent, args, context){
     throw new Error('Please SignIn to continue.')
   }
 
-  console.log(context.request.userId)
-
   const postToUpdate = await context.prisma.post({id: args.id})
 
-  const canUpdate = postToUpdate.author.id === context.request.userId
+  const canUpdate = postToUpdate.authorId === context.request.userId
 
   if (canUpdate) {
     return postToUpdate

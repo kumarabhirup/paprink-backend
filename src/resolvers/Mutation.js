@@ -86,8 +86,6 @@ async function savePost(parent, args, context, info){
     ...data
   })
 
-  console.log(post)
-
   return post
 
 }
