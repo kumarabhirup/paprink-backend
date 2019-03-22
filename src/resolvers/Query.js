@@ -1,5 +1,12 @@
+const { forwardTo } = require('prisma-binding')
+
 async function users(parent, args, context, info) {
+  return context.prisma.users({}, info)
   throw new Error(`Sorry. But just go and fuck yourself!`)
+}
+
+async function posts(parent, args, context, info) {
+  return context.prisma.posts({}, info)
 }
 
 async function me(parent, args, context){
@@ -13,6 +20,8 @@ async function canUpdatePost(parent, args, context){
   if(!context.request.userId){
     throw new Error('Please SignIn to continue.')
   }
+
+  console.log(context.request.userId)
 
   const postToUpdate = await context.prisma.post({id: args.id})
 
@@ -29,5 +38,6 @@ async function canUpdatePost(parent, args, context){
 module.exports = {
   users,
   me,
-  canUpdatePost
+  canUpdatePost,
+  posts
 }

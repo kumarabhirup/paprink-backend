@@ -532,7 +532,7 @@ export interface PostCreateInput {
   editorSerializedOutput: Json;
   editorCurrentContent: Json;
   editorHtml: String;
-  author?: UserCreateOneWithoutPostsInput;
+  author: UserCreateOneWithoutPostsInput;
   categories?: PostCreatecategoriesInput;
   thumbnail: Json;
   status: PostStatus;
@@ -611,18 +611,16 @@ export interface PostUpdateInput {
   editorSerializedOutput?: Json;
   editorCurrentContent?: Json;
   editorHtml?: String;
-  author?: UserUpdateOneWithoutPostsInput;
+  author?: UserUpdateOneRequiredWithoutPostsInput;
   categories?: PostUpdatecategoriesInput;
   thumbnail?: Json;
   status?: PostStatus;
 }
 
-export interface UserUpdateOneWithoutPostsInput {
+export interface UserUpdateOneRequiredWithoutPostsInput {
   create?: UserCreateWithoutPostsInput;
   update?: UserUpdateWithoutPostsDataInput;
   upsert?: UserUpsertWithoutPostsInput;
-  delete?: Boolean;
-  disconnect?: Boolean;
   connect?: UserWhereUniqueInput;
 }
 

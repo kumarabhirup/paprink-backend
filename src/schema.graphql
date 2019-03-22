@@ -38,6 +38,21 @@ type Query {
   users: [User]!
   me: User
   canUpdatePost(id: ID!): Post
+  posts: [Post]!
+}
+
+type Post {
+  id: ID!
+  title: String!
+  editorSerializedOutput: Json!
+  editorCurrentContent: Json!
+  editorHtml: String!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+  author: User!
+  categories: [Category!]!
+  thumbnail: Json!
+  status: PostStatus!
 }
 
 type User {
@@ -50,7 +65,7 @@ type User {
   gender: String
   birthday: String
   bio: String
-  posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
+  posts: [Post]!
   profilePicture: String!
   followers(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   previledge: [Previledge]!

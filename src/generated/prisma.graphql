@@ -85,7 +85,7 @@ type Post {
   editorHtml: String!
   updatedAt: DateTime!
   createdAt: DateTime!
-  author: User
+  author: User!
   categories: [Category!]!
   thumbnail: Json!
   status: PostStatus!
@@ -106,7 +106,7 @@ input PostCreateInput {
   editorSerializedOutput: Json!
   editorCurrentContent: Json!
   editorHtml: String!
-  author: UserCreateOneWithoutPostsInput
+  author: UserCreateOneWithoutPostsInput!
   categories: PostCreatecategoriesInput
   thumbnail: Json!
   status: PostStatus!
@@ -267,7 +267,7 @@ input PostUpdateInput {
   editorSerializedOutput: Json
   editorCurrentContent: Json
   editorHtml: String
-  author: UserUpdateOneWithoutPostsInput
+  author: UserUpdateOneRequiredWithoutPostsInput
   categories: PostUpdatecategoriesInput
   thumbnail: Json
   status: PostStatus
@@ -867,12 +867,10 @@ input UserUpdateManyWithWhereNestedInput {
   data: UserUpdateManyDataInput!
 }
 
-input UserUpdateOneWithoutPostsInput {
+input UserUpdateOneRequiredWithoutPostsInput {
   create: UserCreateWithoutPostsInput
   update: UserUpdateWithoutPostsDataInput
   upsert: UserUpsertWithoutPostsInput
-  delete: Boolean
-  disconnect: Boolean
   connect: UserWhereUniqueInput
 }
 
