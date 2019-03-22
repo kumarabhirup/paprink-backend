@@ -163,6 +163,8 @@ export type PostOrderByInput =
   | "updatedAt_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
+  | "authorId_ASC"
+  | "authorId_DESC"
   | "thumbnail_ASC"
   | "thumbnail_DESC"
   | "status_ASC"
@@ -301,6 +303,20 @@ export interface PostWhereInput {
   createdAt_gt?: DateTimeInput;
   createdAt_gte?: DateTimeInput;
   author?: UserWhereInput;
+  authorId?: String;
+  authorId_not?: String;
+  authorId_in?: String[] | String;
+  authorId_not_in?: String[] | String;
+  authorId_lt?: String;
+  authorId_lte?: String;
+  authorId_gt?: String;
+  authorId_gte?: String;
+  authorId_contains?: String;
+  authorId_not_contains?: String;
+  authorId_starts_with?: String;
+  authorId_not_starts_with?: String;
+  authorId_ends_with?: String;
+  authorId_not_ends_with?: String;
   status?: PostStatus;
   status_not?: PostStatus;
   status_in?: PostStatus[] | PostStatus;
@@ -532,7 +548,8 @@ export interface PostCreateInput {
   editorSerializedOutput: Json;
   editorCurrentContent: Json;
   editorHtml: String;
-  author: UserCreateOneWithoutPostsInput;
+  author?: UserCreateOneWithoutPostsInput;
+  authorId: String;
   categories?: PostCreatecategoriesInput;
   thumbnail: Json;
   status: PostStatus;
@@ -593,6 +610,7 @@ export interface PostCreateWithoutAuthorInput {
   editorSerializedOutput: Json;
   editorCurrentContent: Json;
   editorHtml: String;
+  authorId: String;
   categories?: PostCreatecategoriesInput;
   thumbnail: Json;
   status: PostStatus;
@@ -611,16 +629,19 @@ export interface PostUpdateInput {
   editorSerializedOutput?: Json;
   editorCurrentContent?: Json;
   editorHtml?: String;
-  author?: UserUpdateOneRequiredWithoutPostsInput;
+  author?: UserUpdateOneWithoutPostsInput;
+  authorId?: String;
   categories?: PostUpdatecategoriesInput;
   thumbnail?: Json;
   status?: PostStatus;
 }
 
-export interface UserUpdateOneRequiredWithoutPostsInput {
+export interface UserUpdateOneWithoutPostsInput {
   create?: UserCreateWithoutPostsInput;
   update?: UserUpdateWithoutPostsDataInput;
   upsert?: UserUpsertWithoutPostsInput;
+  delete?: Boolean;
+  disconnect?: Boolean;
   connect?: UserWhereUniqueInput;
 }
 
@@ -710,6 +731,7 @@ export interface PostUpdateWithoutAuthorDataInput {
   editorSerializedOutput?: Json;
   editorCurrentContent?: Json;
   editorHtml?: String;
+  authorId?: String;
   categories?: PostUpdatecategoriesInput;
   thumbnail?: Json;
   status?: PostStatus;
@@ -784,6 +806,20 @@ export interface PostScalarWhereInput {
   createdAt_lte?: DateTimeInput;
   createdAt_gt?: DateTimeInput;
   createdAt_gte?: DateTimeInput;
+  authorId?: String;
+  authorId_not?: String;
+  authorId_in?: String[] | String;
+  authorId_not_in?: String[] | String;
+  authorId_lt?: String;
+  authorId_lte?: String;
+  authorId_gt?: String;
+  authorId_gte?: String;
+  authorId_contains?: String;
+  authorId_not_contains?: String;
+  authorId_starts_with?: String;
+  authorId_not_starts_with?: String;
+  authorId_ends_with?: String;
+  authorId_not_ends_with?: String;
   status?: PostStatus;
   status_not?: PostStatus;
   status_in?: PostStatus[] | PostStatus;
@@ -803,6 +839,7 @@ export interface PostUpdateManyDataInput {
   editorSerializedOutput?: Json;
   editorCurrentContent?: Json;
   editorHtml?: String;
+  authorId?: String;
   categories?: PostUpdatecategoriesInput;
   thumbnail?: Json;
   status?: PostStatus;
@@ -1053,6 +1090,7 @@ export interface PostUpdateManyMutationInput {
   editorSerializedOutput?: Json;
   editorCurrentContent?: Json;
   editorHtml?: String;
+  authorId?: String;
   categories?: PostUpdatecategoriesInput;
   thumbnail?: Json;
   status?: PostStatus;
@@ -1126,6 +1164,7 @@ export interface Post {
   editorHtml: String;
   updatedAt: DateTimeOutput;
   createdAt: DateTimeOutput;
+  authorId: String;
   categories: Category[];
   thumbnail: Json;
   status: PostStatus;
@@ -1140,6 +1179,7 @@ export interface PostPromise extends Promise<Post>, Fragmentable {
   updatedAt: () => Promise<DateTimeOutput>;
   createdAt: () => Promise<DateTimeOutput>;
   author: <T = UserPromise>() => T;
+  authorId: () => Promise<String>;
   categories: () => Promise<Category[]>;
   thumbnail: () => Promise<Json>;
   status: () => Promise<PostStatus>;
@@ -1156,6 +1196,7 @@ export interface PostSubscription
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   author: <T = UserSubscription>() => T;
+  authorId: () => Promise<AsyncIterator<String>>;
   categories: () => Promise<AsyncIterator<Category[]>>;
   thumbnail: () => Promise<AsyncIterator<Json>>;
   status: () => Promise<AsyncIterator<PostStatus>>;
@@ -1444,6 +1485,7 @@ export interface PostPreviousValues {
   editorHtml: String;
   updatedAt: DateTimeOutput;
   createdAt: DateTimeOutput;
+  authorId: String;
   categories: Category[];
   thumbnail: Json;
   status: PostStatus;
@@ -1459,6 +1501,7 @@ export interface PostPreviousValuesPromise
   editorHtml: () => Promise<String>;
   updatedAt: () => Promise<DateTimeOutput>;
   createdAt: () => Promise<DateTimeOutput>;
+  authorId: () => Promise<String>;
   categories: () => Promise<Category[]>;
   thumbnail: () => Promise<Json>;
   status: () => Promise<PostStatus>;
@@ -1474,6 +1517,7 @@ export interface PostPreviousValuesSubscription
   editorHtml: () => Promise<AsyncIterator<String>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  authorId: () => Promise<AsyncIterator<String>>;
   categories: () => Promise<AsyncIterator<Category[]>>;
   thumbnail: () => Promise<AsyncIterator<Json>>;
   status: () => Promise<AsyncIterator<PostStatus>>;

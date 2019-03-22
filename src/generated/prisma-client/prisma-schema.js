@@ -90,7 +90,8 @@ type Post {
   editorHtml: String!
   updatedAt: DateTime!
   createdAt: DateTime!
-  author: User!
+  author: User
+  authorId: String!
   categories: [Category!]!
   thumbnail: Json!
   status: PostStatus!
@@ -111,7 +112,8 @@ input PostCreateInput {
   editorSerializedOutput: Json!
   editorCurrentContent: Json!
   editorHtml: String!
-  author: UserCreateOneWithoutPostsInput!
+  author: UserCreateOneWithoutPostsInput
+  authorId: String!
   categories: PostCreatecategoriesInput
   thumbnail: Json!
   status: PostStatus!
@@ -127,6 +129,7 @@ input PostCreateWithoutAuthorInput {
   editorSerializedOutput: Json!
   editorCurrentContent: Json!
   editorHtml: String!
+  authorId: String!
   categories: PostCreatecategoriesInput
   thumbnail: Json!
   status: PostStatus!
@@ -152,6 +155,8 @@ enum PostOrderByInput {
   updatedAt_DESC
   createdAt_ASC
   createdAt_DESC
+  authorId_ASC
+  authorId_DESC
   thumbnail_ASC
   thumbnail_DESC
   status_ASC
@@ -166,6 +171,7 @@ type PostPreviousValues {
   editorHtml: String!
   updatedAt: DateTime!
   createdAt: DateTime!
+  authorId: String!
   categories: [Category!]!
   thumbnail: Json!
   status: PostStatus!
@@ -230,6 +236,20 @@ input PostScalarWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
+  authorId: String
+  authorId_not: String
+  authorId_in: [String!]
+  authorId_not_in: [String!]
+  authorId_lt: String
+  authorId_lte: String
+  authorId_gt: String
+  authorId_gte: String
+  authorId_contains: String
+  authorId_not_contains: String
+  authorId_starts_with: String
+  authorId_not_starts_with: String
+  authorId_ends_with: String
+  authorId_not_ends_with: String
   status: PostStatus
   status_not: PostStatus
   status_in: [PostStatus!]
@@ -272,7 +292,8 @@ input PostUpdateInput {
   editorSerializedOutput: Json
   editorCurrentContent: Json
   editorHtml: String
-  author: UserUpdateOneRequiredWithoutPostsInput
+  author: UserUpdateOneWithoutPostsInput
+  authorId: String
   categories: PostUpdatecategoriesInput
   thumbnail: Json
   status: PostStatus
@@ -283,6 +304,7 @@ input PostUpdateManyDataInput {
   editorSerializedOutput: Json
   editorCurrentContent: Json
   editorHtml: String
+  authorId: String
   categories: PostUpdatecategoriesInput
   thumbnail: Json
   status: PostStatus
@@ -293,6 +315,7 @@ input PostUpdateManyMutationInput {
   editorSerializedOutput: Json
   editorCurrentContent: Json
   editorHtml: String
+  authorId: String
   categories: PostUpdatecategoriesInput
   thumbnail: Json
   status: PostStatus
@@ -320,6 +343,7 @@ input PostUpdateWithoutAuthorDataInput {
   editorSerializedOutput: Json
   editorCurrentContent: Json
   editorHtml: String
+  authorId: String
   categories: PostUpdatecategoriesInput
   thumbnail: Json
   status: PostStatus
@@ -396,6 +420,20 @@ input PostWhereInput {
   createdAt_gt: DateTime
   createdAt_gte: DateTime
   author: UserWhereInput
+  authorId: String
+  authorId_not: String
+  authorId_in: [String!]
+  authorId_not_in: [String!]
+  authorId_lt: String
+  authorId_lte: String
+  authorId_gt: String
+  authorId_gte: String
+  authorId_contains: String
+  authorId_not_contains: String
+  authorId_starts_with: String
+  authorId_not_starts_with: String
+  authorId_ends_with: String
+  authorId_not_ends_with: String
   status: PostStatus
   status_not: PostStatus
   status_in: [PostStatus!]
@@ -872,10 +910,12 @@ input UserUpdateManyWithWhereNestedInput {
   data: UserUpdateManyDataInput!
 }
 
-input UserUpdateOneRequiredWithoutPostsInput {
+input UserUpdateOneWithoutPostsInput {
   create: UserCreateWithoutPostsInput
   update: UserUpdateWithoutPostsDataInput
   upsert: UserUpsertWithoutPostsInput
+  delete: Boolean
+  disconnect: Boolean
   connect: UserWhereUniqueInput
 }
 
