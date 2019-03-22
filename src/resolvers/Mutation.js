@@ -68,25 +68,28 @@ async function signOut(parent, args, context){
 
 async function savePost(parent, args, context, info){
 
-  let data = {...args}
-  delete data.categories
-  delete data.status
+  let data = {
+    ...args,
+    author: {
+      connect: { id: context.request.userId }
+    },
+    categories: {
+      set: args.categories
+    },
+    status: args.status
+  }
+
+  // make sure that what the data here is ALSO works in playground
+  console.log('data: ', data)
+  
 
   if (!context.request.userId) {
     throw new Error('Please SignIn to continue.')
   }
 
-  const loggedInUser = await context.prisma.user({ id: context.request.userId })
-  console.log(loggedInUser)
-
-  const post = await context.prisma.createPost({
-    author: { connect: { id: loggedInUser.id } },
-    categories: {
-      set: args.categories,
-    },
-    status: args.status,
-    ...data
-  })
+  // add info as second parameter, so that your graphql requested info is returned
+  console.log('info', info)
+  const post = await context.prisma.createPost(data, info)
 
   console.log(post)
 
