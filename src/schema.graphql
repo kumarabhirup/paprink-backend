@@ -32,12 +32,22 @@ type Mutation {
     thumbnail: Json!
     status: PostStatus!
   ): Post!
+  updatePost(
+    id: ID!
+    title: String!
+    editorSerializedOutput: Json!
+    editorCurrentContent: Json!
+    editorHtml: String!
+    categories: [Category]!
+    thumbnail: Json!
+    status: PostStatus!
+  ): Post!
 }
 
 type Query {
   users: [User]!
   me: User
-  canUpdatePost(id: ID!): Post
+  canUpdatePost(id: ID!): Json
   posts: [Post]!
 }
 

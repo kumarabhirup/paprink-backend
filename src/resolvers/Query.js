@@ -1,7 +1,7 @@
 const { forwardTo } = require('prisma-binding')
 
 async function users(parent, args, context, info) {
-  return context.prisma.users({}, info)
+  // return context.prisma.users({}, info)
   throw new Error(`Sorry. But just go and fuck yourself!`)
 }
 
@@ -25,8 +25,22 @@ async function canUpdatePost(parent, args, context){
 
   const canUpdate = postToUpdate.authorId === context.request.userId
 
+  const getPostAuthor = await context.prisma.user({ id: postToUpdate.authorId })
+  delete getPostAuthor.accessToken
+  delete getPostAuthor.socialId
+  delete getPostAuthor.updatedAt
+  delete getPostAuthor.createdAt
+  delete getPostAuthor.phone
+  delete getPostAuthor.birthday
+  delete getPostAuthor.bio
+
   if (canUpdate) {
-    return postToUpdate
+    return {
+      ...postToUpdate,
+      author: {
+        ...getPostAuthor
+      }
+    }
   }
 
   throw new Error('You are not allowed to update this post.')

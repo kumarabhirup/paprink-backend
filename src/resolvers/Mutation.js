@@ -90,8 +90,43 @@ async function savePost(parent, args, context, info){
 
 }
 
+async function updatePost(parent, args, context, info){
+
+  if (!context.request.userId) {
+    throw new Error('Please SignIn to continue.')
+  }
+
+  const postToUpdate = await context.prisma.post({id: args.id})
+  const canUpdate = postToUpdate.authorId === context.request.userId
+
+  if (canUpdate) {
+
+    const post = await context.prisma.updatePost({
+      where: { id: postToUpdate.id },
+      data: {
+        title: args.title,
+        editorCurrentContent: args.editorCurrentContent,
+        editorHtml: args.editorHtml,
+        editorSerializedOutput: args.editorSerializedOutput,
+        categories: {
+          set: args.categories
+        },
+        thumbnail: args.thumbnail,
+        status: args.status
+      }
+    })
+
+    return post
+
+  }
+
+  throw new Error('You cannot Update this post.')
+
+}
+
 module.exports = {
   signIn,
   signOut,
-  savePost
+  savePost,
+  updatePost
 }
