@@ -48,6 +48,7 @@ type Query {
   users: [User]!
   me: User
   canUpdatePost(id: ID!): Json
+  getPost(slugParam: String!): Json!
 }
 
 type Post {

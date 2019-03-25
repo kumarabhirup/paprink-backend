@@ -44,12 +44,39 @@ async function canUpdatePost(parent, args, context){
 
 async function getPost(parent, args, context){
 
+  const { slugParam } = args
+  const unfilteredPostId = slugParam.split('-').pop(-1) // " may be '252352532/' (with slash) "
+  const arrayOfUnfilteredPostId = [...unfilteredPostId]
+  const hasSlashAtLast = arrayOfUnfilteredPostId[arrayOfUnfilteredPostId.length - 1] === "/"
+
+  const postId = hasSlashAtLast ? unfilteredPostId.slice(0, -1) : unfilteredPostId // is '252352532 (without slash)'
   
-  
+  const post = await context.prisma.post({id: postId})
+  const postAuthor = await context.prisma.user({ id: post.authorId })
+  delete postAuthor.accessToken
+  delete postAuthor.socialId
+  delete postAuthor.updatedAt
+  delete postAuthor.createdAt
+  delete postAuthor.phone
+  delete postAuthor.birthday
+  delete postAuthor.bio
+
+  if (post) {
+    return {
+      ...post,
+      author: {
+        ...postAuthor
+      }
+    }
+  }
+
+  throw new Error('POST NOT FOUND.')
+
 }
 
 module.exports = {
   users,
   me,
-  canUpdatePost
+  canUpdatePost,
+  getPost
 }
