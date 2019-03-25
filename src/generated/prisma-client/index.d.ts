@@ -168,7 +168,9 @@ export type PostOrderByInput =
   | "thumbnail_ASC"
   | "thumbnail_DESC"
   | "status_ASC"
-  | "status_DESC";
+  | "status_DESC"
+  | "slug_ASC"
+  | "slug_DESC";
 
 export type UserOrderByInput =
   | "id_ASC"
@@ -321,6 +323,20 @@ export interface PostWhereInput {
   status_not?: PostStatus;
   status_in?: PostStatus[] | PostStatus;
   status_not_in?: PostStatus[] | PostStatus;
+  slug?: String;
+  slug_not?: String;
+  slug_in?: String[] | String;
+  slug_not_in?: String[] | String;
+  slug_lt?: String;
+  slug_lte?: String;
+  slug_gt?: String;
+  slug_gte?: String;
+  slug_contains?: String;
+  slug_not_contains?: String;
+  slug_starts_with?: String;
+  slug_not_starts_with?: String;
+  slug_ends_with?: String;
+  slug_not_ends_with?: String;
   AND?: PostWhereInput[] | PostWhereInput;
   OR?: PostWhereInput[] | PostWhereInput;
   NOT?: PostWhereInput[] | PostWhereInput;
@@ -553,6 +569,7 @@ export interface PostCreateInput {
   categories?: PostCreatecategoriesInput;
   thumbnail: Json;
   status: PostStatus;
+  slug: String;
 }
 
 export interface UserCreateOneWithoutPostsInput {
@@ -614,6 +631,7 @@ export interface PostCreateWithoutAuthorInput {
   categories?: PostCreatecategoriesInput;
   thumbnail: Json;
   status: PostStatus;
+  slug: String;
 }
 
 export interface PostCreatecategoriesInput {
@@ -634,6 +652,7 @@ export interface PostUpdateInput {
   categories?: PostUpdatecategoriesInput;
   thumbnail?: Json;
   status?: PostStatus;
+  slug?: String;
 }
 
 export interface UserUpdateOneWithoutPostsInput {
@@ -735,6 +754,7 @@ export interface PostUpdateWithoutAuthorDataInput {
   categories?: PostUpdatecategoriesInput;
   thumbnail?: Json;
   status?: PostStatus;
+  slug?: String;
 }
 
 export interface PostUpdatecategoriesInput {
@@ -824,6 +844,20 @@ export interface PostScalarWhereInput {
   status_not?: PostStatus;
   status_in?: PostStatus[] | PostStatus;
   status_not_in?: PostStatus[] | PostStatus;
+  slug?: String;
+  slug_not?: String;
+  slug_in?: String[] | String;
+  slug_not_in?: String[] | String;
+  slug_lt?: String;
+  slug_lte?: String;
+  slug_gt?: String;
+  slug_gte?: String;
+  slug_contains?: String;
+  slug_not_contains?: String;
+  slug_starts_with?: String;
+  slug_not_starts_with?: String;
+  slug_ends_with?: String;
+  slug_not_ends_with?: String;
   AND?: PostScalarWhereInput[] | PostScalarWhereInput;
   OR?: PostScalarWhereInput[] | PostScalarWhereInput;
   NOT?: PostScalarWhereInput[] | PostScalarWhereInput;
@@ -843,6 +877,7 @@ export interface PostUpdateManyDataInput {
   categories?: PostUpdatecategoriesInput;
   thumbnail?: Json;
   status?: PostStatus;
+  slug?: String;
 }
 
 export interface UserUpdatepreviledgeInput {
@@ -1094,6 +1129,7 @@ export interface PostUpdateManyMutationInput {
   categories?: PostUpdatecategoriesInput;
   thumbnail?: Json;
   status?: PostStatus;
+  slug?: String;
 }
 
 export interface UserUpdateInput {
@@ -1168,6 +1204,7 @@ export interface Post {
   categories: Category[];
   thumbnail: Json;
   status: PostStatus;
+  slug: String;
 }
 
 export interface PostPromise extends Promise<Post>, Fragmentable {
@@ -1183,6 +1220,7 @@ export interface PostPromise extends Promise<Post>, Fragmentable {
   categories: () => Promise<Category[]>;
   thumbnail: () => Promise<Json>;
   status: () => Promise<PostStatus>;
+  slug: () => Promise<String>;
 }
 
 export interface PostSubscription
@@ -1200,6 +1238,7 @@ export interface PostSubscription
   categories: () => Promise<AsyncIterator<Category[]>>;
   thumbnail: () => Promise<AsyncIterator<Json>>;
   status: () => Promise<AsyncIterator<PostStatus>>;
+  slug: () => Promise<AsyncIterator<String>>;
 }
 
 export interface User {
@@ -1489,6 +1528,7 @@ export interface PostPreviousValues {
   categories: Category[];
   thumbnail: Json;
   status: PostStatus;
+  slug: String;
 }
 
 export interface PostPreviousValuesPromise
@@ -1505,6 +1545,7 @@ export interface PostPreviousValuesPromise
   categories: () => Promise<Category[]>;
   thumbnail: () => Promise<Json>;
   status: () => Promise<PostStatus>;
+  slug: () => Promise<String>;
 }
 
 export interface PostPreviousValuesSubscription
@@ -1521,6 +1562,7 @@ export interface PostPreviousValuesSubscription
   categories: () => Promise<AsyncIterator<Category[]>>;
   thumbnail: () => Promise<AsyncIterator<Json>>;
   status: () => Promise<AsyncIterator<PostStatus>>;
+  slug: () => Promise<AsyncIterator<String>>;
 }
 
 export interface UserSubscriptionPayload {

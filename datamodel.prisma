@@ -54,6 +54,7 @@ type Post {
   categories: [Category!]!
   thumbnail: Json!
   status: PostStatus!
+  slug: String!
 }
 
 type User {

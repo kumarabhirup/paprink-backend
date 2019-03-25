@@ -48,7 +48,6 @@ type Query {
   users: [User]!
   me: User
   canUpdatePost(id: ID!): Json
-  posts: [Post]!
 }
 
 type Post {
@@ -64,6 +63,7 @@ type Post {
   categories: [Category!]!
   thumbnail: Json!
   status: PostStatus!
+  slug: String!
 }
 
 type User {

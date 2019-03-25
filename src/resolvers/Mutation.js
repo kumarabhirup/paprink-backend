@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken')
 const { isTokenValid } = require('../utils')
+const slugify = require('slug')
 
 async function signIn(parent, args, context){
 
@@ -83,6 +84,7 @@ async function savePost(parent, args, context, info){
       set: args.categories,
     },
     status: args.status,
+    slug: slugify(args.title, { lower: true }),
     ...data
   })
 
@@ -112,7 +114,8 @@ async function updatePost(parent, args, context, info){
           set: args.categories
         },
         thumbnail: args.thumbnail,
-        status: args.status
+        status: args.status,
+        slug: slugify(args.title, { lower: true }),
       }
     })
 

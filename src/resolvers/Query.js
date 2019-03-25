@@ -1,12 +1,7 @@
 const { forwardTo } = require('prisma-binding')
 
 async function users(parent, args, context, info) {
-  // return context.prisma.users({}, info)
   throw new Error(`Sorry. But just go and fuck yourself!`)
-}
-
-async function posts(parent, args, context, info) {
-  return context.prisma.posts({}, info)
 }
 
 async function me(parent, args, context){
@@ -47,9 +42,14 @@ async function canUpdatePost(parent, args, context){
   
 }
 
+async function getPost(parent, args, context){
+
+  
+  
+}
+
 module.exports = {
   users,
   me,
-  canUpdatePost,
-  posts
+  canUpdatePost
 }

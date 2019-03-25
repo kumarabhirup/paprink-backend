@@ -95,6 +95,7 @@ type Post {
   categories: [Category!]!
   thumbnail: Json!
   status: PostStatus!
+  slug: String!
 }
 
 type PostConnection {
@@ -117,6 +118,7 @@ input PostCreateInput {
   categories: PostCreatecategoriesInput
   thumbnail: Json!
   status: PostStatus!
+  slug: String!
 }
 
 input PostCreateManyWithoutAuthorInput {
@@ -133,6 +135,7 @@ input PostCreateWithoutAuthorInput {
   categories: PostCreatecategoriesInput
   thumbnail: Json!
   status: PostStatus!
+  slug: String!
 }
 
 type PostEdge {
@@ -161,6 +164,8 @@ enum PostOrderByInput {
   thumbnail_DESC
   status_ASC
   status_DESC
+  slug_ASC
+  slug_DESC
 }
 
 type PostPreviousValues {
@@ -175,6 +180,7 @@ type PostPreviousValues {
   categories: [Category!]!
   thumbnail: Json!
   status: PostStatus!
+  slug: String!
 }
 
 input PostScalarWhereInput {
@@ -254,6 +260,20 @@ input PostScalarWhereInput {
   status_not: PostStatus
   status_in: [PostStatus!]
   status_not_in: [PostStatus!]
+  slug: String
+  slug_not: String
+  slug_in: [String!]
+  slug_not_in: [String!]
+  slug_lt: String
+  slug_lte: String
+  slug_gt: String
+  slug_gte: String
+  slug_contains: String
+  slug_not_contains: String
+  slug_starts_with: String
+  slug_not_starts_with: String
+  slug_ends_with: String
+  slug_not_ends_with: String
   AND: [PostScalarWhereInput!]
   OR: [PostScalarWhereInput!]
   NOT: [PostScalarWhereInput!]
@@ -297,6 +317,7 @@ input PostUpdateInput {
   categories: PostUpdatecategoriesInput
   thumbnail: Json
   status: PostStatus
+  slug: String
 }
 
 input PostUpdateManyDataInput {
@@ -308,6 +329,7 @@ input PostUpdateManyDataInput {
   categories: PostUpdatecategoriesInput
   thumbnail: Json
   status: PostStatus
+  slug: String
 }
 
 input PostUpdateManyMutationInput {
@@ -319,6 +341,7 @@ input PostUpdateManyMutationInput {
   categories: PostUpdatecategoriesInput
   thumbnail: Json
   status: PostStatus
+  slug: String
 }
 
 input PostUpdateManyWithoutAuthorInput {
@@ -347,6 +370,7 @@ input PostUpdateWithoutAuthorDataInput {
   categories: PostUpdatecategoriesInput
   thumbnail: Json
   status: PostStatus
+  slug: String
 }
 
 input PostUpdateWithWhereUniqueWithoutAuthorInput {
@@ -438,6 +462,20 @@ input PostWhereInput {
   status_not: PostStatus
   status_in: [PostStatus!]
   status_not_in: [PostStatus!]
+  slug: String
+  slug_not: String
+  slug_in: [String!]
+  slug_not_in: [String!]
+  slug_lt: String
+  slug_lte: String
+  slug_gt: String
+  slug_gte: String
+  slug_contains: String
+  slug_not_contains: String
+  slug_starts_with: String
+  slug_not_starts_with: String
+  slug_ends_with: String
+  slug_not_ends_with: String
   AND: [PostWhereInput!]
   OR: [PostWhereInput!]
   NOT: [PostWhereInput!]
