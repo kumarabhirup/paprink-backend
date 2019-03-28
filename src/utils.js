@@ -35,7 +35,10 @@ async function isTokenValid(method, accessToken) {
 
 }
 
+const postInfo = `{ id title slug authorId categories thumbnail editorCurrentContent editorHtml editorSerializedOutput author { id name email fname lname profilePicture } createdAt updatedAt status }`
+
 module.exports = {
   validateEmail,
-  isTokenValid
+  isTokenValid,
+  postInfo
 }

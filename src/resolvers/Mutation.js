@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken')
-const { isTokenValid } = require('../utils')
 const slugify = require('slug')
+const { isTokenValid } = require('../utils')
+const { postInfo } = require('../utils')
 
 async function signIn(parent, args, context, info){
 
@@ -104,8 +105,8 @@ async function updatePost(parent, args, context, info){
     throw new Error('Please SignIn to continue.')
   }
 
-  const postToUpdate = await context.db.query.post({where: {id: args.id}}, info)
-  const canUpdate = postToUpdate.authorId === context.request.userId
+  const postToUpdate = await context.db.query.post({where: {id: args.id}}, postInfo)
+  const canUpdate = postToUpdate.author.id === context.request.userId
 
   if (canUpdate) {
 
@@ -129,7 +130,7 @@ async function updatePost(parent, args, context, info){
 
   }
 
-  throw new Error('You cannot Update this post.')
+  throw new Error('You cannot update this post.')
 
 }
 
