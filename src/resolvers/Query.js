@@ -74,7 +74,7 @@ async function getPost(parent, args, context, info){
 
 }
 
-var postsConnection = (parent, args, context, info) => forwardTo("prisma")(parent, args, context, info)
+var postsConnection = (parent, args, context, info) => forwardTo("db")(parent, args, context, info)
 
 module.exports = {
   users,
