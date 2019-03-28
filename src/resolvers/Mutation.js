@@ -73,7 +73,7 @@ async function signOut(parent, args, context, info){
 }
 
 async function savePost(parent, args, context, info){
-
+  
   let data = {...args}
   delete data.categories
   delete data.status
