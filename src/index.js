@@ -4,9 +4,9 @@ const { GraphQLServer } = require('graphql-yoga')
 const cookieParser = require('cookie-parser')
 const jwt = require('jsonwebtoken')
 
-const { prisma } = require('./generated/prisma-client')
 const Query = require('./resolvers/Query')
 const Mutation = require('./resolvers/Mutation')
+const db = require('./db')
 
 // start it
 const server = new GraphQLServer({
@@ -15,9 +15,12 @@ const server = new GraphQLServer({
     Query,
     Mutation
   },
+  resolverValidationOptions: {
+    requireResolversForResolveType: false,
+  },
   context: request => ({
     ...request,
-    prisma,
+    db
   }),
 })
 
@@ -54,7 +57,7 @@ server.express.use(async (req, res, next) => {
         return next()
     }
 
-    const user = await prisma.user({ id: req.userId }, '{ id, fname, lname, name, email, previledge }')
+    const user = await db.query.user({ where: {id: req.userId} }, '{ id, fname, lname, name, email, previledge }')
     req.user = user
 
     next()

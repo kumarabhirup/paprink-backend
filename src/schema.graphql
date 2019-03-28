@@ -32,13 +32,24 @@ type Mutation {
     thumbnail: Json!
     status: PostStatus!
   ): Post!
+  updatePost(
+    id: ID!
+    title: String!
+    editorSerializedOutput: Json!
+    editorCurrentContent: Json!
+    editorHtml: String!
+    categories: [Category]!
+    thumbnail: Json!
+    status: PostStatus!
+  ): Post!
 }
 
 type Query {
   users: [User]!
   me: User
-  canUpdatePost(id: ID!): Post
-  posts: [Post]!
+  canUpdatePost(id: ID!): Json
+  getPost(slugParam: String!): Json!
+  postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
 }
 
 type Post {
@@ -49,10 +60,12 @@ type Post {
   editorHtml: String!
   updatedAt: DateTime!
   createdAt: DateTime!
-  author: User!
+  author: User
+  authorId: String!
   categories: [Category!]!
   thumbnail: Json!
   status: PostStatus!
+  slug: String!
 }
 
 type User {
@@ -65,7 +78,7 @@ type User {
   gender: String
   birthday: String
   bio: String
-  posts: [Post]!
+  posts: [Post]
   profilePicture: String!
   followers(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   previledge: [Previledge]!
