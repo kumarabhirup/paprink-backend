@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken')
 const { isTokenValid } = require('../utils')
 const slugify = require('slug')
 
-async function signIn(parent, args, context){
+async function signIn(parent, args, context, info){
 
   const data = { ...args }
 
@@ -13,11 +13,15 @@ async function signIn(parent, args, context){
   }
 
   // Check if user is already signedUp!
-  const signedUser = await context.prisma.user({socialId: data.socialId})
+  const signedUser = await context.db.query.user({where: {socialId: data.socialId}}, info)
   if(!signedUser) {
 
     // Create user
-    const newUser = await context.prisma.createUser({...data})
+    const newUser = await context.db.mutation.createUser({
+      data: {
+        ...data
+      }
+    }, info)
 
     const token = jwt.sign({ userId: newUser.id, /*accessToken: args.accessToken,*/ signUpMethod: args.signUpMethod }, process.env.JWT_SECRET)
     context.response.cookie('paprinkToken', token, {
@@ -30,7 +34,7 @@ async function signIn(parent, args, context){
   }
 
   // Update user with new access token
-  await context.prisma.updateUser({
+  await context.db.mutation.updateUser({
     data: {
       accessToken: data.accessToken,
       fname: data.fname,
@@ -43,7 +47,7 @@ async function signIn(parent, args, context){
       bio: data.bio
     },
     where: { id: signedUser.id }
-  })
+  }, info)
 
   const token = jwt.sign({ userId: signedUser.id, /*accessToken: args.accessToken,*/ signUpMethod: args.signUpMethod }, process.env.JWT_SECRET)
   await context.response.cookie('paprinkToken', token, {
@@ -55,7 +59,7 @@ async function signIn(parent, args, context){
 
 }
 
-async function signOut(parent, args, context){
+async function signOut(parent, args, context, info){
 
   /**
    * Revoke Google Token: https://accounts.google.com/o/oauth2/revoke?token={access_token}
@@ -77,16 +81,18 @@ async function savePost(parent, args, context, info){
     throw new Error('Please SignIn to continue.')
   }
 
-  const post = await context.prisma.createPost({
-    author: { connect: { id: context.request.userId } },
-    authorId: context.request.userId,
-    categories: {
-      set: args.categories,
-    },
-    status: args.status,
-    slug: slugify(args.title, { lower: true }),
-    ...data
-  })
+  const post = await context.db.mutation.createPost({
+    data: {
+      author: { connect: { id: context.request.userId } },
+      authorId: context.request.userId,
+      categories: {
+        set: args.categories,
+      },
+      status: args.status,
+      slug: slugify(args.title, { lower: true }),
+      ...data
+    }
+  }, info)
 
   return post
 
@@ -98,12 +104,12 @@ async function updatePost(parent, args, context, info){
     throw new Error('Please SignIn to continue.')
   }
 
-  const postToUpdate = await context.prisma.post({id: args.id})
+  const postToUpdate = await context.db.query.post({where: {id: args.id}}, info)
   const canUpdate = postToUpdate.authorId === context.request.userId
 
   if (canUpdate) {
 
-    const post = await context.prisma.updatePost({
+    const post = await context.db.mutation.updatePost({
       where: { id: postToUpdate.id },
       data: {
         title: args.title,
@@ -117,7 +123,7 @@ async function updatePost(parent, args, context, info){
         status: args.status,
         slug: slugify(args.title, { lower: true }),
       }
-    })
+    }, info)
 
     return post
 

@@ -7,7 +7,7 @@ async function users(parent, args, context, info) {
 async function me(parent, args, context, info){
   if(!context.request.userId){
     return null
-  } return context.prisma.user({id: context.request.userId})
+  } return context.db.query.user({where: {id: context.request.userId}}, info)
 }
 
 async function canUpdatePost(parent, args, context, info){
@@ -16,11 +16,11 @@ async function canUpdatePost(parent, args, context, info){
     throw new Error('Please SignIn to continue.')
   }
 
-  const postToUpdate = await context.prisma.post({id: args.id})
+  const postToUpdate = await context.db.query.post({where: {id: args.id}}, info)
 
   const canUpdate = postToUpdate.authorId === context.request.userId
 
-  const getPostAuthor = await context.prisma.user({ id: postToUpdate.authorId })
+  const getPostAuthor = await context.db.query.user({ where: {id: postToUpdate.authorId} }, info)
   delete getPostAuthor.accessToken
   delete getPostAuthor.socialId
   delete getPostAuthor.updatedAt
@@ -51,8 +51,8 @@ async function getPost(parent, args, context, info){
 
   const postId = hasSlashAtLast ? unfilteredPostId.slice(0, -1) : unfilteredPostId // is '252352532 (without slash)'
   
-  const post = await context.prisma.post({id: postId})
-  const postAuthor = await context.prisma.user({ id: post.authorId })
+  const post = await context.db.query.post({where: {id: postId}}, info)
+  const postAuthor = await context.db.query.user({where: {id: post.authorId}}, info)
   delete postAuthor.accessToken
   delete postAuthor.socialId
   delete postAuthor.updatedAt
