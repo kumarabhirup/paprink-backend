@@ -4,13 +4,13 @@ async function users(parent, args, context, info) {
   throw new Error(`Sorry. But just go and fuck yourself!`)
 }
 
-async function me(parent, args, context){
+async function me(parent, args, context, info){
   if(!context.request.userId){
     return null
   } return context.prisma.user({id: context.request.userId})
 }
 
-async function canUpdatePost(parent, args, context){
+async function canUpdatePost(parent, args, context, info){
 
   if(!context.request.userId){
     throw new Error('Please SignIn to continue.')
@@ -42,7 +42,7 @@ async function canUpdatePost(parent, args, context){
   
 }
 
-async function getPost(parent, args, context){
+async function getPost(parent, args, context, info){
 
   const { slugParam } = args
   const unfilteredPostId = slugParam.split('-').pop(-1) // " may be '252352532/' (with slash) "
@@ -74,9 +74,12 @@ async function getPost(parent, args, context){
 
 }
 
+var postsConnection = (parent, args, context, info) => forwardTo("prisma")(parent, args, context, info)
+
 module.exports = {
   users,
   me,
   canUpdatePost,
-  getPost
+  getPost,
+  postsConnection
 }
