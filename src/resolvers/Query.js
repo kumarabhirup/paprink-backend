@@ -40,11 +40,13 @@ async function getPost(parent, args, context, info){
 
   const post = await context.db.query.post({where: {id: postId}}, postInfo)
 
-  if (post) {
+  if (post.status === "PUBLISHED") {
     return post
+  } else if (post.status === "DRAFT" && post.author.id === context.request.userId ) {
+    return post
+  } else {
+    throw new Error('POST NOT FOUND!')
   }
-
-  throw new Error('POST NOT FOUND.')
 
 }
 
