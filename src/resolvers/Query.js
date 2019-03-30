@@ -50,7 +50,20 @@ async function getPost(parent, args, context, info){
 
 async function postsCategoryConnection(parent, args, context, info) {
   
-  const connection = await context.db.query.postsConnection({ where: { status: "PUBLISHED" } }, info)
+  const category = args.categorySlug
+
+  const connection = await context.db.query.postsConnection({
+    where: { 
+      status: "PUBLISHED", 
+      categories_some: {
+        category
+      }
+    },
+    first: 9,
+    orderBy: args.orderBy || "updatedAt_DESC",
+    after: args.after
+  }, info)
+
   return connection
 
 }

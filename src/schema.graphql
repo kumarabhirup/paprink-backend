@@ -49,7 +49,11 @@ type Query {
   me: User
   canUpdatePost(id: ID!): Json
   getPost(slugParam: String!): Json!
-  postsCategoryConnection(category: String!): PostConnection!
+  postsCategoryConnection(
+    categorySlug: String!
+    after: String
+    orderBy: PostOrderByInput
+  ): PostConnection!
 }
 
 type Post {
