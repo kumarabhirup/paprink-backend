@@ -28,7 +28,7 @@ type Mutation {
     editorSerializedOutput: Json!
     editorCurrentContent: Json!
     editorHtml: String!
-    categories: [Category]!
+    categories: Json!
     thumbnail: Json!
     status: PostStatus!
   ): Post!
@@ -38,7 +38,7 @@ type Mutation {
     editorSerializedOutput: Json!
     editorCurrentContent: Json!
     editorHtml: String!
-    categories: [Category]!
+    categories: Json!
     thumbnail: Json!
     status: PostStatus!
   ): Post!
@@ -66,6 +66,13 @@ type Post {
   thumbnail: Json!
   status: PostStatus!
   slug: String!
+}
+
+type Category {
+  id: ID!
+  text: String!
+  category: CategoryEnum!
+  posts: [Post]!
 }
 
 type User {
