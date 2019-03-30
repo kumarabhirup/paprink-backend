@@ -14,6 +14,7 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
   U[keyof U];
 
 export interface Exists {
+  category: (where?: CategoryWhereInput) => Promise<boolean>;
   post: (where?: PostWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
 }
@@ -37,6 +38,29 @@ export interface Prisma {
    * Queries
    */
 
+  category: (where: CategoryWhereUniqueInput) => CategoryPromise;
+  categories: (
+    args?: {
+      where?: CategoryWhereInput;
+      orderBy?: CategoryOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => FragmentableArray<Category>;
+  categoriesConnection: (
+    args?: {
+      where?: CategoryWhereInput;
+      orderBy?: CategoryOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => CategoryConnectionPromise;
   post: (where: PostWhereUniqueInput) => PostPromise;
   posts: (
     args?: {
@@ -89,6 +113,22 @@ export interface Prisma {
    * Mutations
    */
 
+  createCategory: (data: CategoryCreateInput) => CategoryPromise;
+  updateCategory: (
+    args: { data: CategoryUpdateInput; where: CategoryWhereUniqueInput }
+  ) => CategoryPromise;
+  updateManyCategories: (
+    args: { data: CategoryUpdateManyMutationInput; where?: CategoryWhereInput }
+  ) => BatchPayloadPromise;
+  upsertCategory: (
+    args: {
+      where: CategoryWhereUniqueInput;
+      create: CategoryCreateInput;
+      update: CategoryUpdateInput;
+    }
+  ) => CategoryPromise;
+  deleteCategory: (where: CategoryWhereUniqueInput) => CategoryPromise;
+  deleteManyCategories: (where?: CategoryWhereInput) => BatchPayloadPromise;
   createPost: (data: PostCreateInput) => PostPromise;
   updatePost: (
     args: { data: PostUpdateInput; where: PostWhereUniqueInput }
@@ -130,6 +170,9 @@ export interface Prisma {
 }
 
 export interface Subscription {
+  category: (
+    where?: CategorySubscriptionWhereInput
+  ) => CategorySubscriptionPayloadSubscription;
   post: (
     where?: PostSubscriptionWhereInput
   ) => PostSubscriptionPayloadSubscription;
@@ -145,6 +188,34 @@ export interface ClientConstructor<T> {
 /**
  * Types
  */
+
+export type CategoryEnum =
+  | "TECH"
+  | "FIN"
+  | "DIGIMARK"
+  | "CODING"
+  | "TUTORIAL"
+  | "HOWTO"
+  | "WRITING"
+  | "INSPIRE"
+  | "SCIENCE"
+  | "POLITICS"
+  | "LIFESTYLE"
+  | "FOOD"
+  | "BUSSINESS"
+  | "ENTREPRENEUR"
+  | "HISTORY"
+  | "HEALTH"
+  | "PET"
+  | "PARENTHOOD"
+  | "TRAVEL"
+  | "INDIA"
+  | "CHINA"
+  | "US"
+  | "UK"
+  | "WORLD"
+  | "NEWS"
+  | "REVIEW";
 
 export type PostStatus = "PUBLISHED" | "DRAFT" | "DELETED";
 
@@ -211,38 +282,23 @@ export type Previledge =
   | "AUTHOR"
   | "READER";
 
-export type Category =
-  | "TECH"
-  | "FIN"
-  | "DIGIMARK"
-  | "CODING"
-  | "TUTORIAL"
-  | "HOWTO"
-  | "WRITING"
-  | "INSPIRE"
-  | "SCIENCE"
-  | "POLITICS"
-  | "LIFESTYLE"
-  | "FOOD"
-  | "BUSSINESS"
-  | "ENTREPRENEUR"
-  | "HISTORY"
-  | "HEALTH"
-  | "PET"
-  | "PARENTHOOD"
-  | "TRAVEL"
-  | "INDIA"
-  | "CHINA"
-  | "US"
-  | "UK"
-  | "WORLD"
-  | "NEWS"
-  | "REVIEW";
+export type CategoryOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "text_ASC"
+  | "text_DESC"
+  | "category_ASC"
+  | "category_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export type PostWhereUniqueInput = AtLeastOne<{
+export type CategoryWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
+  category?: CategoryEnum;
 }>;
 
 export interface PostWhereInput {
@@ -319,6 +375,9 @@ export interface PostWhereInput {
   authorId_not_starts_with?: String;
   authorId_ends_with?: String;
   authorId_not_ends_with?: String;
+  categories_every?: CategoryWhereInput;
+  categories_some?: CategoryWhereInput;
+  categories_none?: CategoryWhereInput;
   status?: PostStatus;
   status_not?: PostStatus;
   status_in?: PostStatus[] | PostStatus;
@@ -552,6 +611,51 @@ export interface UserWhereInput {
   NOT?: UserWhereInput[] | UserWhereInput;
 }
 
+export interface CategoryWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  text?: String;
+  text_not?: String;
+  text_in?: String[] | String;
+  text_not_in?: String[] | String;
+  text_lt?: String;
+  text_lte?: String;
+  text_gt?: String;
+  text_gte?: String;
+  text_contains?: String;
+  text_not_contains?: String;
+  text_starts_with?: String;
+  text_not_starts_with?: String;
+  text_ends_with?: String;
+  text_not_ends_with?: String;
+  category?: CategoryEnum;
+  category_not?: CategoryEnum;
+  category_in?: CategoryEnum[] | CategoryEnum;
+  category_not_in?: CategoryEnum[] | CategoryEnum;
+  posts_every?: PostWhereInput;
+  posts_some?: PostWhereInput;
+  posts_none?: PostWhereInput;
+  AND?: CategoryWhereInput[] | CategoryWhereInput;
+  OR?: CategoryWhereInput[] | CategoryWhereInput;
+  NOT?: CategoryWhereInput[] | CategoryWhereInput;
+}
+
+export type PostWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
 export type UserWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
   socialId?: String;
@@ -559,14 +663,26 @@ export type UserWhereUniqueInput = AtLeastOne<{
   email?: String;
 }>;
 
-export interface PostCreateInput {
+export interface CategoryCreateInput {
+  text: String;
+  category: CategoryEnum;
+  posts?: PostCreateManyWithoutCategoriesInput;
+}
+
+export interface PostCreateManyWithoutCategoriesInput {
+  create?:
+    | PostCreateWithoutCategoriesInput[]
+    | PostCreateWithoutCategoriesInput;
+  connect?: PostWhereUniqueInput[] | PostWhereUniqueInput;
+}
+
+export interface PostCreateWithoutCategoriesInput {
   title: String;
   editorSerializedOutput: Json;
   editorCurrentContent: Json;
   editorHtml: String;
   author?: UserCreateOneWithoutPostsInput;
   authorId: String;
-  categories?: PostCreatecategoriesInput;
   thumbnail: Json;
   status: PostStatus;
   slug: String;
@@ -628,28 +744,64 @@ export interface PostCreateWithoutAuthorInput {
   editorCurrentContent: Json;
   editorHtml: String;
   authorId: String;
-  categories?: PostCreatecategoriesInput;
+  categories?: CategoryCreateManyWithoutPostsInput;
   thumbnail: Json;
   status: PostStatus;
   slug: String;
 }
 
-export interface PostCreatecategoriesInput {
-  set?: Category[] | Category;
+export interface CategoryCreateManyWithoutPostsInput {
+  create?: CategoryCreateWithoutPostsInput[] | CategoryCreateWithoutPostsInput;
+  connect?: CategoryWhereUniqueInput[] | CategoryWhereUniqueInput;
+}
+
+export interface CategoryCreateWithoutPostsInput {
+  text: String;
+  category: CategoryEnum;
 }
 
 export interface UserCreatepreviledgeInput {
   set?: Previledge[] | Previledge;
 }
 
-export interface PostUpdateInput {
+export interface CategoryUpdateInput {
+  text?: String;
+  category?: CategoryEnum;
+  posts?: PostUpdateManyWithoutCategoriesInput;
+}
+
+export interface PostUpdateManyWithoutCategoriesInput {
+  create?:
+    | PostCreateWithoutCategoriesInput[]
+    | PostCreateWithoutCategoriesInput;
+  delete?: PostWhereUniqueInput[] | PostWhereUniqueInput;
+  connect?: PostWhereUniqueInput[] | PostWhereUniqueInput;
+  set?: PostWhereUniqueInput[] | PostWhereUniqueInput;
+  disconnect?: PostWhereUniqueInput[] | PostWhereUniqueInput;
+  update?:
+    | PostUpdateWithWhereUniqueWithoutCategoriesInput[]
+    | PostUpdateWithWhereUniqueWithoutCategoriesInput;
+  upsert?:
+    | PostUpsertWithWhereUniqueWithoutCategoriesInput[]
+    | PostUpsertWithWhereUniqueWithoutCategoriesInput;
+  deleteMany?: PostScalarWhereInput[] | PostScalarWhereInput;
+  updateMany?:
+    | PostUpdateManyWithWhereNestedInput[]
+    | PostUpdateManyWithWhereNestedInput;
+}
+
+export interface PostUpdateWithWhereUniqueWithoutCategoriesInput {
+  where: PostWhereUniqueInput;
+  data: PostUpdateWithoutCategoriesDataInput;
+}
+
+export interface PostUpdateWithoutCategoriesDataInput {
   title?: String;
   editorSerializedOutput?: Json;
   editorCurrentContent?: Json;
   editorHtml?: String;
   author?: UserUpdateOneWithoutPostsInput;
   authorId?: String;
-  categories?: PostUpdatecategoriesInput;
   thumbnail?: Json;
   status?: PostStatus;
   slug?: String;
@@ -751,14 +903,92 @@ export interface PostUpdateWithoutAuthorDataInput {
   editorCurrentContent?: Json;
   editorHtml?: String;
   authorId?: String;
-  categories?: PostUpdatecategoriesInput;
+  categories?: CategoryUpdateManyWithoutPostsInput;
   thumbnail?: Json;
   status?: PostStatus;
   slug?: String;
 }
 
-export interface PostUpdatecategoriesInput {
-  set?: Category[] | Category;
+export interface CategoryUpdateManyWithoutPostsInput {
+  create?: CategoryCreateWithoutPostsInput[] | CategoryCreateWithoutPostsInput;
+  delete?: CategoryWhereUniqueInput[] | CategoryWhereUniqueInput;
+  connect?: CategoryWhereUniqueInput[] | CategoryWhereUniqueInput;
+  set?: CategoryWhereUniqueInput[] | CategoryWhereUniqueInput;
+  disconnect?: CategoryWhereUniqueInput[] | CategoryWhereUniqueInput;
+  update?:
+    | CategoryUpdateWithWhereUniqueWithoutPostsInput[]
+    | CategoryUpdateWithWhereUniqueWithoutPostsInput;
+  upsert?:
+    | CategoryUpsertWithWhereUniqueWithoutPostsInput[]
+    | CategoryUpsertWithWhereUniqueWithoutPostsInput;
+  deleteMany?: CategoryScalarWhereInput[] | CategoryScalarWhereInput;
+  updateMany?:
+    | CategoryUpdateManyWithWhereNestedInput[]
+    | CategoryUpdateManyWithWhereNestedInput;
+}
+
+export interface CategoryUpdateWithWhereUniqueWithoutPostsInput {
+  where: CategoryWhereUniqueInput;
+  data: CategoryUpdateWithoutPostsDataInput;
+}
+
+export interface CategoryUpdateWithoutPostsDataInput {
+  text?: String;
+  category?: CategoryEnum;
+}
+
+export interface CategoryUpsertWithWhereUniqueWithoutPostsInput {
+  where: CategoryWhereUniqueInput;
+  update: CategoryUpdateWithoutPostsDataInput;
+  create: CategoryCreateWithoutPostsInput;
+}
+
+export interface CategoryScalarWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  text?: String;
+  text_not?: String;
+  text_in?: String[] | String;
+  text_not_in?: String[] | String;
+  text_lt?: String;
+  text_lte?: String;
+  text_gt?: String;
+  text_gte?: String;
+  text_contains?: String;
+  text_not_contains?: String;
+  text_starts_with?: String;
+  text_not_starts_with?: String;
+  text_ends_with?: String;
+  text_not_ends_with?: String;
+  category?: CategoryEnum;
+  category_not?: CategoryEnum;
+  category_in?: CategoryEnum[] | CategoryEnum;
+  category_not_in?: CategoryEnum[] | CategoryEnum;
+  AND?: CategoryScalarWhereInput[] | CategoryScalarWhereInput;
+  OR?: CategoryScalarWhereInput[] | CategoryScalarWhereInput;
+  NOT?: CategoryScalarWhereInput[] | CategoryScalarWhereInput;
+}
+
+export interface CategoryUpdateManyWithWhereNestedInput {
+  where: CategoryScalarWhereInput;
+  data: CategoryUpdateManyDataInput;
+}
+
+export interface CategoryUpdateManyDataInput {
+  text?: String;
+  category?: CategoryEnum;
 }
 
 export interface PostUpsertWithWhereUniqueWithoutAuthorInput {
@@ -874,7 +1104,6 @@ export interface PostUpdateManyDataInput {
   editorCurrentContent?: Json;
   editorHtml?: String;
   authorId?: String;
-  categories?: PostUpdatecategoriesInput;
   thumbnail?: Json;
   status?: PostStatus;
   slug?: String;
@@ -1120,13 +1349,49 @@ export interface UserUpsertWithoutPostsInput {
   create: UserCreateWithoutPostsInput;
 }
 
+export interface PostUpsertWithWhereUniqueWithoutCategoriesInput {
+  where: PostWhereUniqueInput;
+  update: PostUpdateWithoutCategoriesDataInput;
+  create: PostCreateWithoutCategoriesInput;
+}
+
+export interface CategoryUpdateManyMutationInput {
+  text?: String;
+  category?: CategoryEnum;
+}
+
+export interface PostCreateInput {
+  title: String;
+  editorSerializedOutput: Json;
+  editorCurrentContent: Json;
+  editorHtml: String;
+  author?: UserCreateOneWithoutPostsInput;
+  authorId: String;
+  categories?: CategoryCreateManyWithoutPostsInput;
+  thumbnail: Json;
+  status: PostStatus;
+  slug: String;
+}
+
+export interface PostUpdateInput {
+  title?: String;
+  editorSerializedOutput?: Json;
+  editorCurrentContent?: Json;
+  editorHtml?: String;
+  author?: UserUpdateOneWithoutPostsInput;
+  authorId?: String;
+  categories?: CategoryUpdateManyWithoutPostsInput;
+  thumbnail?: Json;
+  status?: PostStatus;
+  slug?: String;
+}
+
 export interface PostUpdateManyMutationInput {
   title?: String;
   editorSerializedOutput?: Json;
   editorCurrentContent?: Json;
   editorHtml?: String;
   authorId?: String;
-  categories?: PostUpdatecategoriesInput;
   thumbnail?: Json;
   status?: PostStatus;
   slug?: String;
@@ -1166,6 +1431,17 @@ export interface UserUpdateManyMutationInput {
   accessToken?: String;
 }
 
+export interface CategorySubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: CategoryWhereInput;
+  AND?: CategorySubscriptionWhereInput[] | CategorySubscriptionWhereInput;
+  OR?: CategorySubscriptionWhereInput[] | CategorySubscriptionWhereInput;
+  NOT?: CategorySubscriptionWhereInput[] | CategorySubscriptionWhereInput;
+}
+
 export interface PostSubscriptionWhereInput {
   mutation_in?: MutationType[] | MutationType;
   updatedFields_contains?: String;
@@ -1192,6 +1468,48 @@ export interface NodeNode {
   id: ID_Output;
 }
 
+export interface Category {
+  id: ID_Output;
+  text: String;
+  category: CategoryEnum;
+}
+
+export interface CategoryPromise extends Promise<Category>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  text: () => Promise<String>;
+  category: () => Promise<CategoryEnum>;
+  posts: <T = FragmentableArray<Post>>(
+    args?: {
+      where?: PostWhereInput;
+      orderBy?: PostOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+}
+
+export interface CategorySubscription
+  extends Promise<AsyncIterator<Category>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  text: () => Promise<AsyncIterator<String>>;
+  category: () => Promise<AsyncIterator<CategoryEnum>>;
+  posts: <T = Promise<AsyncIterator<PostSubscription>>>(
+    args?: {
+      where?: PostWhereInput;
+      orderBy?: PostOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+}
+
 export interface Post {
   id: ID_Output;
   title: String;
@@ -1201,7 +1519,6 @@ export interface Post {
   updatedAt: DateTimeOutput;
   createdAt: DateTimeOutput;
   authorId: String;
-  categories: Category[];
   thumbnail: Json;
   status: PostStatus;
   slug: String;
@@ -1217,7 +1534,17 @@ export interface PostPromise extends Promise<Post>, Fragmentable {
   createdAt: () => Promise<DateTimeOutput>;
   author: <T = UserPromise>() => T;
   authorId: () => Promise<String>;
-  categories: () => Promise<Category[]>;
+  categories: <T = FragmentableArray<Category>>(
+    args?: {
+      where?: CategoryWhereInput;
+      orderBy?: CategoryOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
   thumbnail: () => Promise<Json>;
   status: () => Promise<PostStatus>;
   slug: () => Promise<String>;
@@ -1235,7 +1562,17 @@ export interface PostSubscription
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   author: <T = UserSubscription>() => T;
   authorId: () => Promise<AsyncIterator<String>>;
-  categories: () => Promise<AsyncIterator<Category[]>>;
+  categories: <T = Promise<AsyncIterator<CategorySubscription>>>(
+    args?: {
+      where?: CategoryWhereInput;
+      orderBy?: CategoryOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
   thumbnail: () => Promise<AsyncIterator<Json>>;
   status: () => Promise<AsyncIterator<PostStatus>>;
   slug: () => Promise<AsyncIterator<String>>;
@@ -1344,25 +1681,25 @@ export interface UserSubscription
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
-export interface PostConnection {
+export interface CategoryConnection {
   pageInfo: PageInfo;
-  edges: PostEdge[];
+  edges: CategoryEdge[];
 }
 
-export interface PostConnectionPromise
-  extends Promise<PostConnection>,
+export interface CategoryConnectionPromise
+  extends Promise<CategoryConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<PostEdge>>() => T;
-  aggregate: <T = AggregatePostPromise>() => T;
+  edges: <T = FragmentableArray<CategoryEdge>>() => T;
+  aggregate: <T = AggregateCategoryPromise>() => T;
 }
 
-export interface PostConnectionSubscription
-  extends Promise<AsyncIterator<PostConnection>>,
+export interface CategoryConnectionSubscription
+  extends Promise<AsyncIterator<CategoryConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<PostEdgeSubscription>>>() => T;
-  aggregate: <T = AggregatePostSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<CategoryEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateCategorySubscription>() => T;
 }
 
 export interface PageInfo {
@@ -1386,6 +1723,62 @@ export interface PageInfoSubscription
   hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
   startCursor: () => Promise<AsyncIterator<String>>;
   endCursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface CategoryEdge {
+  node: Category;
+  cursor: String;
+}
+
+export interface CategoryEdgePromise
+  extends Promise<CategoryEdge>,
+    Fragmentable {
+  node: <T = CategoryPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface CategoryEdgeSubscription
+  extends Promise<AsyncIterator<CategoryEdge>>,
+    Fragmentable {
+  node: <T = CategorySubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateCategory {
+  count: Int;
+}
+
+export interface AggregateCategoryPromise
+  extends Promise<AggregateCategory>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateCategorySubscription
+  extends Promise<AsyncIterator<AggregateCategory>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface PostConnection {
+  pageInfo: PageInfo;
+  edges: PostEdge[];
+}
+
+export interface PostConnectionPromise
+  extends Promise<PostConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<PostEdge>>() => T;
+  aggregate: <T = AggregatePostPromise>() => T;
+}
+
+export interface PostConnectionSubscription
+  extends Promise<AsyncIterator<PostConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<PostEdgeSubscription>>>() => T;
+  aggregate: <T = AggregatePostSubscription>() => T;
 }
 
 export interface PostEdge {
@@ -1491,6 +1884,53 @@ export interface BatchPayloadSubscription
   count: () => Promise<AsyncIterator<Long>>;
 }
 
+export interface CategorySubscriptionPayload {
+  mutation: MutationType;
+  node: Category;
+  updatedFields: String[];
+  previousValues: CategoryPreviousValues;
+}
+
+export interface CategorySubscriptionPayloadPromise
+  extends Promise<CategorySubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = CategoryPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = CategoryPreviousValuesPromise>() => T;
+}
+
+export interface CategorySubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<CategorySubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = CategorySubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = CategoryPreviousValuesSubscription>() => T;
+}
+
+export interface CategoryPreviousValues {
+  id: ID_Output;
+  text: String;
+  category: CategoryEnum;
+}
+
+export interface CategoryPreviousValuesPromise
+  extends Promise<CategoryPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  text: () => Promise<String>;
+  category: () => Promise<CategoryEnum>;
+}
+
+export interface CategoryPreviousValuesSubscription
+  extends Promise<AsyncIterator<CategoryPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  text: () => Promise<AsyncIterator<String>>;
+  category: () => Promise<AsyncIterator<CategoryEnum>>;
+}
+
 export interface PostSubscriptionPayload {
   mutation: MutationType;
   node: Post;
@@ -1525,7 +1965,6 @@ export interface PostPreviousValues {
   updatedAt: DateTimeOutput;
   createdAt: DateTimeOutput;
   authorId: String;
-  categories: Category[];
   thumbnail: Json;
   status: PostStatus;
   slug: String;
@@ -1542,7 +1981,6 @@ export interface PostPreviousValuesPromise
   updatedAt: () => Promise<DateTimeOutput>;
   createdAt: () => Promise<DateTimeOutput>;
   authorId: () => Promise<String>;
-  categories: () => Promise<Category[]>;
   thumbnail: () => Promise<Json>;
   status: () => Promise<PostStatus>;
   slug: () => Promise<String>;
@@ -1559,7 +1997,6 @@ export interface PostPreviousValuesSubscription
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   authorId: () => Promise<AsyncIterator<String>>;
-  categories: () => Promise<AsyncIterator<Category[]>>;
   thumbnail: () => Promise<AsyncIterator<Json>>;
   status: () => Promise<AsyncIterator<PostStatus>>;
   slug: () => Promise<AsyncIterator<String>>;
@@ -1662,8 +2099,6 @@ The `String` scalar type represents textual data, represented as UTF-8 character
 */
 export type String = string;
 
-export type Json = any;
-
 /*
 DateTime scalar input type, allowing Date
 */
@@ -1679,6 +2114,8 @@ The `Int` scalar type represents non-fractional signed whole numeric values. Int
 */
 export type Int = number;
 
+export type Json = any;
+
 /*
 The `Boolean` scalar type represents `true` or `false`.
 */
@@ -1692,6 +2129,10 @@ export type Long = string;
 
 export const models: Model[] = [
   {
+    name: "Category",
+    embedded: false
+  },
+  {
     name: "Post",
     embedded: false
   },
@@ -1704,7 +2145,7 @@ export const models: Model[] = [
     embedded: false
   },
   {
-    name: "Category",
+    name: "CategoryEnum",
     embedded: false
   },
   {

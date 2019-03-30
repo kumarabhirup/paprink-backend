@@ -48,12 +48,17 @@ async function getPost(parent, args, context, info){
 
 }
 
-var postsConnection = (parent, args, context, info) => forwardTo("db")(parent, args, context, info)
+async function postsCategoryConnection(parent, args, context, info) {
+  
+  const connection = await context.db.query.postsConnection({ where: { status: "PUBLISHED" } }, info)
+  return connection
+
+}
 
 module.exports = {
   users,
   me,
   canUpdatePost,
   getPost,
-  postsConnection
+  postsCategoryConnection
 }

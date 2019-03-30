@@ -87,7 +87,7 @@ async function savePost(parent, args, context, info){
       author: { connect: { id: context.request.userId } },
       authorId: context.request.userId,
       categories: {
-        set: args.categories,
+        connect: args.categories.map(category => ({ category })),
       },
       status: args.status,
       slug: slugify(args.title, { lower: true }),
@@ -118,7 +118,7 @@ async function updatePost(parent, args, context, info){
         editorHtml: args.editorHtml,
         editorSerializedOutput: args.editorSerializedOutput,
         categories: {
-          set: args.categories
+          connect: args.categories.map(category => ({ category })),
         },
         thumbnail: args.thumbnail,
         status: args.status,

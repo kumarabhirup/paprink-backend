@@ -3,7 +3,11 @@ module.exports = {
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-/* GraphQL */ `type AggregatePost {
+/* GraphQL */ `type AggregateCategory {
+  count: Int!
+}
+
+type AggregatePost {
   count: Int!
 }
 
@@ -15,7 +19,41 @@ type BatchPayload {
   count: Long!
 }
 
-enum Category {
+type Category {
+  id: ID!
+  text: String!
+  category: CategoryEnum!
+  posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
+}
+
+type CategoryConnection {
+  pageInfo: PageInfo!
+  edges: [CategoryEdge]!
+  aggregate: AggregateCategory!
+}
+
+input CategoryCreateInput {
+  text: String!
+  category: CategoryEnum!
+  posts: PostCreateManyWithoutCategoriesInput
+}
+
+input CategoryCreateManyWithoutPostsInput {
+  create: [CategoryCreateWithoutPostsInput!]
+  connect: [CategoryWhereUniqueInput!]
+}
+
+input CategoryCreateWithoutPostsInput {
+  text: String!
+  category: CategoryEnum!
+}
+
+type CategoryEdge {
+  node: Category!
+  cursor: String!
+}
+
+enum CategoryEnum {
   TECH
   FIN
   DIGIMARK
@@ -44,6 +82,176 @@ enum Category {
   REVIEW
 }
 
+enum CategoryOrderByInput {
+  id_ASC
+  id_DESC
+  text_ASC
+  text_DESC
+  category_ASC
+  category_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type CategoryPreviousValues {
+  id: ID!
+  text: String!
+  category: CategoryEnum!
+}
+
+input CategoryScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  text: String
+  text_not: String
+  text_in: [String!]
+  text_not_in: [String!]
+  text_lt: String
+  text_lte: String
+  text_gt: String
+  text_gte: String
+  text_contains: String
+  text_not_contains: String
+  text_starts_with: String
+  text_not_starts_with: String
+  text_ends_with: String
+  text_not_ends_with: String
+  category: CategoryEnum
+  category_not: CategoryEnum
+  category_in: [CategoryEnum!]
+  category_not_in: [CategoryEnum!]
+  AND: [CategoryScalarWhereInput!]
+  OR: [CategoryScalarWhereInput!]
+  NOT: [CategoryScalarWhereInput!]
+}
+
+type CategorySubscriptionPayload {
+  mutation: MutationType!
+  node: Category
+  updatedFields: [String!]
+  previousValues: CategoryPreviousValues
+}
+
+input CategorySubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: CategoryWhereInput
+  AND: [CategorySubscriptionWhereInput!]
+  OR: [CategorySubscriptionWhereInput!]
+  NOT: [CategorySubscriptionWhereInput!]
+}
+
+input CategoryUpdateInput {
+  text: String
+  category: CategoryEnum
+  posts: PostUpdateManyWithoutCategoriesInput
+}
+
+input CategoryUpdateManyDataInput {
+  text: String
+  category: CategoryEnum
+}
+
+input CategoryUpdateManyMutationInput {
+  text: String
+  category: CategoryEnum
+}
+
+input CategoryUpdateManyWithoutPostsInput {
+  create: [CategoryCreateWithoutPostsInput!]
+  delete: [CategoryWhereUniqueInput!]
+  connect: [CategoryWhereUniqueInput!]
+  set: [CategoryWhereUniqueInput!]
+  disconnect: [CategoryWhereUniqueInput!]
+  update: [CategoryUpdateWithWhereUniqueWithoutPostsInput!]
+  upsert: [CategoryUpsertWithWhereUniqueWithoutPostsInput!]
+  deleteMany: [CategoryScalarWhereInput!]
+  updateMany: [CategoryUpdateManyWithWhereNestedInput!]
+}
+
+input CategoryUpdateManyWithWhereNestedInput {
+  where: CategoryScalarWhereInput!
+  data: CategoryUpdateManyDataInput!
+}
+
+input CategoryUpdateWithoutPostsDataInput {
+  text: String
+  category: CategoryEnum
+}
+
+input CategoryUpdateWithWhereUniqueWithoutPostsInput {
+  where: CategoryWhereUniqueInput!
+  data: CategoryUpdateWithoutPostsDataInput!
+}
+
+input CategoryUpsertWithWhereUniqueWithoutPostsInput {
+  where: CategoryWhereUniqueInput!
+  update: CategoryUpdateWithoutPostsDataInput!
+  create: CategoryCreateWithoutPostsInput!
+}
+
+input CategoryWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  text: String
+  text_not: String
+  text_in: [String!]
+  text_not_in: [String!]
+  text_lt: String
+  text_lte: String
+  text_gt: String
+  text_gte: String
+  text_contains: String
+  text_not_contains: String
+  text_starts_with: String
+  text_not_starts_with: String
+  text_ends_with: String
+  text_not_ends_with: String
+  category: CategoryEnum
+  category_not: CategoryEnum
+  category_in: [CategoryEnum!]
+  category_not_in: [CategoryEnum!]
+  posts_every: PostWhereInput
+  posts_some: PostWhereInput
+  posts_none: PostWhereInput
+  AND: [CategoryWhereInput!]
+  OR: [CategoryWhereInput!]
+  NOT: [CategoryWhereInput!]
+}
+
+input CategoryWhereUniqueInput {
+  id: ID
+  category: CategoryEnum
+}
+
 scalar DateTime
 
 scalar Json
@@ -51,6 +259,12 @@ scalar Json
 scalar Long
 
 type Mutation {
+  createCategory(data: CategoryCreateInput!): Category!
+  updateCategory(data: CategoryUpdateInput!, where: CategoryWhereUniqueInput!): Category
+  updateManyCategories(data: CategoryUpdateManyMutationInput!, where: CategoryWhereInput): BatchPayload!
+  upsertCategory(where: CategoryWhereUniqueInput!, create: CategoryCreateInput!, update: CategoryUpdateInput!): Category!
+  deleteCategory(where: CategoryWhereUniqueInput!): Category
+  deleteManyCategories(where: CategoryWhereInput): BatchPayload!
   createPost(data: PostCreateInput!): Post!
   updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
   updateManyPosts(data: PostUpdateManyMutationInput!, where: PostWhereInput): BatchPayload!
@@ -92,7 +306,7 @@ type Post {
   createdAt: DateTime!
   author: User
   authorId: String!
-  categories: [Category!]!
+  categories(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Category!]
   thumbnail: Json!
   status: PostStatus!
   slug: String!
@@ -104,10 +318,6 @@ type PostConnection {
   aggregate: AggregatePost!
 }
 
-input PostCreatecategoriesInput {
-  set: [Category!]
-}
-
 input PostCreateInput {
   title: String!
   editorSerializedOutput: Json!
@@ -115,7 +325,7 @@ input PostCreateInput {
   editorHtml: String!
   author: UserCreateOneWithoutPostsInput
   authorId: String!
-  categories: PostCreatecategoriesInput
+  categories: CategoryCreateManyWithoutPostsInput
   thumbnail: Json!
   status: PostStatus!
   slug: String!
@@ -126,13 +336,30 @@ input PostCreateManyWithoutAuthorInput {
   connect: [PostWhereUniqueInput!]
 }
 
+input PostCreateManyWithoutCategoriesInput {
+  create: [PostCreateWithoutCategoriesInput!]
+  connect: [PostWhereUniqueInput!]
+}
+
 input PostCreateWithoutAuthorInput {
   title: String!
   editorSerializedOutput: Json!
   editorCurrentContent: Json!
   editorHtml: String!
   authorId: String!
-  categories: PostCreatecategoriesInput
+  categories: CategoryCreateManyWithoutPostsInput
+  thumbnail: Json!
+  status: PostStatus!
+  slug: String!
+}
+
+input PostCreateWithoutCategoriesInput {
+  title: String!
+  editorSerializedOutput: Json!
+  editorCurrentContent: Json!
+  editorHtml: String!
+  author: UserCreateOneWithoutPostsInput
+  authorId: String!
   thumbnail: Json!
   status: PostStatus!
   slug: String!
@@ -177,7 +404,6 @@ type PostPreviousValues {
   updatedAt: DateTime!
   createdAt: DateTime!
   authorId: String!
-  categories: [Category!]!
   thumbnail: Json!
   status: PostStatus!
   slug: String!
@@ -303,10 +529,6 @@ input PostSubscriptionWhereInput {
   NOT: [PostSubscriptionWhereInput!]
 }
 
-input PostUpdatecategoriesInput {
-  set: [Category!]
-}
-
 input PostUpdateInput {
   title: String
   editorSerializedOutput: Json
@@ -314,7 +536,7 @@ input PostUpdateInput {
   editorHtml: String
   author: UserUpdateOneWithoutPostsInput
   authorId: String
-  categories: PostUpdatecategoriesInput
+  categories: CategoryUpdateManyWithoutPostsInput
   thumbnail: Json
   status: PostStatus
   slug: String
@@ -326,7 +548,6 @@ input PostUpdateManyDataInput {
   editorCurrentContent: Json
   editorHtml: String
   authorId: String
-  categories: PostUpdatecategoriesInput
   thumbnail: Json
   status: PostStatus
   slug: String
@@ -338,7 +559,6 @@ input PostUpdateManyMutationInput {
   editorCurrentContent: Json
   editorHtml: String
   authorId: String
-  categories: PostUpdatecategoriesInput
   thumbnail: Json
   status: PostStatus
   slug: String
@@ -356,6 +576,18 @@ input PostUpdateManyWithoutAuthorInput {
   updateMany: [PostUpdateManyWithWhereNestedInput!]
 }
 
+input PostUpdateManyWithoutCategoriesInput {
+  create: [PostCreateWithoutCategoriesInput!]
+  delete: [PostWhereUniqueInput!]
+  connect: [PostWhereUniqueInput!]
+  set: [PostWhereUniqueInput!]
+  disconnect: [PostWhereUniqueInput!]
+  update: [PostUpdateWithWhereUniqueWithoutCategoriesInput!]
+  upsert: [PostUpsertWithWhereUniqueWithoutCategoriesInput!]
+  deleteMany: [PostScalarWhereInput!]
+  updateMany: [PostUpdateManyWithWhereNestedInput!]
+}
+
 input PostUpdateManyWithWhereNestedInput {
   where: PostScalarWhereInput!
   data: PostUpdateManyDataInput!
@@ -367,7 +599,19 @@ input PostUpdateWithoutAuthorDataInput {
   editorCurrentContent: Json
   editorHtml: String
   authorId: String
-  categories: PostUpdatecategoriesInput
+  categories: CategoryUpdateManyWithoutPostsInput
+  thumbnail: Json
+  status: PostStatus
+  slug: String
+}
+
+input PostUpdateWithoutCategoriesDataInput {
+  title: String
+  editorSerializedOutput: Json
+  editorCurrentContent: Json
+  editorHtml: String
+  author: UserUpdateOneWithoutPostsInput
+  authorId: String
   thumbnail: Json
   status: PostStatus
   slug: String
@@ -378,10 +622,21 @@ input PostUpdateWithWhereUniqueWithoutAuthorInput {
   data: PostUpdateWithoutAuthorDataInput!
 }
 
+input PostUpdateWithWhereUniqueWithoutCategoriesInput {
+  where: PostWhereUniqueInput!
+  data: PostUpdateWithoutCategoriesDataInput!
+}
+
 input PostUpsertWithWhereUniqueWithoutAuthorInput {
   where: PostWhereUniqueInput!
   update: PostUpdateWithoutAuthorDataInput!
   create: PostCreateWithoutAuthorInput!
+}
+
+input PostUpsertWithWhereUniqueWithoutCategoriesInput {
+  where: PostWhereUniqueInput!
+  update: PostUpdateWithoutCategoriesDataInput!
+  create: PostCreateWithoutCategoriesInput!
 }
 
 input PostWhereInput {
@@ -458,6 +713,9 @@ input PostWhereInput {
   authorId_not_starts_with: String
   authorId_ends_with: String
   authorId_not_ends_with: String
+  categories_every: CategoryWhereInput
+  categories_some: CategoryWhereInput
+  categories_none: CategoryWhereInput
   status: PostStatus
   status_not: PostStatus
   status_in: [PostStatus!]
@@ -494,6 +752,9 @@ enum Previledge {
 }
 
 type Query {
+  category(where: CategoryWhereUniqueInput!): Category
+  categories(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Category]!
+  categoriesConnection(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CategoryConnection!
   post(where: PostWhereUniqueInput!): Post
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
   postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
@@ -504,6 +765,7 @@ type Query {
 }
 
 type Subscription {
+  category(where: CategorySubscriptionWhereInput): CategorySubscriptionPayload
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
