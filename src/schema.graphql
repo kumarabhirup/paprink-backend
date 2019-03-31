@@ -54,6 +54,11 @@ type Query {
     after: String
     orderBy: PostOrderByInput
   ): PostConnection!
+  postsAuthorConnection(
+    authorUsername: String!
+    after: String
+    orderBy: PostOrderByInput
+  ): PostConnection!
 }
 
 type Post {

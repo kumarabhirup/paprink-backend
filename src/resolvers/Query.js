@@ -70,10 +70,31 @@ async function postsCategoryConnection(parent, args, context, info) {
 
 }
 
+async function postsAuthorConnection(parent, args, context, info) {
+  
+  const authorUsername = args.authorUsername
+
+  const connection = await context.db.query.postsConnection({
+    where: {
+      status: "PUBLISHED", 
+      author: {
+        username: authorUsername
+      }
+    },
+    first: 8,
+    orderBy: args.orderBy || "updatedAt_DESC",
+    after: args.after
+  }, info)
+
+  return connection
+
+}
+
 module.exports = {
   users,
   me,
   canUpdatePost,
   getPost,
-  postsCategoryConnection
+  postsCategoryConnection,
+  postsAuthorConnection
 }
