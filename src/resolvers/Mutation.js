@@ -110,6 +110,19 @@ async function updatePost(parent, args, context, info){
 
   if (canUpdate) {
 
+    // 1. First, disconnect the categories you had earlier
+    await context.db.mutation.updatePost({
+      where: { id: postToUpdate.id },
+      data: {
+        categories: {
+          disconnect: JSON.parse(JSON.stringify(postToUpdate)).categories.map(category => {
+            return { category: category.category }
+          })
+        }
+      }
+    }, `{ id }`)
+
+    // 2. Fill the post with new categories!
     const post = await context.db.mutation.updatePost({
       where: { id: postToUpdate.id },
       data: {
