@@ -20,7 +20,8 @@ async function signIn(parent, args, context, info){
     // Create user
     const newUser = await context.db.mutation.createUser({
       data: {
-        ...data
+        ...data,
+        username: `${slugify(args.name, { lower: true, replacement: '_' })}_${Math.floor(Math.random() * 99) + 1}`
       }
     }, info)
 

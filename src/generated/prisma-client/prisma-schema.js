@@ -775,6 +775,7 @@ type User {
   socialId: String!
   fname: String!
   lname: String!
+  username: String!
   name: String!
   phone: String
   email: String!
@@ -801,6 +802,7 @@ input UserCreateInput {
   socialId: String!
   fname: String!
   lname: String!
+  username: String!
   name: String!
   phone: String
   email: String!
@@ -833,6 +835,7 @@ input UserCreateWithoutPostsInput {
   socialId: String!
   fname: String!
   lname: String!
+  username: String!
   name: String!
   phone: String
   email: String!
@@ -860,6 +863,8 @@ enum UserOrderByInput {
   fname_DESC
   lname_ASC
   lname_DESC
+  username_ASC
+  username_DESC
   name_ASC
   name_DESC
   phone_ASC
@@ -889,6 +894,7 @@ type UserPreviousValues {
   socialId: String!
   fname: String!
   lname: String!
+  username: String!
   name: String!
   phone: String
   email: String!
@@ -960,6 +966,20 @@ input UserScalarWhereInput {
   lname_not_starts_with: String
   lname_ends_with: String
   lname_not_ends_with: String
+  username: String
+  username_not: String
+  username_in: [String!]
+  username_not_in: [String!]
+  username_lt: String
+  username_lte: String
+  username_gt: String
+  username_gte: String
+  username_contains: String
+  username_not_contains: String
+  username_starts_with: String
+  username_not_starts_with: String
+  username_ends_with: String
+  username_not_ends_with: String
   name: String
   name_not: String
   name_in: [String!]
@@ -1129,6 +1149,7 @@ input UserUpdateDataInput {
   socialId: String
   fname: String
   lname: String
+  username: String
   name: String
   phone: String
   email: String
@@ -1147,6 +1168,7 @@ input UserUpdateInput {
   socialId: String
   fname: String
   lname: String
+  username: String
   name: String
   phone: String
   email: String
@@ -1165,6 +1187,7 @@ input UserUpdateManyDataInput {
   socialId: String
   fname: String
   lname: String
+  username: String
   name: String
   phone: String
   email: String
@@ -1193,6 +1216,7 @@ input UserUpdateManyMutationInput {
   socialId: String
   fname: String
   lname: String
+  username: String
   name: String
   phone: String
   email: String
@@ -1227,6 +1251,7 @@ input UserUpdateWithoutPostsDataInput {
   socialId: String
   fname: String
   lname: String
+  username: String
   name: String
   phone: String
   email: String
@@ -1313,6 +1338,20 @@ input UserWhereInput {
   lname_not_starts_with: String
   lname_ends_with: String
   lname_not_ends_with: String
+  username: String
+  username_not: String
+  username_in: [String!]
+  username_not_in: [String!]
+  username_lt: String
+  username_lte: String
+  username_gt: String
+  username_gte: String
+  username_contains: String
+  username_not_contains: String
+  username_starts_with: String
+  username_not_starts_with: String
+  username_ends_with: String
+  username_not_ends_with: String
   name: String
   name_not: String
   name_in: [String!]
@@ -1469,6 +1508,7 @@ input UserWhereInput {
 input UserWhereUniqueInput {
   id: ID
   socialId: String
+  username: String
   phone: String
   email: String
 }

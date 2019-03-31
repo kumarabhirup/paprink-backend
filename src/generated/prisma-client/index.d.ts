@@ -252,6 +252,8 @@ export type UserOrderByInput =
   | "fname_DESC"
   | "lname_ASC"
   | "lname_DESC"
+  | "username_ASC"
+  | "username_DESC"
   | "name_ASC"
   | "name_DESC"
   | "phone_ASC"
@@ -458,6 +460,20 @@ export interface UserWhereInput {
   lname_not_starts_with?: String;
   lname_ends_with?: String;
   lname_not_ends_with?: String;
+  username?: String;
+  username_not?: String;
+  username_in?: String[] | String;
+  username_not_in?: String[] | String;
+  username_lt?: String;
+  username_lte?: String;
+  username_gt?: String;
+  username_gte?: String;
+  username_contains?: String;
+  username_not_contains?: String;
+  username_starts_with?: String;
+  username_not_starts_with?: String;
+  username_ends_with?: String;
+  username_not_ends_with?: String;
   name?: String;
   name_not?: String;
   name_in?: String[] | String;
@@ -659,6 +675,7 @@ export type PostWhereUniqueInput = AtLeastOne<{
 export type UserWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
   socialId?: String;
+  username?: String;
   phone?: String;
   email?: String;
 }>;
@@ -697,6 +714,7 @@ export interface UserCreateWithoutPostsInput {
   socialId: String;
   fname: String;
   lname: String;
+  username: String;
   name: String;
   phone?: String;
   email: String;
@@ -719,6 +737,7 @@ export interface UserCreateInput {
   socialId: String;
   fname: String;
   lname: String;
+  username: String;
   name: String;
   phone?: String;
   email: String;
@@ -820,6 +839,7 @@ export interface UserUpdateWithoutPostsDataInput {
   socialId?: String;
   fname?: String;
   lname?: String;
+  username?: String;
   name?: String;
   phone?: String;
   email?: String;
@@ -860,6 +880,7 @@ export interface UserUpdateDataInput {
   socialId?: String;
   fname?: String;
   lname?: String;
+  username?: String;
   name?: String;
   phone?: String;
   email?: String;
@@ -1176,6 +1197,20 @@ export interface UserScalarWhereInput {
   lname_not_starts_with?: String;
   lname_ends_with?: String;
   lname_not_ends_with?: String;
+  username?: String;
+  username_not?: String;
+  username_in?: String[] | String;
+  username_not_in?: String[] | String;
+  username_lt?: String;
+  username_lte?: String;
+  username_gt?: String;
+  username_gte?: String;
+  username_contains?: String;
+  username_not_contains?: String;
+  username_starts_with?: String;
+  username_not_starts_with?: String;
+  username_ends_with?: String;
+  username_not_ends_with?: String;
   name?: String;
   name_not?: String;
   name_in?: String[] | String;
@@ -1332,6 +1367,7 @@ export interface UserUpdateManyDataInput {
   socialId?: String;
   fname?: String;
   lname?: String;
+  username?: String;
   name?: String;
   phone?: String;
   email?: String;
@@ -1401,6 +1437,7 @@ export interface UserUpdateInput {
   socialId?: String;
   fname?: String;
   lname?: String;
+  username?: String;
   name?: String;
   phone?: String;
   email?: String;
@@ -1419,6 +1456,7 @@ export interface UserUpdateManyMutationInput {
   socialId?: String;
   fname?: String;
   lname?: String;
+  username?: String;
   name?: String;
   phone?: String;
   email?: String;
@@ -1583,6 +1621,7 @@ export interface User {
   socialId: String;
   fname: String;
   lname: String;
+  username: String;
   name: String;
   phone?: String;
   email: String;
@@ -1602,6 +1641,7 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   socialId: () => Promise<String>;
   fname: () => Promise<String>;
   lname: () => Promise<String>;
+  username: () => Promise<String>;
   name: () => Promise<String>;
   phone: () => Promise<String>;
   email: () => Promise<String>;
@@ -1645,6 +1685,7 @@ export interface UserSubscription
   socialId: () => Promise<AsyncIterator<String>>;
   fname: () => Promise<AsyncIterator<String>>;
   lname: () => Promise<AsyncIterator<String>>;
+  username: () => Promise<AsyncIterator<String>>;
   name: () => Promise<AsyncIterator<String>>;
   phone: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
@@ -2032,6 +2073,7 @@ export interface UserPreviousValues {
   socialId: String;
   fname: String;
   lname: String;
+  username: String;
   name: String;
   phone?: String;
   email: String;
@@ -2053,6 +2095,7 @@ export interface UserPreviousValuesPromise
   socialId: () => Promise<String>;
   fname: () => Promise<String>;
   lname: () => Promise<String>;
+  username: () => Promise<String>;
   name: () => Promise<String>;
   phone: () => Promise<String>;
   email: () => Promise<String>;
@@ -2074,6 +2117,7 @@ export interface UserPreviousValuesSubscription
   socialId: () => Promise<AsyncIterator<String>>;
   fname: () => Promise<AsyncIterator<String>>;
   lname: () => Promise<AsyncIterator<String>>;
+  username: () => Promise<AsyncIterator<String>>;
   name: () => Promise<AsyncIterator<String>>;
   phone: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
