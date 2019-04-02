@@ -20,7 +20,8 @@ async function signIn(parent, args, context, info){
     // Create user
     const newUser = await context.db.mutation.createUser({
       data: {
-        ...data
+        ...data,
+        username: `${slugify(args.name, { lower: true, replacement: '_' })}_${Math.floor(Math.random() * 99) + 1}`
       }
     }, info)
 
@@ -87,7 +88,7 @@ async function savePost(parent, args, context, info){
       author: { connect: { id: context.request.userId } },
       authorId: context.request.userId,
       categories: {
-        set: args.categories,
+        connect: args.categories.map(category => ({ category })),
       },
       status: args.status,
       slug: slugify(args.title, { lower: true }),
@@ -110,6 +111,19 @@ async function updatePost(parent, args, context, info){
 
   if (canUpdate) {
 
+    // 1. First, disconnect the categories you had earlier
+    await context.db.mutation.updatePost({
+      where: { id: postToUpdate.id },
+      data: {
+        categories: {
+          disconnect: JSON.parse(JSON.stringify(postToUpdate)).categories.map(category => {
+            return { category: category.category }
+          })
+        }
+      }
+    }, `{ id }`)
+
+    // 2. Fill the post with new categories!
     const post = await context.db.mutation.updatePost({
       where: { id: postToUpdate.id },
       data: {
@@ -118,7 +132,7 @@ async function updatePost(parent, args, context, info){
         editorHtml: args.editorHtml,
         editorSerializedOutput: args.editorSerializedOutput,
         categories: {
-          set: args.categories
+          connect: args.categories.map(category => ({ category })),
         },
         thumbnail: args.thumbnail,
         status: args.status,

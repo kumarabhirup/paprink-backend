@@ -6,7 +6,7 @@ enum Previledge {
   READER
 }
 
-enum Category {
+enum CategoryEnum {
   TECH
   FIN
   DIGIMARK
@@ -35,6 +35,13 @@ enum Category {
   REVIEW
 }
 
+type Category {
+  id: ID! @unique
+  text: String!
+  category: CategoryEnum! @unique
+  posts: [Post]! @relation(name: "PostsCategories")
+}
+
 enum PostStatus {
   PUBLISHED
   DRAFT
@@ -51,7 +58,7 @@ type Post {
   createdAt: DateTime!
   author: User @relation(name: "PostsAndUser")
   authorId: String!
-  categories: [Category!]!
+  categories: [Category!]! @relation(name: "PostsCategories")
   thumbnail: Json!
   status: PostStatus!
   slug: String!
@@ -62,6 +69,7 @@ type User {
   socialId: String! @unique
   fname: String!
   lname: String!
+  username: String! @unique
   name: String!
   phone: String @unique
   email: String! @unique

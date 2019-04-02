@@ -40,20 +40,88 @@ async function getPost(parent, args, context, info){
 
   const post = await context.db.query.post({where: {id: postId}}, postInfo)
 
-  if (post) {
+  if (post.status === "PUBLISHED") {
     return post
+  } else if (post.status === "DRAFT" && post.author.id === context.request.userId ) {
+    return post
+  } else {
+    throw new Error('POST NOT FOUND!')
   }
-
-  throw new Error('POST NOT FOUND.')
 
 }
 
-var postsConnection = (parent, args, context, info) => forwardTo("db")(parent, args, context, info)
+async function postsCategoryConnection(parent, args, context, info) {
+  
+  const category = args.categorySlug
+
+  const connection = await context.db.query.postsConnection({
+    where: {
+      status: "PUBLISHED", 
+      categories_some: {
+        category
+      }
+    },
+    first: 8,
+    orderBy: args.orderBy || "updatedAt_DESC",
+    after: args.after
+  }, info)
+
+  if (connection) {
+    return connection
+  }
+
+  throw new Error('Error finding the posts.')
+
+}
+
+async function postsAuthorConnection(parent, args, context, info) {
+  
+  const authorUsername = args.authorUsername
+
+  const connection = await context.db.query.postsConnection({
+    where: {
+      status: "PUBLISHED", 
+      author: {
+        username: authorUsername
+      }
+    },
+    first: 8,
+    orderBy: args.orderBy || "updatedAt_DESC",
+    after: args.after
+  }, info)
+
+  if (connection) {
+    return connection
+  }
+
+  throw new Error('Error finding the author.')
+
+}
+
+async function getAuthor(parent, args, context, info) {
+
+  const authorUsername = args.authorUsername
+
+  const author = await context.db.query.user({
+    where: {
+      username: authorUsername
+    }
+  }, info)
+
+  if (author) {
+    return author
+  }
+
+  throw new Error('Author not found.')
+
+}
 
 module.exports = {
   users,
   me,
   canUpdatePost,
   getPost,
-  postsConnection
+  postsCategoryConnection,
+  postsAuthorConnection,
+  getAuthor
 }
