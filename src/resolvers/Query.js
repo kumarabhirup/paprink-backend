@@ -66,7 +66,11 @@ async function postsCategoryConnection(parent, args, context, info) {
     after: args.after
   }, info)
 
-  return connection
+  if (connection) {
+    return connection
+  }
+
+  throw new Error('Error finding the posts.')
 
 }
 
@@ -86,7 +90,29 @@ async function postsAuthorConnection(parent, args, context, info) {
     after: args.after
   }, info)
 
-  return connection
+  if (connection) {
+    return connection
+  }
+
+  throw new Error('Error finding the author.')
+
+}
+
+async function getAuthor(parent, args, context, info) {
+
+  const authorUsername = args.authorUsername
+
+  const author = await context.db.query.user({
+    where: {
+      username: authorUsername
+    }
+  }, info)
+
+  if (author) {
+    return author
+  }
+
+  throw new Error('Author not found.')
 
 }
 
@@ -96,5 +122,6 @@ module.exports = {
   canUpdatePost,
   getPost,
   postsCategoryConnection,
-  postsAuthorConnection
+  postsAuthorConnection,
+  getAuthor
 }

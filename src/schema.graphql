@@ -59,6 +59,7 @@ type Query {
     after: String
     orderBy: PostOrderByInput
   ): PostConnection!
+  getAuthor(authorUsername: String!): User!
 }
 
 type Post {
@@ -86,6 +87,7 @@ type Category {
 
 type User {
   id: ID!
+  username: String!
   fname: String!
   lname: String!
   name: String!
