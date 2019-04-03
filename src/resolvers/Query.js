@@ -116,6 +116,35 @@ async function getAuthor(parent, args, context, info) {
 
 }
 
+async function search(parent, args, context, info) {
+
+  const posts = await context.db.query.posts({
+    where: {
+      OR: [
+        {
+          title_contains: args.searchString
+        },
+        {
+          author: {
+            username: args.searchString
+          }
+        },
+        {
+          categories_some: {
+            text_contains: args.searchString
+          }
+        },
+        {
+          editorHtml_contains: args.searchString
+        }
+      ]
+    }
+  }, info)
+
+  return posts
+
+}
+
 module.exports = {
   users,
   me,
@@ -123,5 +152,6 @@ module.exports = {
   getPost,
   postsCategoryConnection,
   postsAuthorConnection,
-  getAuthor
+  getAuthor,
+  search
 }
