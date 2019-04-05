@@ -60,7 +60,7 @@ type Query {
     orderBy: PostOrderByInput
   ): PostConnection!
   getAuthor(authorUsername: String!): User!
-  search(searchString: String!): [Post]
+  search(searchString: String): [Post]
 }
 
 type Post {

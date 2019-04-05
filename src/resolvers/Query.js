@@ -34,7 +34,7 @@ async function getPost(parent, args, context, info){
   const { slugParam } = args
   const unfilteredPostId = slugParam.split('-').pop(-1) // " may be '252352532/' (with slash) "
   const arrayOfUnfilteredPostId = [...unfilteredPostId]
-  const hasSlashAtLast = arrayOfUnfilteredPostId[arrayOfUnfilteredPostId.length - 1] === "/"
+  const hasSlashAtLast = arrayOfUnfilteredPostId[arrayOfUnfilteredPostId.length - 1] === "/" || arrayOfUnfilteredPostId[arrayOfUnfilteredPostId.length - 1] === "#"
 
   const postId = hasSlashAtLast ? unfilteredPostId.slice(0, -1) : unfilteredPostId // is '252352532 (without slash)'
 
@@ -120,6 +120,7 @@ async function search(parent, args, context, info) {
 
   const posts = await context.db.query.posts({
     where: {
+      status: "PUBLISHED",
       OR: [
         {
           title_contains: args.searchString
