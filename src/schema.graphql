@@ -48,7 +48,7 @@ type Query {
   users: [User]!
   me: User
   canUpdatePost(id: ID!): Json
-  getPost(slugParam: String!): Json!
+  getPost(slugParam: String!): Post!
   postsCategoryConnection(
     categorySlug: String!
     after: String
