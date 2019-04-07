@@ -148,6 +148,14 @@ async function updatePost(parent, args, context, info){
 
 }
 
+async function upvote(parent, args, context, info){
+
+  // Check if user is signed in.
+
+  // UPVOTE!
+
+}
+
 module.exports = {
   signIn,
   signOut,
