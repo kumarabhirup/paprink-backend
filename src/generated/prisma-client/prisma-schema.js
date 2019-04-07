@@ -11,6 +11,10 @@ type AggregatePost {
   count: Int!
 }
 
+type AggregateUpvote {
+  count: Int!
+}
+
 type AggregateUser {
   count: Int!
 }
@@ -271,6 +275,11 @@ type Mutation {
   upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
   deletePost(where: PostWhereUniqueInput!): Post
   deleteManyPosts(where: PostWhereInput): BatchPayload!
+  createUpvote(data: UpvoteCreateInput!): Upvote!
+  updateUpvote(data: UpvoteUpdateInput!, where: UpvoteWhereUniqueInput!): Upvote
+  upsertUpvote(where: UpvoteWhereUniqueInput!, create: UpvoteCreateInput!, update: UpvoteUpdateInput!): Upvote!
+  deleteUpvote(where: UpvoteWhereUniqueInput!): Upvote
+  deleteManyUpvotes(where: UpvoteWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -304,6 +313,7 @@ type Post {
   editorHtml: String!
   updatedAt: DateTime!
   createdAt: DateTime!
+  upvotes(where: UpvoteWhereInput, orderBy: UpvoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Upvote!]
   author: User
   authorId: String!
   categories(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Category!]
@@ -323,6 +333,7 @@ input PostCreateInput {
   editorSerializedOutput: Json!
   editorCurrentContent: Json!
   editorHtml: String!
+  upvotes: UpvoteCreateManyWithoutPostInput
   author: UserCreateOneWithoutPostsInput
   authorId: String!
   categories: CategoryCreateManyWithoutPostsInput
@@ -341,11 +352,17 @@ input PostCreateManyWithoutCategoriesInput {
   connect: [PostWhereUniqueInput!]
 }
 
+input PostCreateOneWithoutUpvotesInput {
+  create: PostCreateWithoutUpvotesInput
+  connect: PostWhereUniqueInput
+}
+
 input PostCreateWithoutAuthorInput {
   title: String!
   editorSerializedOutput: Json!
   editorCurrentContent: Json!
   editorHtml: String!
+  upvotes: UpvoteCreateManyWithoutPostInput
   authorId: String!
   categories: CategoryCreateManyWithoutPostsInput
   thumbnail: Json!
@@ -358,8 +375,22 @@ input PostCreateWithoutCategoriesInput {
   editorSerializedOutput: Json!
   editorCurrentContent: Json!
   editorHtml: String!
+  upvotes: UpvoteCreateManyWithoutPostInput
   author: UserCreateOneWithoutPostsInput
   authorId: String!
+  thumbnail: Json!
+  status: PostStatus!
+  slug: String!
+}
+
+input PostCreateWithoutUpvotesInput {
+  title: String!
+  editorSerializedOutput: Json!
+  editorCurrentContent: Json!
+  editorHtml: String!
+  author: UserCreateOneWithoutPostsInput
+  authorId: String!
+  categories: CategoryCreateManyWithoutPostsInput
   thumbnail: Json!
   status: PostStatus!
   slug: String!
@@ -534,6 +565,7 @@ input PostUpdateInput {
   editorSerializedOutput: Json
   editorCurrentContent: Json
   editorHtml: String
+  upvotes: UpvoteUpdateManyWithoutPostInput
   author: UserUpdateOneWithoutPostsInput
   authorId: String
   categories: CategoryUpdateManyWithoutPostsInput
@@ -593,11 +625,19 @@ input PostUpdateManyWithWhereNestedInput {
   data: PostUpdateManyDataInput!
 }
 
+input PostUpdateOneRequiredWithoutUpvotesInput {
+  create: PostCreateWithoutUpvotesInput
+  update: PostUpdateWithoutUpvotesDataInput
+  upsert: PostUpsertWithoutUpvotesInput
+  connect: PostWhereUniqueInput
+}
+
 input PostUpdateWithoutAuthorDataInput {
   title: String
   editorSerializedOutput: Json
   editorCurrentContent: Json
   editorHtml: String
+  upvotes: UpvoteUpdateManyWithoutPostInput
   authorId: String
   categories: CategoryUpdateManyWithoutPostsInput
   thumbnail: Json
@@ -610,8 +650,22 @@ input PostUpdateWithoutCategoriesDataInput {
   editorSerializedOutput: Json
   editorCurrentContent: Json
   editorHtml: String
+  upvotes: UpvoteUpdateManyWithoutPostInput
   author: UserUpdateOneWithoutPostsInput
   authorId: String
+  thumbnail: Json
+  status: PostStatus
+  slug: String
+}
+
+input PostUpdateWithoutUpvotesDataInput {
+  title: String
+  editorSerializedOutput: Json
+  editorCurrentContent: Json
+  editorHtml: String
+  author: UserUpdateOneWithoutPostsInput
+  authorId: String
+  categories: CategoryUpdateManyWithoutPostsInput
   thumbnail: Json
   status: PostStatus
   slug: String
@@ -625,6 +679,11 @@ input PostUpdateWithWhereUniqueWithoutAuthorInput {
 input PostUpdateWithWhereUniqueWithoutCategoriesInput {
   where: PostWhereUniqueInput!
   data: PostUpdateWithoutCategoriesDataInput!
+}
+
+input PostUpsertWithoutUpvotesInput {
+  update: PostUpdateWithoutUpvotesDataInput!
+  create: PostCreateWithoutUpvotesInput!
 }
 
 input PostUpsertWithWhereUniqueWithoutAuthorInput {
@@ -698,6 +757,9 @@ input PostWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
+  upvotes_every: UpvoteWhereInput
+  upvotes_some: UpvoteWhereInput
+  upvotes_none: UpvoteWhereInput
   author: UserWhereInput
   authorId: String
   authorId_not: String
@@ -758,6 +820,9 @@ type Query {
   post(where: PostWhereUniqueInput!): Post
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
   postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
+  upvote(where: UpvoteWhereUniqueInput!): Upvote
+  upvotes(where: UpvoteWhereInput, orderBy: UpvoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Upvote]!
+  upvotesConnection(where: UpvoteWhereInput, orderBy: UpvoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UpvoteConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
@@ -767,7 +832,218 @@ type Query {
 type Subscription {
   category(where: CategorySubscriptionWhereInput): CategorySubscriptionPayload
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
+  upvote(where: UpvoteSubscriptionWhereInput): UpvoteSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+}
+
+type Upvote {
+  id: ID!
+  user: User!
+  post: Post!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+type UpvoteConnection {
+  pageInfo: PageInfo!
+  edges: [UpvoteEdge]!
+  aggregate: AggregateUpvote!
+}
+
+input UpvoteCreateInput {
+  user: UserCreateOneWithoutUpvotesInput!
+  post: PostCreateOneWithoutUpvotesInput!
+}
+
+input UpvoteCreateManyWithoutPostInput {
+  create: [UpvoteCreateWithoutPostInput!]
+  connect: [UpvoteWhereUniqueInput!]
+}
+
+input UpvoteCreateManyWithoutUserInput {
+  create: [UpvoteCreateWithoutUserInput!]
+  connect: [UpvoteWhereUniqueInput!]
+}
+
+input UpvoteCreateWithoutPostInput {
+  user: UserCreateOneWithoutUpvotesInput!
+}
+
+input UpvoteCreateWithoutUserInput {
+  post: PostCreateOneWithoutUpvotesInput!
+}
+
+type UpvoteEdge {
+  node: Upvote!
+  cursor: String!
+}
+
+enum UpvoteOrderByInput {
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type UpvotePreviousValues {
+  id: ID!
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+input UpvoteScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  AND: [UpvoteScalarWhereInput!]
+  OR: [UpvoteScalarWhereInput!]
+  NOT: [UpvoteScalarWhereInput!]
+}
+
+type UpvoteSubscriptionPayload {
+  mutation: MutationType!
+  node: Upvote
+  updatedFields: [String!]
+  previousValues: UpvotePreviousValues
+}
+
+input UpvoteSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: UpvoteWhereInput
+  AND: [UpvoteSubscriptionWhereInput!]
+  OR: [UpvoteSubscriptionWhereInput!]
+  NOT: [UpvoteSubscriptionWhereInput!]
+}
+
+input UpvoteUpdateInput {
+  user: UserUpdateOneRequiredWithoutUpvotesInput
+  post: PostUpdateOneRequiredWithoutUpvotesInput
+}
+
+input UpvoteUpdateManyWithoutPostInput {
+  create: [UpvoteCreateWithoutPostInput!]
+  delete: [UpvoteWhereUniqueInput!]
+  connect: [UpvoteWhereUniqueInput!]
+  set: [UpvoteWhereUniqueInput!]
+  disconnect: [UpvoteWhereUniqueInput!]
+  update: [UpvoteUpdateWithWhereUniqueWithoutPostInput!]
+  upsert: [UpvoteUpsertWithWhereUniqueWithoutPostInput!]
+  deleteMany: [UpvoteScalarWhereInput!]
+}
+
+input UpvoteUpdateManyWithoutUserInput {
+  create: [UpvoteCreateWithoutUserInput!]
+  delete: [UpvoteWhereUniqueInput!]
+  connect: [UpvoteWhereUniqueInput!]
+  set: [UpvoteWhereUniqueInput!]
+  disconnect: [UpvoteWhereUniqueInput!]
+  update: [UpvoteUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [UpvoteUpsertWithWhereUniqueWithoutUserInput!]
+  deleteMany: [UpvoteScalarWhereInput!]
+}
+
+input UpvoteUpdateWithoutPostDataInput {
+  user: UserUpdateOneRequiredWithoutUpvotesInput
+}
+
+input UpvoteUpdateWithoutUserDataInput {
+  post: PostUpdateOneRequiredWithoutUpvotesInput
+}
+
+input UpvoteUpdateWithWhereUniqueWithoutPostInput {
+  where: UpvoteWhereUniqueInput!
+  data: UpvoteUpdateWithoutPostDataInput!
+}
+
+input UpvoteUpdateWithWhereUniqueWithoutUserInput {
+  where: UpvoteWhereUniqueInput!
+  data: UpvoteUpdateWithoutUserDataInput!
+}
+
+input UpvoteUpsertWithWhereUniqueWithoutPostInput {
+  where: UpvoteWhereUniqueInput!
+  update: UpvoteUpdateWithoutPostDataInput!
+  create: UpvoteCreateWithoutPostInput!
+}
+
+input UpvoteUpsertWithWhereUniqueWithoutUserInput {
+  where: UpvoteWhereUniqueInput!
+  update: UpvoteUpdateWithoutUserDataInput!
+  create: UpvoteCreateWithoutUserInput!
+}
+
+input UpvoteWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  user: UserWhereInput
+  post: PostWhereInput
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  AND: [UpvoteWhereInput!]
+  OR: [UpvoteWhereInput!]
+  NOT: [UpvoteWhereInput!]
+}
+
+input UpvoteWhereUniqueInput {
+  id: ID
 }
 
 type User {
@@ -781,6 +1057,7 @@ type User {
   email: String!
   gender: String
   birthday: String
+  upvotes(where: UpvoteWhereInput, orderBy: UpvoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Upvote!]
   bio: String
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
   profilePicture: String!
@@ -808,6 +1085,7 @@ input UserCreateInput {
   email: String!
   gender: String
   birthday: String
+  upvotes: UpvoteCreateManyWithoutUserInput
   bio: String
   posts: PostCreateManyWithoutAuthorInput
   profilePicture: String!
@@ -827,6 +1105,11 @@ input UserCreateOneWithoutPostsInput {
   connect: UserWhereUniqueInput
 }
 
+input UserCreateOneWithoutUpvotesInput {
+  create: UserCreateWithoutUpvotesInput
+  connect: UserWhereUniqueInput
+}
+
 input UserCreatepreviledgeInput {
   set: [Previledge!]
 }
@@ -841,7 +1124,27 @@ input UserCreateWithoutPostsInput {
   email: String!
   gender: String
   birthday: String
+  upvotes: UpvoteCreateManyWithoutUserInput
   bio: String
+  profilePicture: String!
+  followers: UserCreateManyInput
+  previledge: UserCreatepreviledgeInput
+  signUpMethod: String!
+  accessToken: String!
+}
+
+input UserCreateWithoutUpvotesInput {
+  socialId: String!
+  fname: String!
+  lname: String!
+  username: String!
+  name: String!
+  phone: String
+  email: String!
+  gender: String
+  birthday: String
+  bio: String
+  posts: PostCreateManyWithoutAuthorInput
   profilePicture: String!
   followers: UserCreateManyInput
   previledge: UserCreatepreviledgeInput
@@ -1155,6 +1458,7 @@ input UserUpdateDataInput {
   email: String
   gender: String
   birthday: String
+  upvotes: UpvoteUpdateManyWithoutUserInput
   bio: String
   posts: PostUpdateManyWithoutAuthorInput
   profilePicture: String
@@ -1174,6 +1478,7 @@ input UserUpdateInput {
   email: String
   gender: String
   birthday: String
+  upvotes: UpvoteUpdateManyWithoutUserInput
   bio: String
   posts: PostUpdateManyWithoutAuthorInput
   profilePicture: String
@@ -1234,6 +1539,13 @@ input UserUpdateManyWithWhereNestedInput {
   data: UserUpdateManyDataInput!
 }
 
+input UserUpdateOneRequiredWithoutUpvotesInput {
+  create: UserCreateWithoutUpvotesInput
+  update: UserUpdateWithoutUpvotesDataInput
+  upsert: UserUpsertWithoutUpvotesInput
+  connect: UserWhereUniqueInput
+}
+
 input UserUpdateOneWithoutPostsInput {
   create: UserCreateWithoutPostsInput
   update: UserUpdateWithoutPostsDataInput
@@ -1257,7 +1569,27 @@ input UserUpdateWithoutPostsDataInput {
   email: String
   gender: String
   birthday: String
+  upvotes: UpvoteUpdateManyWithoutUserInput
   bio: String
+  profilePicture: String
+  followers: UserUpdateManyInput
+  previledge: UserUpdatepreviledgeInput
+  signUpMethod: String
+  accessToken: String
+}
+
+input UserUpdateWithoutUpvotesDataInput {
+  socialId: String
+  fname: String
+  lname: String
+  username: String
+  name: String
+  phone: String
+  email: String
+  gender: String
+  birthday: String
+  bio: String
+  posts: PostUpdateManyWithoutAuthorInput
   profilePicture: String
   followers: UserUpdateManyInput
   previledge: UserUpdatepreviledgeInput
@@ -1273,6 +1605,11 @@ input UserUpdateWithWhereUniqueNestedInput {
 input UserUpsertWithoutPostsInput {
   update: UserUpdateWithoutPostsDataInput!
   create: UserCreateWithoutPostsInput!
+}
+
+input UserUpsertWithoutUpvotesInput {
+  update: UserUpdateWithoutUpvotesDataInput!
+  create: UserCreateWithoutUpvotesInput!
 }
 
 input UserUpsertWithWhereUniqueNestedInput {
@@ -1422,6 +1759,9 @@ input UserWhereInput {
   birthday_not_starts_with: String
   birthday_ends_with: String
   birthday_not_ends_with: String
+  upvotes_every: UpvoteWhereInput
+  upvotes_some: UpvoteWhereInput
+  upvotes_none: UpvoteWhereInput
   bio: String
   bio_not: String
   bio_in: [String!]

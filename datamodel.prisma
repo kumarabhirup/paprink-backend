@@ -89,7 +89,7 @@ type User {
 }
 
 type Upvote {
-  id: ID!
+  id: ID! @unique
   user: User! @relation(name: "UpvotesAndUser")
   post: Post! @relation(name: "UpvotesAndPost")
   updatedAt: DateTime!
