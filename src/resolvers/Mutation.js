@@ -150,9 +150,77 @@ async function updatePost(parent, args, context, info){
 
 async function upvote(parent, args, context, info){
 
+  /**
+   * @argument postId
+   */
+
   // Check if user is signed in.
+  if (!context.request.userId) {
+    throw new Error('Please SignIn to continue.')
+  }
+
+  // Check if already upvoted
+
+  const loggedInUser = await context.db.query.user({
+    where: { id: context.request.userId }
+  }, 
+  `
+  {
+    id
+    upvotes {
+      id
+      post {
+        id
+      }
+    }
+  }
+  `
+  )
+  
+  const hasUpvotedPost = loggedInUser.upvotes.some(({post}) => post.id === args.postId)
 
   // UPVOTE!
+  if (hasUpvotedPost === false) {
+
+    const upvote = await context.db.mutation.createUpvote({
+      data: {
+        user: {
+          connect: { id: context.request.userId }
+        },
+        post: {
+          connect: { id: args.postId }
+        }
+      }
+    }, `{
+      id
+      post {
+        id
+      }
+      user {
+        id
+      }
+    }`)
+
+    if ( !upvote ) {
+      throw new Error("Your upvote failed. Try again later.")
+    }
+
+    return upvote
+
+  }
+
+  // DOWNVOTE!
+  const upvoteId = loggedInUser.upvotes.filter(({post}) => post.id === args.postId)[0].id
+
+  const downvote = await context.db.mutation.deleteUpvote({
+    where: { id: upvoteId }
+  }, `{ id }`)
+
+  if ( !downvote ) {
+    throw new Error("Your downvote failed. Try again later.")
+  }
+
+  return downvote
 
 }
 
@@ -160,5 +228,6 @@ module.exports = {
   signIn,
   signOut,
   savePost,
-  updatePost
+  updatePost,
+  upvote
 }

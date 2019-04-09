@@ -42,6 +42,7 @@ type Mutation {
     thumbnail: Json!
     status: PostStatus!
   ): Post!
+  upvote(postId: ID!): Upvote!
 }
 
 type Query {
@@ -77,6 +78,7 @@ type Post {
   thumbnail: Json!
   status: PostStatus!
   slug: String!
+  upvotes: [Upvote]!
 }
 
 type Category {
@@ -104,4 +106,5 @@ type User {
   signUpMethod: String!
   updatedAt: String!
   createdAt: String!
+  upvotes: [Upvote]!
 }
