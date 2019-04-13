@@ -274,6 +274,8 @@ export type PostOrderByInput =
   | "updatedAt_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
+  | "upvotesNumber_ASC"
+  | "upvotesNumber_DESC"
   | "authorId_ASC"
   | "authorId_DESC"
   | "thumbnail_ASC"
@@ -413,6 +415,14 @@ export interface PostWhereInput {
   upvotes_every?: UpvoteWhereInput;
   upvotes_some?: UpvoteWhereInput;
   upvotes_none?: UpvoteWhereInput;
+  upvotesNumber?: Int;
+  upvotesNumber_not?: Int;
+  upvotesNumber_in?: Int[] | Int;
+  upvotesNumber_not_in?: Int[] | Int;
+  upvotesNumber_lt?: Int;
+  upvotesNumber_lte?: Int;
+  upvotesNumber_gt?: Int;
+  upvotesNumber_gte?: Int;
   author?: UserWhereInput;
   authorId?: String;
   authorId_not?: String;
@@ -795,6 +805,7 @@ export interface PostCreateWithoutCategoriesInput {
   editorCurrentContent: Json;
   editorHtml: String;
   upvotes?: UpvoteCreateManyWithoutPostInput;
+  upvotesNumber?: Int;
   author?: UserCreateOneWithoutPostsInput;
   authorId: String;
   thumbnail: Json;
@@ -846,6 +857,7 @@ export interface PostCreateWithoutAuthorInput {
   editorCurrentContent: Json;
   editorHtml: String;
   upvotes?: UpvoteCreateManyWithoutPostInput;
+  upvotesNumber?: Int;
   authorId: String;
   categories?: CategoryCreateManyWithoutPostsInput;
   thumbnail: Json;
@@ -907,6 +919,7 @@ export interface PostCreateWithoutUpvotesInput {
   editorSerializedOutput: Json;
   editorCurrentContent: Json;
   editorHtml: String;
+  upvotesNumber?: Int;
   author?: UserCreateOneWithoutPostsInput;
   authorId: String;
   categories?: CategoryCreateManyWithoutPostsInput;
@@ -980,6 +993,7 @@ export interface PostUpdateWithoutCategoriesDataInput {
   editorCurrentContent?: Json;
   editorHtml?: String;
   upvotes?: UpvoteUpdateManyWithoutPostInput;
+  upvotesNumber?: Int;
   author?: UserUpdateOneWithoutPostsInput;
   authorId?: String;
   thumbnail?: Json;
@@ -1066,6 +1080,7 @@ export interface PostUpdateWithoutAuthorDataInput {
   editorCurrentContent?: Json;
   editorHtml?: String;
   upvotes?: UpvoteUpdateManyWithoutPostInput;
+  upvotesNumber?: Int;
   authorId?: String;
   categories?: CategoryUpdateManyWithoutPostsInput;
   thumbnail?: Json;
@@ -1220,6 +1235,14 @@ export interface PostScalarWhereInput {
   createdAt_lte?: DateTimeInput;
   createdAt_gt?: DateTimeInput;
   createdAt_gte?: DateTimeInput;
+  upvotesNumber?: Int;
+  upvotesNumber_not?: Int;
+  upvotesNumber_in?: Int[] | Int;
+  upvotesNumber_not_in?: Int[] | Int;
+  upvotesNumber_lt?: Int;
+  upvotesNumber_lte?: Int;
+  upvotesNumber_gt?: Int;
+  upvotesNumber_gte?: Int;
   authorId?: String;
   authorId_not?: String;
   authorId_in?: String[] | String;
@@ -1267,6 +1290,7 @@ export interface PostUpdateManyDataInput {
   editorSerializedOutput?: Json;
   editorCurrentContent?: Json;
   editorHtml?: String;
+  upvotesNumber?: Int;
   authorId?: String;
   thumbnail?: Json;
   status?: PostStatus;
@@ -1352,6 +1376,7 @@ export interface PostUpdateWithoutUpvotesDataInput {
   editorSerializedOutput?: Json;
   editorCurrentContent?: Json;
   editorHtml?: String;
+  upvotesNumber?: Int;
   author?: UserUpdateOneWithoutPostsInput;
   authorId?: String;
   categories?: CategoryUpdateManyWithoutPostsInput;
@@ -1718,6 +1743,7 @@ export interface PostCreateInput {
   editorCurrentContent: Json;
   editorHtml: String;
   upvotes?: UpvoteCreateManyWithoutPostInput;
+  upvotesNumber?: Int;
   author?: UserCreateOneWithoutPostsInput;
   authorId: String;
   categories?: CategoryCreateManyWithoutPostsInput;
@@ -1732,6 +1758,7 @@ export interface PostUpdateInput {
   editorCurrentContent?: Json;
   editorHtml?: String;
   upvotes?: UpvoteUpdateManyWithoutPostInput;
+  upvotesNumber?: Int;
   author?: UserUpdateOneWithoutPostsInput;
   authorId?: String;
   categories?: CategoryUpdateManyWithoutPostsInput;
@@ -1745,6 +1772,7 @@ export interface PostUpdateManyMutationInput {
   editorSerializedOutput?: Json;
   editorCurrentContent?: Json;
   editorHtml?: String;
+  upvotesNumber?: Int;
   authorId?: String;
   thumbnail?: Json;
   status?: PostStatus;
@@ -1896,6 +1924,7 @@ export interface Post {
   editorHtml: String;
   updatedAt: DateTimeOutput;
   createdAt: DateTimeOutput;
+  upvotesNumber?: Int;
   authorId: String;
   thumbnail: Json;
   status: PostStatus;
@@ -1921,6 +1950,7 @@ export interface PostPromise extends Promise<Post>, Fragmentable {
       last?: Int;
     }
   ) => T;
+  upvotesNumber: () => Promise<Int>;
   author: <T = UserPromise>() => T;
   authorId: () => Promise<String>;
   categories: <T = FragmentableArray<Category>>(
@@ -1960,6 +1990,7 @@ export interface PostSubscription
       last?: Int;
     }
   ) => T;
+  upvotesNumber: () => Promise<AsyncIterator<Int>>;
   author: <T = UserSubscription>() => T;
   authorId: () => Promise<AsyncIterator<String>>;
   categories: <T = Promise<AsyncIterator<CategorySubscription>>>(
@@ -2467,6 +2498,7 @@ export interface PostPreviousValues {
   editorHtml: String;
   updatedAt: DateTimeOutput;
   createdAt: DateTimeOutput;
+  upvotesNumber?: Int;
   authorId: String;
   thumbnail: Json;
   status: PostStatus;
@@ -2483,6 +2515,7 @@ export interface PostPreviousValuesPromise
   editorHtml: () => Promise<String>;
   updatedAt: () => Promise<DateTimeOutput>;
   createdAt: () => Promise<DateTimeOutput>;
+  upvotesNumber: () => Promise<Int>;
   authorId: () => Promise<String>;
   thumbnail: () => Promise<Json>;
   status: () => Promise<PostStatus>;
@@ -2499,6 +2532,7 @@ export interface PostPreviousValuesSubscription
   editorHtml: () => Promise<AsyncIterator<String>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  upvotesNumber: () => Promise<AsyncIterator<Int>>;
   authorId: () => Promise<AsyncIterator<String>>;
   thumbnail: () => Promise<AsyncIterator<Json>>;
   status: () => Promise<AsyncIterator<PostStatus>>;

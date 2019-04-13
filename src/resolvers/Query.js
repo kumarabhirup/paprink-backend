@@ -146,6 +146,28 @@ async function search(parent, args, context, info) {
 
 }
 
+async function getToday(parent, args, context, info) {
+
+  const date = new Date()
+  const todayDateISO = date.toISOString().slice(0, 10) // To get format like "2018-08-03" [ ISO 8601 format is UTC ]
+  const tomorrow = new Date(date); tomorrow.setDate(date.getDate() + 1);
+  const tomorrowDateISO = tomorrow.toISOString().slice(0, 10)
+
+  // console.log('Today: ' + todayDateISO)
+  // console.log('Tomorrow: ' + tomorrowDateISO)
+
+  const connection = await context.db.query.postsConnection({
+    where: {
+      status: "PUBLISHED",
+      createdAt_gte: todayDateISO,
+      NOT: [{
+        createdAt_gte: tomorrowDateISO
+      }]
+    }
+  }, info)
+
+}
+
 module.exports = {
   users,
   me,
@@ -154,5 +176,6 @@ module.exports = {
   postsCategoryConnection,
   postsAuthorConnection,
   getAuthor,
-  search
+  search,
+  getToday
 }

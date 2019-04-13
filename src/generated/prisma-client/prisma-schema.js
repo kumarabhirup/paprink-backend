@@ -314,6 +314,7 @@ type Post {
   updatedAt: DateTime!
   createdAt: DateTime!
   upvotes(where: UpvoteWhereInput, orderBy: UpvoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Upvote!]
+  upvotesNumber: Int
   author: User
   authorId: String!
   categories(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Category!]
@@ -334,6 +335,7 @@ input PostCreateInput {
   editorCurrentContent: Json!
   editorHtml: String!
   upvotes: UpvoteCreateManyWithoutPostInput
+  upvotesNumber: Int
   author: UserCreateOneWithoutPostsInput
   authorId: String!
   categories: CategoryCreateManyWithoutPostsInput
@@ -363,6 +365,7 @@ input PostCreateWithoutAuthorInput {
   editorCurrentContent: Json!
   editorHtml: String!
   upvotes: UpvoteCreateManyWithoutPostInput
+  upvotesNumber: Int
   authorId: String!
   categories: CategoryCreateManyWithoutPostsInput
   thumbnail: Json!
@@ -376,6 +379,7 @@ input PostCreateWithoutCategoriesInput {
   editorCurrentContent: Json!
   editorHtml: String!
   upvotes: UpvoteCreateManyWithoutPostInput
+  upvotesNumber: Int
   author: UserCreateOneWithoutPostsInput
   authorId: String!
   thumbnail: Json!
@@ -388,6 +392,7 @@ input PostCreateWithoutUpvotesInput {
   editorSerializedOutput: Json!
   editorCurrentContent: Json!
   editorHtml: String!
+  upvotesNumber: Int
   author: UserCreateOneWithoutPostsInput
   authorId: String!
   categories: CategoryCreateManyWithoutPostsInput
@@ -416,6 +421,8 @@ enum PostOrderByInput {
   updatedAt_DESC
   createdAt_ASC
   createdAt_DESC
+  upvotesNumber_ASC
+  upvotesNumber_DESC
   authorId_ASC
   authorId_DESC
   thumbnail_ASC
@@ -434,6 +441,7 @@ type PostPreviousValues {
   editorHtml: String!
   updatedAt: DateTime!
   createdAt: DateTime!
+  upvotesNumber: Int
   authorId: String!
   thumbnail: Json!
   status: PostStatus!
@@ -499,6 +507,14 @@ input PostScalarWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
+  upvotesNumber: Int
+  upvotesNumber_not: Int
+  upvotesNumber_in: [Int!]
+  upvotesNumber_not_in: [Int!]
+  upvotesNumber_lt: Int
+  upvotesNumber_lte: Int
+  upvotesNumber_gt: Int
+  upvotesNumber_gte: Int
   authorId: String
   authorId_not: String
   authorId_in: [String!]
@@ -566,6 +582,7 @@ input PostUpdateInput {
   editorCurrentContent: Json
   editorHtml: String
   upvotes: UpvoteUpdateManyWithoutPostInput
+  upvotesNumber: Int
   author: UserUpdateOneWithoutPostsInput
   authorId: String
   categories: CategoryUpdateManyWithoutPostsInput
@@ -579,6 +596,7 @@ input PostUpdateManyDataInput {
   editorSerializedOutput: Json
   editorCurrentContent: Json
   editorHtml: String
+  upvotesNumber: Int
   authorId: String
   thumbnail: Json
   status: PostStatus
@@ -590,6 +608,7 @@ input PostUpdateManyMutationInput {
   editorSerializedOutput: Json
   editorCurrentContent: Json
   editorHtml: String
+  upvotesNumber: Int
   authorId: String
   thumbnail: Json
   status: PostStatus
@@ -638,6 +657,7 @@ input PostUpdateWithoutAuthorDataInput {
   editorCurrentContent: Json
   editorHtml: String
   upvotes: UpvoteUpdateManyWithoutPostInput
+  upvotesNumber: Int
   authorId: String
   categories: CategoryUpdateManyWithoutPostsInput
   thumbnail: Json
@@ -651,6 +671,7 @@ input PostUpdateWithoutCategoriesDataInput {
   editorCurrentContent: Json
   editorHtml: String
   upvotes: UpvoteUpdateManyWithoutPostInput
+  upvotesNumber: Int
   author: UserUpdateOneWithoutPostsInput
   authorId: String
   thumbnail: Json
@@ -663,6 +684,7 @@ input PostUpdateWithoutUpvotesDataInput {
   editorSerializedOutput: Json
   editorCurrentContent: Json
   editorHtml: String
+  upvotesNumber: Int
   author: UserUpdateOneWithoutPostsInput
   authorId: String
   categories: CategoryUpdateManyWithoutPostsInput
@@ -760,6 +782,14 @@ input PostWhereInput {
   upvotes_every: UpvoteWhereInput
   upvotes_some: UpvoteWhereInput
   upvotes_none: UpvoteWhereInput
+  upvotesNumber: Int
+  upvotesNumber_not: Int
+  upvotesNumber_in: [Int!]
+  upvotesNumber_not_in: [Int!]
+  upvotesNumber_lt: Int
+  upvotesNumber_lte: Int
+  upvotesNumber_gt: Int
+  upvotesNumber_gte: Int
   author: UserWhereInput
   authorId: String
   authorId_not: String

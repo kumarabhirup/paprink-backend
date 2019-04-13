@@ -57,6 +57,7 @@ type Post {
   updatedAt: DateTime!
   createdAt: DateTime!
   upvotes: [Upvote]! @relation(name: "UpvotesAndPost")
+  upvotesNumber: Int @default(value: "0")
   author: User @relation(name: "PostsAndUser")
   authorId: String!
   categories: [Category!]! @relation(name: "PostsCategories")
