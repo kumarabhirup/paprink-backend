@@ -179,6 +179,8 @@ async function upvote(parent, args, context, info){
   
   const hasUpvotedPost = loggedInUser.upvotes.some(({post}) => post.id === args.postId)
 
+  const postToUpvote = await context.db.query.post({ where: { id: args.postId } }, `{ id upvotes { id } }`)
+
   // UPVOTE!
   if (hasUpvotedPost === false) {
 
@@ -201,6 +203,18 @@ async function upvote(parent, args, context, info){
       }
     }`)
 
+    const updateUpvotesNumber = await context.db.mutation.updatePost({
+      where: {
+        id: postToUpvote.id
+      },
+      data: {
+        upvotesNumber: postToUpvote.upvotes.length + 1
+      }
+    }, `{
+      id
+      upvotesNumber
+    }`)
+
     if ( !upvote ) {
       throw new Error("Your upvote failed. Try again later.")
     }
@@ -215,6 +229,18 @@ async function upvote(parent, args, context, info){
   const downvote = await context.db.mutation.deleteUpvote({
     where: { id: upvoteId }
   }, `{ id }`)
+
+  const updateUpvotesNumber = await context.db.mutation.updatePost({
+    where: {
+      id: postToUpvote.id
+    },
+    data: {
+      upvotesNumber: postToUpvote.upvotes.length - 1
+    }
+  }, `{
+    id
+    upvotesNumber
+  }`)
 
   if ( !downvote ) {
     throw new Error("Your downvote failed. Try again later.")
