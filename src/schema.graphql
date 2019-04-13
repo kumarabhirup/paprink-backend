@@ -74,6 +74,7 @@ type Post {
   updatedAt: DateTime!
   createdAt: DateTime!
   author: User
+  upvotesNumber: Int
   authorId: String!
   categories: [Category!]!
   thumbnail: Json!

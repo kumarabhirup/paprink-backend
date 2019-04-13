@@ -163,8 +163,13 @@ async function getToday(parent, args, context, info) {
       NOT: [{
         createdAt_gte: tomorrowDateISO
       }]
-    }
+    },
+    orderBy: args.orderBy || "upvotesNumber_DESC",
+    first: 6,
+    after: args.after
   }, info)
+
+  return connection
 
 }
 
