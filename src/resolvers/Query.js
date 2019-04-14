@@ -164,12 +164,47 @@ async function getToday(parent, args, context, info) {
         createdAt_gte: tomorrowDateISO
       }]
     },
-    orderBy: args.orderBy || "upvotesNumber_DESC",
+    orderBy: args.orderBy || "createdAt_DESC", // "upvotesNumber_DESC",
     first: 6,
     after: args.after
   }, info)
 
-  return connection
+  if (connection) {
+    return connection
+  }
+
+  throw new Error(`Error getting today's posts.`)
+
+}
+
+async function getYesterday(parent, args, context, info) {
+
+  const date = new Date()
+  const yesterday = new Date(date); yesterday.setDate(date.getDate() - 1);
+  const yesterdayDateISO = yesterday.toISOString().slice(0, 10)
+  const todayDateISO = date.toISOString().slice(0, 10) // To get format like "2018-08-03" [ ISO 8601 format is UTC ]
+
+  // console.log('Today: ' + todayDateISO)
+  // console.log('Yesterday: ' + tomorrowDateISO)
+
+  const connection = await context.db.query.postsConnection({
+    where: {
+      status: "PUBLISHED",
+      createdAt_gte: yesterdayDateISO,
+      NOT: [{
+        createdAt_gte: todayDateISO
+      }]
+    },
+    orderBy: args.orderBy || "createdAt_DESC", // "upvotesNumber_DESC",
+    first: 6,
+    after: args.after
+  }, info)
+
+  if (connection) {
+    return connection
+  }
+
+  throw new Error(`Error getting yesterday's posts.`)
 
 }
 
@@ -182,5 +217,6 @@ module.exports = {
   postsAuthorConnection,
   getAuthor,
   search,
-  getToday
+  getToday,
+  getYesterday
 }

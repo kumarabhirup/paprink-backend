@@ -62,7 +62,14 @@ type Query {
   ): PostConnection!
   getAuthor(authorUsername: String!): User!
   search(searchString: String): [Post]
-  getToday: [Post]!
+  getToday(
+    after: String
+    orderBy: PostOrderByInput
+  ): PostConnection!
+  getYesterday(
+    after: String
+    orderBy: PostOrderByInput
+  ): PostConnection!
 }
 
 type Post {
