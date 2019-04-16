@@ -148,6 +148,12 @@ async function updatePost(parent, args, context, info){
 
 }
 
+/**
+ * BUG! BUG! bug!!!! 🐛 🐞
+ * Each upvote needs to be validated.
+ * As per now, clicking upvote button a few times in a second, 
+ * upvotes many times from a single account!
+ */
 async function upvote(parent, args, context, info){
 
   /**
