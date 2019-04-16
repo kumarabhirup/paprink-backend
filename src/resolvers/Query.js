@@ -240,6 +240,25 @@ async function getWeekly(parent, args, context, info) {
 
 }
 
+async function getLatest(parent, args, context, info) {
+
+    const connection = await context.db.query.postsConnection({
+      where: {
+        status: "PUBLISHED"
+      },
+      orderBy: "createdAt_DESC",
+      first: 8,
+      after: args.after
+    }, info)
+
+  if (connection) {
+    return connection
+  }
+
+  throw new Error(`Error getting latest posts!`)
+
+}
+
 module.exports = {
   users,
   me,
@@ -251,5 +270,6 @@ module.exports = {
   search,
   getToday,
   getYesterday,
-  getWeekly
+  getWeekly,
+  getLatest
 }

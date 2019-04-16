@@ -74,6 +74,9 @@ type Query {
     after: String
     orderBy: PostOrderByInput
   ): PostConnection!
+  getLatest(
+    after: String
+  ): PostConnection!
 }
 
 type Post {
