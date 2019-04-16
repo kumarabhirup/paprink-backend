@@ -184,8 +184,8 @@ async function getYesterday(parent, args, context, info) {
   const yesterdayDateISO = yesterday.toISOString().slice(0, 10)
   const todayDateISO = date.toISOString().slice(0, 10) // To get format like "2018-08-03" [ ISO 8601 format is UTC ]
 
-  // console.log('Today: ' + todayDateISO)
   // console.log('Yesterday: ' + tomorrowDateISO)
+  // console.log('Today: ' + todayDateISO)
 
   const connection = await context.db.query.postsConnection({
     where: {
@@ -208,6 +208,38 @@ async function getYesterday(parent, args, context, info) {
 
 }
 
+async function getWeekly(parent, args, context, info) {
+
+  const date = new Date()
+  const weekAgo = new Date(date); weekAgo.setDate(date.getDate() - 7);
+  const weekAgoDateISO = weekAgo.toISOString().slice(0, 10)
+  const todayDateISO = date.toISOString().slice(0, 10) // To get format like "2018-08-03" [ ISO 8601 format is UTC ]
+
+  // console.log('Week Ago: ' + weekAgoDateISO)
+  // console.log('Today: ' + todayDateISO)
+
+  const connection = await context.db.query.postsConnection({
+    where: {
+      status: "PUBLISHED",
+      createdAt_gte: weekAgoDateISO,
+      // TODO: Filter posts by minimum number of upvotes needed
+      // NOT: [{
+      //   createdAt_gte: todayDateISO
+      // }]
+    },
+    orderBy: args.orderBy || "createdAt_DESC", // "upvotesNumber_DESC",
+    first: 3,
+    after: args.after
+  }, info)
+
+  if (connection) {
+    return connection
+  }
+
+  throw new Error(`Error getting weekly top posts.`)
+
+}
+
 module.exports = {
   users,
   me,
@@ -218,5 +250,6 @@ module.exports = {
   getAuthor,
   search,
   getToday,
-  getYesterday
+  getYesterday,
+  getWeekly
 }

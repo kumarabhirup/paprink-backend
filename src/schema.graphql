@@ -70,6 +70,10 @@ type Query {
     after: String
     orderBy: PostOrderByInput
   ): PostConnection!
+  getWeekly(
+    after: String
+    orderBy: PostOrderByInput
+  ): PostConnection!
 }
 
 type Post {
