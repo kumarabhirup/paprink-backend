@@ -223,9 +223,6 @@ async function getWeekly(parent, args, context, info) {
       status: "PUBLISHED",
       createdAt_gte: weekAgoDateISO,
       // TODO: Filter posts by minimum number of upvotes needed
-      // NOT: [{
-      //   createdAt_gte: todayDateISO
-      // }]
     },
     orderBy: args.orderBy || "createdAt_DESC", // "upvotesNumber_DESC",
     first: 3,
@@ -259,6 +256,24 @@ async function getLatest(parent, args, context, info) {
 
 }
 
+async function getFeatured(parent, args, context, info) {
+
+  const posts = await context.db.query.posts({
+    where: {
+      status: "PUBLISHED"
+    },
+    orderBy: "createdAt_DESC",
+    first: 4
+  }, info)
+
+  if (posts) {
+    return posts
+  }
+
+  throw new Error(`Error getting featured posts!`)
+
+}
+
 module.exports = {
   users,
   me,
@@ -271,5 +286,6 @@ module.exports = {
   getToday,
   getYesterday,
   getWeekly,
-  getLatest
+  getLatest,
+  getFeatured
 }
