@@ -313,6 +313,7 @@ type Post {
   editorHtml: String!
   updatedAt: DateTime!
   createdAt: DateTime!
+  publishedAt: DateTime
   upvotes(where: UpvoteWhereInput, orderBy: UpvoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Upvote!]
   upvotesNumber: Int
   author: User
@@ -334,6 +335,7 @@ input PostCreateInput {
   editorSerializedOutput: Json!
   editorCurrentContent: Json!
   editorHtml: String!
+  publishedAt: DateTime
   upvotes: UpvoteCreateManyWithoutPostInput
   upvotesNumber: Int
   author: UserCreateOneWithoutPostsInput
@@ -364,6 +366,7 @@ input PostCreateWithoutAuthorInput {
   editorSerializedOutput: Json!
   editorCurrentContent: Json!
   editorHtml: String!
+  publishedAt: DateTime
   upvotes: UpvoteCreateManyWithoutPostInput
   upvotesNumber: Int
   authorId: String!
@@ -378,6 +381,7 @@ input PostCreateWithoutCategoriesInput {
   editorSerializedOutput: Json!
   editorCurrentContent: Json!
   editorHtml: String!
+  publishedAt: DateTime
   upvotes: UpvoteCreateManyWithoutPostInput
   upvotesNumber: Int
   author: UserCreateOneWithoutPostsInput
@@ -392,6 +396,7 @@ input PostCreateWithoutUpvotesInput {
   editorSerializedOutput: Json!
   editorCurrentContent: Json!
   editorHtml: String!
+  publishedAt: DateTime
   upvotesNumber: Int
   author: UserCreateOneWithoutPostsInput
   authorId: String!
@@ -421,6 +426,8 @@ enum PostOrderByInput {
   updatedAt_DESC
   createdAt_ASC
   createdAt_DESC
+  publishedAt_ASC
+  publishedAt_DESC
   upvotesNumber_ASC
   upvotesNumber_DESC
   authorId_ASC
@@ -441,6 +448,7 @@ type PostPreviousValues {
   editorHtml: String!
   updatedAt: DateTime!
   createdAt: DateTime!
+  publishedAt: DateTime
   upvotesNumber: Int
   authorId: String!
   thumbnail: Json!
@@ -507,6 +515,14 @@ input PostScalarWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
+  publishedAt: DateTime
+  publishedAt_not: DateTime
+  publishedAt_in: [DateTime!]
+  publishedAt_not_in: [DateTime!]
+  publishedAt_lt: DateTime
+  publishedAt_lte: DateTime
+  publishedAt_gt: DateTime
+  publishedAt_gte: DateTime
   upvotesNumber: Int
   upvotesNumber_not: Int
   upvotesNumber_in: [Int!]
@@ -581,6 +597,7 @@ input PostUpdateInput {
   editorSerializedOutput: Json
   editorCurrentContent: Json
   editorHtml: String
+  publishedAt: DateTime
   upvotes: UpvoteUpdateManyWithoutPostInput
   upvotesNumber: Int
   author: UserUpdateOneWithoutPostsInput
@@ -596,6 +613,7 @@ input PostUpdateManyDataInput {
   editorSerializedOutput: Json
   editorCurrentContent: Json
   editorHtml: String
+  publishedAt: DateTime
   upvotesNumber: Int
   authorId: String
   thumbnail: Json
@@ -608,6 +626,7 @@ input PostUpdateManyMutationInput {
   editorSerializedOutput: Json
   editorCurrentContent: Json
   editorHtml: String
+  publishedAt: DateTime
   upvotesNumber: Int
   authorId: String
   thumbnail: Json
@@ -656,6 +675,7 @@ input PostUpdateWithoutAuthorDataInput {
   editorSerializedOutput: Json
   editorCurrentContent: Json
   editorHtml: String
+  publishedAt: DateTime
   upvotes: UpvoteUpdateManyWithoutPostInput
   upvotesNumber: Int
   authorId: String
@@ -670,6 +690,7 @@ input PostUpdateWithoutCategoriesDataInput {
   editorSerializedOutput: Json
   editorCurrentContent: Json
   editorHtml: String
+  publishedAt: DateTime
   upvotes: UpvoteUpdateManyWithoutPostInput
   upvotesNumber: Int
   author: UserUpdateOneWithoutPostsInput
@@ -684,6 +705,7 @@ input PostUpdateWithoutUpvotesDataInput {
   editorSerializedOutput: Json
   editorCurrentContent: Json
   editorHtml: String
+  publishedAt: DateTime
   upvotesNumber: Int
   author: UserUpdateOneWithoutPostsInput
   authorId: String
@@ -779,6 +801,14 @@ input PostWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
+  publishedAt: DateTime
+  publishedAt_not: DateTime
+  publishedAt_in: [DateTime!]
+  publishedAt_not_in: [DateTime!]
+  publishedAt_lt: DateTime
+  publishedAt_lte: DateTime
+  publishedAt_gt: DateTime
+  publishedAt_gte: DateTime
   upvotes_every: UpvoteWhereInput
   upvotes_some: UpvoteWhereInput
   upvotes_none: UpvoteWhereInput

@@ -88,6 +88,7 @@ type Post {
   editorHtml: String!
   updatedAt: DateTime!
   createdAt: DateTime!
+  publishedAt: DateTime
   author: User
   upvotesNumber: Int
   authorId: String!

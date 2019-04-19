@@ -74,10 +74,12 @@ async function signOut(parent, args, context, info){
 }
 
 async function savePost(parent, args, context, info){
-  
+
   let data = {...args}
   delete data.categories
   delete data.status
+
+  const date = new Date().toISOString()
 
   if (!context.request.userId) {
     throw new Error('Please SignIn to continue.')
@@ -91,6 +93,7 @@ async function savePost(parent, args, context, info){
         connect: args.categories.map(category => ({ category })),
       },
       status: args.status,
+      publishedAt: args.status === "PUBLISHED" ? date : null,
       slug: slugify(args.title, { lower: true }),
       ...data
     }
@@ -108,6 +111,8 @@ async function updatePost(parent, args, context, info){
 
   const postToUpdate = await context.db.query.post({where: {id: args.id}}, postInfo)
   const canUpdate = postToUpdate.author.id === context.request.userId
+
+  const date = new Date().toISOString()
 
   if (canUpdate) {
 
@@ -136,6 +141,7 @@ async function updatePost(parent, args, context, info){
         },
         thumbnail: args.thumbnail,
         status: args.status,
+        publishedAt: args.status === "PUBLISHED" ? date : null,
         slug: slugify(args.title, { lower: true }),
       }
     }, info)
