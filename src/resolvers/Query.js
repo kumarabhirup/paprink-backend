@@ -164,7 +164,7 @@ async function getToday(parent, args, context, info) {
         createdAt_gte: tomorrowDateISO
       }]
     },
-    orderBy: args.orderBy || "createdAt_DESC", // "upvotesNumber_DESC",
+    orderBy: args.orderBy || "upvotesNumber_DESC",
     first: 6,
     after: args.after
   }, info)
@@ -195,7 +195,7 @@ async function getYesterday(parent, args, context, info) {
         createdAt_gte: todayDateISO
       }]
     },
-    orderBy: args.orderBy || "createdAt_DESC", // "upvotesNumber_DESC",
+    orderBy: args.orderBy || "upvotesNumber_DESC",
     first: 6,
     after: args.after
   }, info)
@@ -224,7 +224,7 @@ async function getWeekly(parent, args, context, info) {
       createdAt_gte: weekAgoDateISO,
       // TODO: Filter posts by minimum number of upvotes needed
     },
-    orderBy: args.orderBy || "createdAt_DESC", // "upvotesNumber_DESC",
+    orderBy: args.orderBy || "upvotesNumber_DESC",
     first: 3,
     after: args.after
   }, info)
@@ -262,7 +262,7 @@ async function getFeatured(parent, args, context, info) {
     where: {
       status: "PUBLISHED"
     },
-    orderBy: "createdAt_DESC",
+    orderBy: "upvotesNumber_DESC",
     first: 4
   }, info)
 
