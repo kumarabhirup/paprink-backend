@@ -5,7 +5,19 @@ var typeDefs = require("./prisma-schema").typeDefs;
 
 var models = [
   {
+    name: "Previledge",
+    embedded: false
+  },
+  {
+    name: "CategoryEnum",
+    embedded: false
+  },
+  {
     name: "Category",
+    embedded: false
+  },
+  {
+    name: "PostStatus",
     embedded: false
   },
   {
@@ -18,18 +30,6 @@ var models = [
   },
   {
     name: "Upvote",
-    embedded: false
-  },
-  {
-    name: "Previledge",
-    embedded: false
-  },
-  {
-    name: "CategoryEnum",
-    embedded: false
-  },
-  {
-    name: "PostStatus",
     embedded: false
   }
 ];

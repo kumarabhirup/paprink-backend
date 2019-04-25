@@ -1,6 +1,6 @@
 endpoint: http://localhost:4466
 secret: ${env:PRISMA_SECRET}
-datamodel: datamodel.prisma
+datamodel: datamodel-1556128517836.prisma
 
 generate:
   - generator: javascript-client
