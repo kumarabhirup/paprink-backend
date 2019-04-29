@@ -35,18 +35,18 @@ async function signIn(parent, args, context, info){
 
   }
 
-  // Update user with new access token // TODO: Change only accessTokens and not any other field!
+  // Update user with new access token
   await context.db.mutation.updateUser({
     data: {
       accessToken: data.accessToken,
-      fname: data.fname,
-      lname: data.lname,
-      name: data.name,
-      profilePicture: data.profilePicture,
+      // fname: data.fname,
+      // lname: data.lname,
+      // name: data.name,
+      // profilePicture: data.profilePicture,
       email: data.email, // TODO: Handle email match conflicts if email got changed
       gender: data.gender,
       birthday: data.birthday,
-      bio: data.bio
+      // bio: data.bio
     },
     where: { id: signedUser.id }
   }, info)
