@@ -1,0 +1,108 @@
+enum Previledge {
+  SUPERADMIN
+  ADMIN
+  MODERATOR
+  AUTHOR
+  READER
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  LGBT
+  NONE
+}
+
+enum CategoryEnum {
+  TECH
+  FIN
+  DIGIMARK
+  CODING
+  TUTORIAL
+  HOWTO
+  WRITING
+  INSPIRE
+  SCIENCE
+  POLITICS
+  LIFESTYLE
+  FOOD
+  BUSSINESS
+  ENTREPRENEUR
+  HISTORY
+  HEALTH
+  PET
+  PARENTHOOD
+  TRAVEL
+  INDIA
+  CHINA
+  US
+  UK
+  WORLD
+  NEWS
+  REVIEW
+}
+
+type Category {
+  id: ID! @id
+  text: String!
+  category: CategoryEnum! @unique
+  posts: [Post] @relation(name: "PostsCategories")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+enum PostStatus {
+  PUBLISHED
+  DRAFT
+  DELETED
+}
+
+type Post {
+  id: ID! @id
+  title: String!
+  editorSerializedOutput: Json!
+  editorCurrentContent: Json!
+  editorHtml: String!
+  updatedAt: DateTime! @updatedAt
+  createdAt: DateTime! @createdAt
+  publishedAt: DateTime
+  upvotes: [Upvote] @relation(name: "UpvotesAndPost")
+  upvotesNumber: Int @default(value: 0)
+  author: User @relation(link: TABLE, name: "PostsAndUser")
+  authorId: String!
+  categories: [Category] @relation(name: "PostsCategories")
+  thumbnail: Json!
+  status: PostStatus!
+  slug: String!
+}
+
+type User {
+  id: ID! @id
+  socialId: String! @unique
+  fname: String!
+  lname: String!
+  username: String! @unique
+  name: String!
+  phone: String @unique
+  email: String! @unique
+  gender: String
+  birthday: String
+  upvotes: [Upvote] @relation(name: "UpvotesAndUser")
+  bio: String
+  posts: [Post] @relation(name: "PostsAndUser")
+  profilePicture: String!
+  followers: [User]
+  previledge: [Previledge] @scalarList(strategy: RELATION)
+  signUpMethod: String!
+  accessToken: String!
+  updatedAt: DateTime! @updatedAt
+  createdAt: DateTime! @createdAt
+}
+
+type Upvote {
+  id: ID! @id
+  user: User! @relation(link: TABLE, name: "UpvotesAndUser")
+  post: Post! @relation(link: TABLE, name: "UpvotesAndPost")
+  updatedAt: DateTime! @updatedAt
+  createdAt: DateTime! @createdAt
+}

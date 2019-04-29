@@ -43,6 +43,18 @@ type Mutation {
     status: PostStatus!
   ): Post!
   upvote(postId: ID!): Upvote!
+  updateUser(
+    # fname: String!
+    # lname: String!
+    # email: String!
+    # birthday: String
+    name: String!
+    phone: String
+    gender: String
+    bio: String
+    profilePicture: String!
+    username: String!
+  ): User!
 }
 
 type Query {

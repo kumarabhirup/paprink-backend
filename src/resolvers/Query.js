@@ -62,7 +62,7 @@ async function postsCategoryConnection(parent, args, context, info) {
       }
     },
     first: 8,
-    orderBy: args.orderBy || "updatedAt_DESC",
+    orderBy: args.orderBy || "upvotesNumber_DESC",
     after: args.after
   }, info)
 
@@ -86,7 +86,7 @@ async function postsAuthorConnection(parent, args, context, info) {
       }
     },
     first: 8,
-    orderBy: args.orderBy || "updatedAt_DESC",
+    orderBy: args.orderBy || "upvotesNumber_DESC",
     after: args.after
   }, info)
 
