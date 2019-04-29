@@ -35,7 +35,7 @@ async function signIn(parent, args, context, info){
 
   }
 
-  // Update user with new access token
+  // Update user with new access token // TODO: Change only accessTokens and not any other field!
   await context.db.mutation.updateUser({
     data: {
       accessToken: data.accessToken,
@@ -262,10 +262,42 @@ async function upvote(parent, args, context, info){
 
 }
 
+async function updateUser(parent, args, context, info){
+
+  if (!context.request.userId) {
+    throw new Error('Please SignIn to continue.')
+  }
+
+  const signedInUser = await context.db.query.user({where: {id: context.request.userId}}, `{ id username }`)
+
+  // Check if the username given already exists
+  if (signedInUser.username !== args.username) {
+    const userWithUsername = await context.db.query.user({where: {username: args.username}}, `{ id username }`)
+    if (userWithUsername) {
+      throw new Error(`The username ${args.username} is already taken!`)
+    }
+  }
+
+  const updateUser = await context.db.mutation.updateUser({
+    where: { id: context.request.userId },
+    data: {
+      ...args
+    }
+  }, info)
+
+  if (!updateUser) {
+    throw new Error('Sorry, failed to update your information!')
+  }
+
+  return updateUser
+
+}
+
 module.exports = {
   signIn,
   signOut,
   savePost,
   updatePost,
-  upvote
+  upvote,
+  updateUser
 }

@@ -6,6 +6,13 @@ enum Previledge {
   READER
 }
 
+enum Gender {
+  MALE
+  FEMALE
+  LGBT
+  NONE
+}
+
 enum CategoryEnum {
   TECH
   FIN
