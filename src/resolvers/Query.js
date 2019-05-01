@@ -274,6 +274,32 @@ async function getFeatured(parent, args, context, info) {
 
 }
 
+async function upvotedPostsAuthorConnection(parent, args, context, info) {
+  
+  const authorUsername = args.authorUsername
+
+  const connection = await context.db.query.postsConnection({
+    where: {
+      status: "PUBLISHED", 
+      upvotes_some: {
+        user: {
+          username: authorUsername
+        }
+      }
+    },
+    first: 8,
+    orderBy: args.orderBy || "createdAt_DESC",
+    after: args.after
+  }, info)
+
+  if (connection) {
+    return connection
+  }
+
+  throw new Error('Error finding the author.')
+
+}
+
 module.exports = {
   users,
   me,
@@ -287,5 +313,6 @@ module.exports = {
   getYesterday,
   getWeekly,
   getLatest,
-  getFeatured
+  getFeatured,
+  upvotedPostsAuthorConnection
 }

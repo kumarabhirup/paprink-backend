@@ -90,6 +90,11 @@ type Query {
     after: String
   ): PostConnection!
   getFeatured: [Post]!
+  upvotedPostsAuthorConnection(
+    authorUsername: String!
+    after: String
+    orderBy: PostOrderByInput
+  ): PostConnection!
 }
 
 type Post {
