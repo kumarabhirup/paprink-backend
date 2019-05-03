@@ -55,6 +55,7 @@ type Mutation {
     profilePicture: String!
     username: String!
   ): User!
+  deletePost(id: ID!): Post!
 }
 
 type Query {

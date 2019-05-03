@@ -293,11 +293,36 @@ async function updateUser(parent, args, context, info){
 
 }
 
+async function deletePost(parent, args, context, info){
+
+  if(!context.request.userId){
+    throw new Error('Please SignIn to continue.')
+  }
+
+  const postToDelete = await context.db.query.post({where: {id: args.id}}, postInfo)
+
+  const canDelete = postToDelete.author.id === context.request.userId
+
+  if (canDelete) {
+    
+    const deletePost = await context.db.mutation.deletePost({
+      where: { id: postToDelete.id }
+    }, info)
+
+    return deletePost
+
+  }
+
+  throw new Error('You are not allowed to delete this post.')
+  
+}
+
 module.exports = {
   signIn,
   signOut,
   savePost,
   updatePost,
   upvote,
-  updateUser
+  updateUser,
+  deletePost
 }
