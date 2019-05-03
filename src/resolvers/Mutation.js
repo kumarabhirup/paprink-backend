@@ -110,7 +110,7 @@ async function updatePost(parent, args, context, info){
   }
 
   const postToUpdate = await context.db.query.post({where: {id: args.id}}, postInfo)
-  const canUpdate = postToUpdate.author.id === context.request.userId
+  const canUpdate = postToUpdate.author.id === context.request.userId && (postToUpdate.status === "PUBLISHED" || postToUpdate.status === "DRAFT")
 
   const date = new Date().toISOString()
 
@@ -305,9 +305,12 @@ async function deletePost(parent, args, context, info){
 
   if (canDelete) {
     
-    const deletePost = await context.db.mutation.deletePost({
-      where: { id: postToDelete.id }
-    }, info) // TODO: Instead of deleting, you should turn the status to DELETED.
+    const deletePost = await context.db.mutation.updatePost({
+      where: { id: postToDelete.id },
+      data: {
+        status: "DELETED"
+      }
+    }, info)
 
     return deletePost
 

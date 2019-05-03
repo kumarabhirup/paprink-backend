@@ -19,7 +19,7 @@ async function canUpdatePost(parent, args, context, info){
 
   const postToUpdate = await context.db.query.post({where: {id: args.id}}, postInfo)
 
-  const canUpdate = postToUpdate.author.id === context.request.userId
+  const canUpdate = postToUpdate.author.id === context.request.userId && (postToUpdate.status === "PUBLISHED" || postToUpdate.status === "DRAFT")
 
   if (canUpdate) {
     return postToUpdate
