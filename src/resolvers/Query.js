@@ -297,6 +297,31 @@ async function upvotedPostsAuthorConnection(parent, args, context, info) {
 
 }
 
+async function getPostsInDraft(parent, args, context, info){
+
+  if(!context.request.userId){
+    throw new Error('Please SignIn to continue.')
+  }
+
+  const profile = await context.db.query.user({ where: { username: args.username } }, `{ id }`)
+  const canSeeDrafts = context.request.userId === profile.id
+
+  if (canSeeDrafts) {
+    const postsInDraft = await context.db.query.posts({
+      where: {
+        status: "DRAFT",
+        author: {
+          id: context.request.userId
+        }
+      }
+    }, info) // Use connections when you get more users
+    return postsInDraft
+  }
+
+  throw new Error('You are not allowed to see the draft posts.')
+  
+}
+
 module.exports = {
   users,
   me,
@@ -311,5 +336,6 @@ module.exports = {
   getWeekly,
   getLatest,
   getFeatured,
-  upvotedPostsAuthorConnection
+  upvotedPostsAuthorConnection,
+  getPostsInDraft
 }

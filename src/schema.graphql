@@ -96,6 +96,7 @@ type Query {
     after: String
     orderBy: PostOrderByInput
   ): PostConnection!
+  getPostsInDraft(username: String!): [Post]!
 }
 
 type Post {

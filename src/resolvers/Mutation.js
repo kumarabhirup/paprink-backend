@@ -307,7 +307,7 @@ async function deletePost(parent, args, context, info){
     
     const deletePost = await context.db.mutation.deletePost({
       where: { id: postToDelete.id }
-    }, info)
+    }, info) // TODO: Instead of deleting, you should turn the status to DELETED.
 
     return deletePost
 
