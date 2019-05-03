@@ -134,9 +134,6 @@ async function search(parent, args, context, info) {
           categories_some: {
             text_contains: args.searchString
           }
-        },
-        {
-          editorHtml_contains: args.searchString
         }
       ]
     }

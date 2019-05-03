@@ -27,7 +27,7 @@ type Mutation {
     title: String!
     editorSerializedOutput: Json!
     editorCurrentContent: Json!
-    editorHtml: String!
+    # editorHtml: String!
     categories: Json!
     thumbnail: Json!
     status: PostStatus!
@@ -37,7 +37,7 @@ type Mutation {
     title: String!
     editorSerializedOutput: Json!
     editorCurrentContent: Json!
-    editorHtml: String!
+    # editorHtml: String!
     categories: Json!
     thumbnail: Json!
     status: PostStatus!

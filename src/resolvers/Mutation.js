@@ -134,7 +134,7 @@ async function updatePost(parent, args, context, info){
       data: {
         title: args.title,
         editorCurrentContent: args.editorCurrentContent,
-        editorHtml: args.editorHtml,
+        // editorHtml: args.editorHtml,
         editorSerializedOutput: args.editorSerializedOutput,
         categories: {
           connect: args.categories.map(category => ({ category })),
