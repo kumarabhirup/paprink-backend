@@ -331,6 +331,7 @@ export type Previledge =
   | "SUPERADMIN"
   | "ADMIN"
   | "MODERATOR"
+  | "VERIFIED"
   | "AUTHOR"
   | "READER";
 

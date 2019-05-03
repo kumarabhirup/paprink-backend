@@ -863,6 +863,7 @@ enum Previledge {
   SUPERADMIN
   ADMIN
   MODERATOR
+  VERIFIED
   AUTHOR
   READER
 }
