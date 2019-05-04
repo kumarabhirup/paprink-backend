@@ -96,7 +96,11 @@ type Query {
     after: String
     orderBy: PostOrderByInput
   ): PostConnection!
-  getPostsInDraft(authorUsername: String!): [Post]!
+  getPostsInDraft(
+    authorUsername: String!
+    after: String
+    orderBy: PostOrderByInput
+  ): PostConnection!
 }
 
 type Post {

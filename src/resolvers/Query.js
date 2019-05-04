@@ -307,15 +307,21 @@ async function getPostsInDraft(parent, args, context, info){
   const canSeeDrafts = context.request.userId === profile.id
 
   if (canSeeDrafts) {
-    const postsInDraft = await context.db.query.posts({
+
+    const postsInDraft = await context.db.query.postsConnection({
       where: {
         status: "DRAFT",
         author: {
           id: context.request.userId
         }
-      }
-    }, info) // Use connections when you get more users
+      },
+      first: 8,
+      orderBy: args.orderBy || "createdAt_DESC",
+      after: args.after
+    }, info)
+
     return postsInDraft
+
   }
 
   throw new Error('You are not allowed to see the draft posts.')
