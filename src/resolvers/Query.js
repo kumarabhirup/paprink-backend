@@ -303,7 +303,7 @@ async function getPostsInDraft(parent, args, context, info){
     throw new Error('Please SignIn to continue.')
   }
 
-  const profile = await context.db.query.user({ where: { username: args.username } }, `{ id }`)
+  const profile = await context.db.query.user({ where: { username: args.authorUsername } }, `{ id }`)
   const canSeeDrafts = context.request.userId === profile.id
 
   if (canSeeDrafts) {
