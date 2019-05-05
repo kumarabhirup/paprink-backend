@@ -255,7 +255,10 @@ export type CategoryEnum =
   | "UK"
   | "WORLD"
   | "NEWS"
-  | "REVIEW";
+  | "REVIEW"
+  | "ART"
+  | "CULTURE"
+  | "STORY";
 
 export type PostStatus = "PUBLISHED" | "DRAFT" | "DELETED";
 

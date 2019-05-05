@@ -86,6 +86,9 @@ enum CategoryEnum {
   WORLD
   NEWS
   REVIEW
+  ART
+  CULTURE
+  STORY
 }
 
 enum CategoryOrderByInput {
