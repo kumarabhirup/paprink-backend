@@ -328,6 +328,14 @@ async function getPostsInDraft(parent, args, context, info){
   
 }
 
+async function countUsers(parent, args, context, info){
+
+  const numberOfUsers = await context.db.query.usersConnection({}, `{ aggregate { count } }`)
+
+  return numberOfUsers.aggregate.count
+
+}
+
 module.exports = {
   users,
   me,
@@ -343,5 +351,6 @@ module.exports = {
   getLatest,
   getFeatured,
   upvotedPostsAuthorConnection,
-  getPostsInDraft
+  getPostsInDraft,
+  countUsers
 }

@@ -101,6 +101,7 @@ type Query {
     after: String
     orderBy: PostOrderByInput
   ): PostConnection!
+  countUsers: Int!
 }
 
 type Post {
