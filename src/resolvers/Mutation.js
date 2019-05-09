@@ -278,6 +278,14 @@ async function updateUser(parent, args, context, info){
     }
   }
 
+  // Form validation
+  if(args.name.length < 4 || args.name.length > 17) {
+    throw new Error("Name, keep it not very big, not very small.")
+  }
+  if(args.username.length < 5 || args.username.length > 15) {
+    throw new Error("Username, keep it not very big, not very small.")
+  }
+
   const updateUser = await context.db.mutation.updateUser({
     where: { id: context.request.userId },
     data: {
