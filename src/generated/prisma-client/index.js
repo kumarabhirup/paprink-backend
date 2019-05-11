@@ -40,7 +40,7 @@ var models = [
 exports.Prisma = prisma_lib_1.makePrismaClientClass({
   typeDefs,
   models,
-  endpoint: `http://localhost:4466`,
+  endpoint: `https://prodpaprink-5f26e1e0b6.herokuapp.com/paprink-backend/prod`,
   secret: `${process.env["PRISMA_SECRET"]}`
 });
 exports.prisma = new exports.Prisma();
