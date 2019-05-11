@@ -74,5 +74,5 @@ server.start(
     endpoint: '/graphql',
     playground: process.env.NODE_ENV === 'development' ? '*' : false
   },
-  details => console.log(`Server is running on http://localhost:${details.port}`)
+  details => console.log(`Server is running on PORT ${details.port}`)
 )
