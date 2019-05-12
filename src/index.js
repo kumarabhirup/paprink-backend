@@ -67,10 +67,10 @@ server.express.use(async (req, res, next) => {
 
 server.start(
   {
-    // cors: {
-    //   credentials: true,
-    //   origin: process.env.NODE_ENV === 'development' ? process.env.FRONTEND_URL : process.env.PROD_FRONTEND_URL
-    // },
+    cors: {
+      credentials: false,
+      origin: process.env.NODE_ENV === 'development' ? process.env.FRONTEND_URL : process.env.PROD_FRONTEND_URL
+    },
     endpoint: '/graphql',
     playground: process.env.NODE_ENV === 'development' ? '*' : false
   },
