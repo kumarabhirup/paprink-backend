@@ -24,16 +24,6 @@ const server = new GraphQLServer({
   }),
 })
 
-
-// Error handler
-const errorHandler = (err, req, res, next) => {
-  if (res.headersSent) {
-    return next(err);
-  }
-  const { status } = err;
-  res.status(status).json(err);
-}; server.use(errorHandler);
-
 // COOKIE PARSER
 server.express.use(cookieParser())
 
@@ -68,7 +58,7 @@ server.express.use(async (req, res, next) => {
 server.start(
   {
     cors: {
-      credentials: false,
+      credentials: true,
       origin: process.env.NODE_ENV === 'development' ? process.env.FRONTEND_URL : process.env.PROD_FRONTEND_URL
     },
     endpoint: '/graphql',
