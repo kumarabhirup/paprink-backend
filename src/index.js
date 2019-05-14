@@ -24,16 +24,6 @@ const server = new GraphQLServer({
   }),
 })
 
-
-// Error handler
-const errorHandler = (err, req, res, next) => {
-  if (res.headersSent) {
-    return next(err);
-  }
-  const { status } = err;
-  res.status(status).json(err);
-}; server.use(errorHandler);
-
 // COOKIE PARSER
 server.express.use(cookieParser())
 
