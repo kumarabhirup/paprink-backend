@@ -6,6 +6,7 @@ async function users(parent, args, context, info) {
 }
 
 async function me(parent, args, context, info){
+  console.log(context.request.userId)
   if(!context.request.userId){
     return null
   } return context.db.query.user({where: {id: context.request.userId}}, info)
