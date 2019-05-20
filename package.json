@@ -24,10 +24,13 @@
     "nodemailer": "^4.6.8",
     "nodemon": "^1.18.7",
     "npm-run-all": "^4.1.5",
-    "prisma": "^1.21.1",
+    "prisma": "^1.33.0",
     "prisma-binding": "2.1.6",
     "prisma-client-lib": "^1.22.2",
     "slug": "^1.0.0"
+  },
+  "resolutions": {
+    "graphql": "^0.13.0"
   },
   "babel": {
     "presets": [
