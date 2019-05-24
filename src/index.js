@@ -62,7 +62,7 @@ server.start(
       origin: process.env.NODE_ENV === 'development' ? process.env.FRONTEND_URL : process.env.PROD_FRONTEND_URL
     },
     endpoint: '/graphql',
-    playground: process.env.NODE_ENV === 'development' ? '*' : false
+    // playground: process.env.NODE_ENV === 'development' ? '*' : false
   },
   details => console.log(`Server is running on PORT ${details.port}`)
 )
