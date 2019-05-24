@@ -18,10 +18,12 @@ const server = new GraphQLServer({
   resolverValidationOptions: {
     requireResolversForResolveType: false,
   },
-  context: request => ({
-    ...request,
-    db
-  }),
+  context: request => {
+    return {
+      ...request,
+      db
+    }
+  },
 })
 
 // COOKIE PARSER

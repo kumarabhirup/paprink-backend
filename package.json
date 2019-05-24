@@ -29,9 +29,6 @@
     "prisma-client-lib": "^1.22.2",
     "slug": "^1.0.0"
   },
-  "resolutions": {
-    "graphql": "^0.13.0"
-  },
   "babel": {
     "presets": [
       "env"
