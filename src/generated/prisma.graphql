@@ -34,6 +34,7 @@ type CategoryConnection {
 }
 
 input CategoryCreateInput {
+  id: ID
   text: String!
   category: CategoryEnum!
   posts: PostCreateManyWithoutCategoriesInput
@@ -45,6 +46,7 @@ input CategoryCreateManyWithoutPostsInput {
 }
 
 input CategoryCreateWithoutPostsInput {
+  id: ID
   text: String!
   category: CategoryEnum!
 }
@@ -364,6 +366,7 @@ type PostConnection {
 }
 
 input PostCreateInput {
+  id: ID
   title: String!
   editorSerializedOutput: Json!
   editorCurrentContent: Json!
@@ -394,6 +397,7 @@ input PostCreateOneWithoutUpvotesInput {
 }
 
 input PostCreateWithoutAuthorInput {
+  id: ID
   title: String!
   editorSerializedOutput: Json!
   editorCurrentContent: Json!
@@ -408,6 +412,7 @@ input PostCreateWithoutAuthorInput {
 }
 
 input PostCreateWithoutCategoriesInput {
+  id: ID
   title: String!
   editorSerializedOutput: Json!
   editorCurrentContent: Json!
@@ -422,6 +427,7 @@ input PostCreateWithoutCategoriesInput {
 }
 
 input PostCreateWithoutUpvotesInput {
+  id: ID
   title: String!
   editorSerializedOutput: Json!
   editorCurrentContent: Json!
@@ -904,6 +910,7 @@ type UpvoteConnection {
 }
 
 input UpvoteCreateInput {
+  id: ID
   user: UserCreateOneWithoutUpvotesInput!
   post: PostCreateOneWithoutUpvotesInput!
 }
@@ -919,10 +926,12 @@ input UpvoteCreateManyWithoutUserInput {
 }
 
 input UpvoteCreateWithoutPostInput {
+  id: ID
   user: UserCreateOneWithoutUpvotesInput!
 }
 
 input UpvoteCreateWithoutUserInput {
+  id: ID
   post: PostCreateOneWithoutUpvotesInput!
 }
 
@@ -1129,6 +1138,7 @@ type UserConnection {
 }
 
 input UserCreateInput {
+  id: ID
   socialId: String!
   fname: String!
   lname: String!
@@ -1168,6 +1178,7 @@ input UserCreatepreviledgeInput {
 }
 
 input UserCreateWithoutPostsInput {
+  id: ID
   socialId: String!
   fname: String!
   lname: String!
@@ -1187,6 +1198,7 @@ input UserCreateWithoutPostsInput {
 }
 
 input UserCreateWithoutUpvotesInput {
+  id: ID
   socialId: String!
   fname: String!
   lname: String!
