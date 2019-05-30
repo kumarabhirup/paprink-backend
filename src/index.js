@@ -13,7 +13,7 @@ const server = new GraphQLServer({
   typeDefs: './src/schema.graphql',
   resolvers: {
     Query,
-    Mutation
+    Mutation,
   },
   resolverValidationOptions: {
     requireResolversForResolveType: false,
@@ -21,7 +21,7 @@ const server = new GraphQLServer({
   context: request => {
     return {
       ...request,
-      db
+      db,
     }
   },
 })
@@ -31,40 +31,44 @@ server.express.use(cookieParser())
 
 // Decode the JWT
 server.express.use((req, res, next) => {
-    const { paprinkToken } = req.cookies
-    if(paprinkToken){
-      const { userId } = jwt.verify(paprinkToken, process.env.JWT_SECRET)
-      if(userId) {
-        req.userId = userId
-      }
+  const { paprinkToken } = req.cookies
+  console.log('TOKEN TOKEN', paprinkToken)
+  if (paprinkToken) {
+    const { userId } = jwt.verify(paprinkToken, process.env.JWT_SECRET)
+    if (userId) {
+      req.userId = userId
     }
-    next()
+  }
+  next()
 })
 
 // Populate the user
 server.express.use(async (req, res, next) => {
+  // skip if they aren't logged in
+  if (!req.userId) {
+    return next()
+  }
 
-    // skip if they aren't logged in
-    if(!req.userId){
-        return next()
-    }
+  const user = await db.query.user(
+    { where: { id: req.userId } },
+    '{ id, fname, lname, name, email, previledge }',
+  )
+  req.user = user
 
-    const user = await db.query.user({ where: {id: req.userId} }, '{ id, fname, lname, name, email, previledge }')
-    req.user = user
-
-    next()
-
+  next()
 })
-
 
 server.start(
   {
     cors: {
       credentials: true,
-      origin: process.env.NODE_ENV === 'development' ? process.env.FRONTEND_URL : process.env.PROD_FRONTEND_URL
+      origin:
+        process.env.NODE_ENV === 'development'
+          ? process.env.FRONTEND_URL
+          : process.env.PROD_FRONTEND_URL,
     },
     endpoint: '/graphql',
     // playground: process.env.NODE_ENV === 'development' ? '*' : false
   },
-  details => console.log(`Server is running on PORT ${details.port}`)
+  details => console.log(`Server is running on PORT ${details.port}`),
 )
