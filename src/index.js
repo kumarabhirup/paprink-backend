@@ -32,7 +32,6 @@ server.express.use(cookieParser())
 // Decode the JWT
 server.express.use((req, res, next) => {
   const { paprinkToken } = req.cookies
-  console.log('TOKEN TOKEN', paprinkToken)
   if (paprinkToken) {
     const { userId } = jwt.verify(paprinkToken, process.env.JWT_SECRET)
     if (userId) {
