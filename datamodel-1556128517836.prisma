@@ -74,7 +74,7 @@ type Post {
   upvotesNumber: Int @default(value: 0)
   author: User @relation(link: TABLE, name: "PostsAndUser")
   authorId: String!
-  categories: [Category] @relation(name: "PostsCategories")
+  categories: [Category!]! @relation(name: "PostsCategories")
   thumbnail: Json!
   status: PostStatus!
   slug: String!

@@ -52,7 +52,7 @@ async function signIn(parent, args, context, info){
   }, info)
 
   const token = jwt.sign({ userId: signedUser.id, /*accessToken: args.accessToken,*/ signUpMethod: args.signUpMethod }, process.env.JWT_SECRET)
-  await context.response.cookie('paprinkToken', token, {
+  context.response.cookie('paprinkToken', token, {
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 7
   })
