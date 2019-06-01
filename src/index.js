@@ -14,7 +14,7 @@ const corsMW = {
   origin: process.env.NODE_ENV === 'development'
           ? process.env.FRONTEND_URL
           : process.env.PROD_FRONTEND_URL,
-};
+}
 
 // start it
 const server = new GraphQLServer({
@@ -37,8 +37,8 @@ const server = new GraphQLServer({
 // COOKIE PARSER
 server.express.use(cookieParser())
 
-server.express.use(cors(corsMW));
-server.express.options('*', cors(corsMW));
+server.express.use(cors(corsMW))
+server.express.options('*', cors(corsMW))
 
 // Decode the JWT
 server.express.use((req, res, next) => {
@@ -68,13 +68,10 @@ server.express.use(async (req, res, next) => {
   next()
 })
 
-// got it :P
-
 server.start(
   {
     cors: corsMW,
-    endpoint: '/api/graphql',
-    // playground: process.env.NODE_ENV === 'development' ? '*' : false
+    endpoint: '/api/graphql'
   },
   details => console.log(`Server is running on PORT ${details.port}`),
 )
