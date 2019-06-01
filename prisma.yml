@@ -6,12 +6,7 @@ generate:
   - generator: javascript-client
     output: ./src/generated/prisma-client/
   - generator: graphql-schema
-    output: ./src/generated/
-
-hooks:
-  post-deploy:
-    - graphql get-schema -p prisma
-    - prisma generate
+    output: ./src/generated/prisma.graphql
 
 seed:
   run: node ./src/seed.js
