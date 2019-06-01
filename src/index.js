@@ -73,7 +73,7 @@ server.express.use(async (req, res, next) => {
 server.start(
   {
     cors: corsMW,
-    endpoint: '/graphql',
+    endpoint: '/api/graphql',
     // playground: process.env.NODE_ENV === 'development' ? '*' : false
   },
   details => console.log(`Server is running on PORT ${details.port}`),
