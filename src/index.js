@@ -9,11 +9,22 @@ const Query = require('./resolvers/Query')
 const Mutation = require('./resolvers/Mutation')
 const db = require('./db')
 
+var whitelist = [
+  process.env.NODE_ENV === 'development'
+          ? process.env.FRONTEND_URL
+          : process.env.PROD_FRONTEND_URL, 
+  process.env.WWW_PROD_FRONTEND_URL
+]
+
 const corsMW = {
   credentials: true,
-  origin: process.env.NODE_ENV === 'development'
-          ? process.env.FRONTEND_URL
-          : process.env.PROD_FRONTEND_URL,
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1 || !origin) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
 }
 
 // start it
