@@ -102,6 +102,7 @@ type Query {
     orderBy: PostOrderByInput
   ): PostConnection!
   countUsers: Int!
+  hasPostedToday: Json!
 }
 
 type Post {

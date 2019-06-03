@@ -156,9 +156,9 @@ async function getToday(parent, args, context, info) {
   const connection = await context.db.query.postsConnection({
     where: {
       status: "PUBLISHED",
-      createdAt_gte: todayDateISO,
+      publishedAt_gte: todayDateISO,
       NOT: [{
-        createdAt_gte: tomorrowDateISO
+        publishedAt_gte: tomorrowDateISO
       }]
     },
     orderBy: args.orderBy || "upvotesNumber_DESC",
@@ -187,9 +187,9 @@ async function getYesterday(parent, args, context, info) {
   const connection = await context.db.query.postsConnection({
     where: {
       status: "PUBLISHED",
-      createdAt_gte: yesterdayDateISO,
+      publishedAt_gte: yesterdayDateISO,
       NOT: [{
-        createdAt_gte: todayDateISO
+        publishedAt_gte: todayDateISO
       }]
     },
     orderBy: args.orderBy || "upvotesNumber_DESC",
@@ -218,7 +218,7 @@ async function getWeekly(parent, args, context, info) {
   const connection = await context.db.query.postsConnection({
     where: {
       status: "PUBLISHED",
-      createdAt_gte: weekAgoDateISO,
+      publishedAt_gte: weekAgoDateISO,
       // TODO: Filter posts by minimum number of upvotes needed
     },
     orderBy: args.orderBy || "upvotesNumber_DESC",
@@ -240,7 +240,7 @@ async function getLatest(parent, args, context, info) {
       where: {
         status: "PUBLISHED"
       },
-      orderBy: "createdAt_DESC",
+      orderBy: "publishedAt_DESC",
       first: 8,
       after: args.after
     }, info)
@@ -285,7 +285,7 @@ async function upvotedPostsAuthorConnection(parent, args, context, info) {
       }
     },
     first: 8,
-    orderBy: args.orderBy || "createdAt_DESC",
+    orderBy: args.orderBy || "publishedAt_DESC",
     after: args.after
   }, info)
 
@@ -336,6 +336,34 @@ async function countUsers(parent, args, context, info){
 
 }
 
+async function hasPostedToday(parent, args, context, info){
+
+  if(!context.request.userId){
+    throw new Error('Please SignIn to continue.')
+  }
+
+  const date = new Date()
+  const todayDateISO = date.toISOString().slice(0, 10) // To get format like "2018-08-03" [ ISO 8601 format is UTC ]
+
+  const lastPost = await context.db.query.posts({
+                    where: { 
+                      author: { id: context.request.userId },
+                      status: "PUBLISHED"
+                    },
+                    orderBy: "publishedAt_DESC",
+                    first: 1
+                  }, `{ title, publishedAt, slug, id }`)
+                  .then(res => res[0])
+
+  const hasPostedToday = lastPost ? lastPost.publishedAt.slice(0, 10) === todayDateISO : false
+
+  return {
+    hasPostedToday,
+    lastPost
+  }
+
+}
+
 module.exports = {
   users,
   me,
@@ -352,5 +380,6 @@ module.exports = {
   getFeatured,
   upvotedPostsAuthorConnection,
   getPostsInDraft,
-  countUsers
+  countUsers,
+  hasPostedToday
 }
