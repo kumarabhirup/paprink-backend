@@ -338,10 +338,6 @@ async function countUsers(parent, args, context, info){
 
 async function hasPostedToday(parent, args, context, info){
 
-  if(!context.request.userId){
-    throw new Error('Please SignIn to continue.')
-  }
-
   const date = new Date()
   const todayDateISO = date.toISOString().slice(0, 10) // To get format like "2018-08-03" [ ISO 8601 format is UTC ]
 
