@@ -357,7 +357,7 @@ async function hasPostedToday(parent, args, context, info){
     hasPostedToday,
     lastPost
   }
-
+  
 }
 
 module.exports = {

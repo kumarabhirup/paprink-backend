@@ -2,6 +2,7 @@ require('dotenv').config()
 
 const { GraphQLServer } = require('graphql-yoga')
 const cookieParser = require('cookie-parser')
+const bodyParser = require('body-parser')
 const jwt = require('jsonwebtoken')
 const cors = require('cors')
 
@@ -38,6 +39,14 @@ const server = new GraphQLServer({
 server.express.use(cookieParser())
 
 server.express.use(cors(corsMW))
+
+/**
+ * BUG FIX: Error: request entity too large [Due to Large Payload]
+ * Code from: https://stackoverflow.com/questions/19917401/error-request-entity-too-large/36514330#36514330
+ */
+server.express.use(bodyParser.json({limit: "50mb"}))
+server.express.use(bodyParser.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}))
+
 server.express.options('*', cors(corsMW))
 
 // Decode the JWT
