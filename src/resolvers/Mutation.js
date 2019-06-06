@@ -191,7 +191,7 @@ async function upvote(parent, args, context, info){
   
   const hasUpvotedPost = loggedInUser.upvotes.some(({post}) => post.id === args.postId)
 
-  const postToUpvote = await context.db.query.post({ where: { id: args.postId } }, `{ id upvotes { id } }`)
+  const postToUpvote = await context.db.query.post({ where: { id: args.postId } }, `{ id upvotesNumber upvotes { id } }`)
 
   // UPVOTE!
   if (hasUpvotedPost === false) {
@@ -220,7 +220,7 @@ async function upvote(parent, args, context, info){
         id: postToUpvote.id
       },
       data: {
-        upvotesNumber: postToUpvote.upvotes.length + 1
+        upvotesNumber: postToUpvote.upvotesNumber + 1 // postToUpvote.upvotes.length + 1
       }
     }, `{
       id
@@ -247,7 +247,7 @@ async function upvote(parent, args, context, info){
       id: postToUpvote.id
     },
     data: {
-      upvotesNumber: postToUpvote.upvotes.length - 1
+      upvotesNumber: postToUpvote.upvotesNumber - 1 // postToUpvote.upvotes.length - 1
     }
   }, `{
     id
