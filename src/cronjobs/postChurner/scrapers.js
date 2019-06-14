@@ -15,6 +15,28 @@ const twoHundredWordsADay = {
   }
 }
 
+const twoHundredWordsADayArchive = {
+  links: {
+    listItem: "div.tab-content > div.tab-pane > ul > li.text",
+    data: {
+      url: {
+        selector: "div.d-flex.flex-row.justify-content-center.align-items-start > div.p-3.shadow-sm.rounded > div.text-blurb > a",
+        attr: "href",
+        convert: data => data ? `https://200wordsaday.com${data}` : null
+      }
+    }
+  }
+}
+
+const scrapeWebsites = [
+  {
+    uri: 'https://200wordsaday.com', 
+    scraper: twoHundredWordsADay,
+    archiveScraper: twoHundredWordsADayArchive
+  }
+]
+
 module.exports = {
+  scrapeWebsites,
   twoHundredWordsADay
 }
