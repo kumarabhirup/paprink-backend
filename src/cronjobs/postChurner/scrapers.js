@@ -7,7 +7,7 @@ const twoHundredWordsADay = {
     how: "html"
   },
   authorName: {selector: "div.writer-details > p.mb-2"},
-  authorAvatar: {selector: "div.writer-details > img", attr: "data-src", convert: data => `https://200wordsaday.com${data}`},
+  authorAvatar: {selector: "div.writer-details > img", attr: "data-src", convert: data => data ? `https://200wordsaday.com${data}` : `https://i.ibb.co/QjskV8p/images.png`},
   authorUsername: {
     selector: "small.d-block > a", 
     attr: "href", 
