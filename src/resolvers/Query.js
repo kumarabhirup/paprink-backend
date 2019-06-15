@@ -40,7 +40,7 @@ async function getPost(parent, args, context, info){
 
   const post = await context.db.query.post({where: {id: postId}}, postInfo)
 
-  if (post.status === "PUBLISHED") {
+  if (post.status === "PUBLISHED" || post.status === "FAKEPOST") {
     return post
   } else if (post.status === "DRAFT" && post.author.id === context.request.userId ) {
     return post
@@ -56,7 +56,10 @@ async function postsCategoryConnection(parent, args, context, info) {
 
   const connection = await context.db.query.postsConnection({
     where: {
-      status: "PUBLISHED", 
+      OR: [
+        { status: "PUBLISHED" },
+        { status: "FAKEPOST" }
+      ],
       categories_some: {
         category
       }
@@ -80,7 +83,10 @@ async function postsAuthorConnection(parent, args, context, info) {
 
   const connection = await context.db.query.postsConnection({
     where: {
-      status: "PUBLISHED", 
+      OR: [
+        { status: "PUBLISHED" },
+        { status: "FAKEPOST" }
+      ],
       author: {
         username: authorUsername
       }
@@ -120,7 +126,10 @@ async function search(parent, args, context, info) {
 
   const posts = await context.db.query.posts({
     where: {
-      status: "PUBLISHED",
+      OR: [
+        { status: "PUBLISHED" },
+        { status: "FAKEPOST" }
+      ],
       OR: [
         {
           title_contains: args.searchString
@@ -155,7 +164,10 @@ async function getToday(parent, args, context, info) {
 
   const connection = await context.db.query.postsConnection({
     where: {
-      status: "PUBLISHED",
+      OR: [
+        { status: "PUBLISHED" },
+        { status: "FAKEPOST" }
+      ],
       publishedAt_gte: todayDateISO,
       NOT: [{
         publishedAt_gte: tomorrowDateISO
@@ -186,7 +198,10 @@ async function getYesterday(parent, args, context, info) {
 
   const connection = await context.db.query.postsConnection({
     where: {
-      status: "PUBLISHED",
+      OR: [
+        { status: "PUBLISHED" },
+        { status: "FAKEPOST" }
+      ],
       publishedAt_gte: yesterdayDateISO,
       NOT: [{
         publishedAt_gte: todayDateISO
@@ -217,7 +232,10 @@ async function getWeekly(parent, args, context, info) {
 
   const connection = await context.db.query.postsConnection({
     where: {
-      status: "PUBLISHED",
+      OR: [
+        { status: "PUBLISHED" },
+        { status: "FAKEPOST" }
+      ],
       publishedAt_gte: weekAgoDateISO,
       // TODO: Filter posts by minimum number of upvotes needed
     },
@@ -238,7 +256,10 @@ async function getLatest(parent, args, context, info) {
 
     const connection = await context.db.query.postsConnection({
       where: {
-        status: "PUBLISHED"
+        OR: [
+          { status: "PUBLISHED" },
+          { status: "FAKEPOST" }
+        ],
       },
       orderBy: "publishedAt_DESC",
       first: 8,
@@ -257,7 +278,10 @@ async function getFeatured(parent, args, context, info) {
 
   const posts = await context.db.query.posts({
     where: {
-      status: "PUBLISHED"
+      OR: [
+        { status: "PUBLISHED" },
+        { status: "FAKEPOST" }
+      ],
     },
     orderBy: "upvotesNumber_DESC",
     first: 4
@@ -277,7 +301,10 @@ async function upvotedPostsAuthorConnection(parent, args, context, info) {
 
   const connection = await context.db.query.postsConnection({
     where: {
-      status: "PUBLISHED", 
+      OR: [
+        { status: "PUBLISHED" },
+        { status: "FAKEPOST" }
+      ],
       upvotes_some: {
         user: {
           username: authorUsername

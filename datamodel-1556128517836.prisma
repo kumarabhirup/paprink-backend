@@ -5,6 +5,7 @@ enum Previledge {
   VERIFIED
   AUTHOR
   READER
+  FAKEUSER
 }
 
 enum Gender {
@@ -59,6 +60,7 @@ enum PostStatus {
   PUBLISHED
   DRAFT
   DELETED
+  FAKEPOST
 }
 
 type Post {
@@ -66,7 +68,7 @@ type Post {
   title: String!
   editorSerializedOutput: Json!
   editorCurrentContent: Json!
-  # editorHtml: String!
+  editorHtml: String
   updatedAt: DateTime! @updatedAt
   createdAt: DateTime! @createdAt
   publishedAt: DateTime
@@ -76,6 +78,7 @@ type Post {
   authorId: String!
   categories: [Category!]! @relation(name: "PostsCategories")
   thumbnail: Json!
+  refUrl: String @unique
   status: PostStatus!
   slug: String!
 }

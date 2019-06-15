@@ -346,6 +346,7 @@ type Post {
   title: String!
   editorSerializedOutput: Json!
   editorCurrentContent: Json!
+  editorHtml: String
   updatedAt: DateTime!
   createdAt: DateTime!
   publishedAt: DateTime
@@ -355,6 +356,7 @@ type Post {
   authorId: String!
   categories(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Category!]
   thumbnail: Json!
+  refUrl: String
   status: PostStatus!
   slug: String!
 }
@@ -370,6 +372,7 @@ input PostCreateInput {
   title: String!
   editorSerializedOutput: Json!
   editorCurrentContent: Json!
+  editorHtml: String
   publishedAt: DateTime
   upvotes: UpvoteCreateManyWithoutPostInput
   upvotesNumber: Int
@@ -377,6 +380,7 @@ input PostCreateInput {
   authorId: String!
   categories: CategoryCreateManyWithoutPostsInput
   thumbnail: Json!
+  refUrl: String
   status: PostStatus!
   slug: String!
 }
@@ -401,12 +405,14 @@ input PostCreateWithoutAuthorInput {
   title: String!
   editorSerializedOutput: Json!
   editorCurrentContent: Json!
+  editorHtml: String
   publishedAt: DateTime
   upvotes: UpvoteCreateManyWithoutPostInput
   upvotesNumber: Int
   authorId: String!
   categories: CategoryCreateManyWithoutPostsInput
   thumbnail: Json!
+  refUrl: String
   status: PostStatus!
   slug: String!
 }
@@ -416,12 +422,14 @@ input PostCreateWithoutCategoriesInput {
   title: String!
   editorSerializedOutput: Json!
   editorCurrentContent: Json!
+  editorHtml: String
   publishedAt: DateTime
   upvotes: UpvoteCreateManyWithoutPostInput
   upvotesNumber: Int
   author: UserCreateOneWithoutPostsInput
   authorId: String!
   thumbnail: Json!
+  refUrl: String
   status: PostStatus!
   slug: String!
 }
@@ -431,12 +439,14 @@ input PostCreateWithoutUpvotesInput {
   title: String!
   editorSerializedOutput: Json!
   editorCurrentContent: Json!
+  editorHtml: String
   publishedAt: DateTime
   upvotesNumber: Int
   author: UserCreateOneWithoutPostsInput
   authorId: String!
   categories: CategoryCreateManyWithoutPostsInput
   thumbnail: Json!
+  refUrl: String
   status: PostStatus!
   slug: String!
 }
@@ -455,6 +465,8 @@ enum PostOrderByInput {
   editorSerializedOutput_DESC
   editorCurrentContent_ASC
   editorCurrentContent_DESC
+  editorHtml_ASC
+  editorHtml_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -467,6 +479,8 @@ enum PostOrderByInput {
   authorId_DESC
   thumbnail_ASC
   thumbnail_DESC
+  refUrl_ASC
+  refUrl_DESC
   status_ASC
   status_DESC
   slug_ASC
@@ -478,12 +492,14 @@ type PostPreviousValues {
   title: String!
   editorSerializedOutput: Json!
   editorCurrentContent: Json!
+  editorHtml: String
   updatedAt: DateTime!
   createdAt: DateTime!
   publishedAt: DateTime
   upvotesNumber: Int
   authorId: String!
   thumbnail: Json!
+  refUrl: String
   status: PostStatus!
   slug: String!
 }
@@ -517,6 +533,20 @@ input PostScalarWhereInput {
   title_not_starts_with: String
   title_ends_with: String
   title_not_ends_with: String
+  editorHtml: String
+  editorHtml_not: String
+  editorHtml_in: [String!]
+  editorHtml_not_in: [String!]
+  editorHtml_lt: String
+  editorHtml_lte: String
+  editorHtml_gt: String
+  editorHtml_gte: String
+  editorHtml_contains: String
+  editorHtml_not_contains: String
+  editorHtml_starts_with: String
+  editorHtml_not_starts_with: String
+  editorHtml_ends_with: String
+  editorHtml_not_ends_with: String
   updatedAt: DateTime
   updatedAt_not: DateTime
   updatedAt_in: [DateTime!]
@@ -563,6 +593,20 @@ input PostScalarWhereInput {
   authorId_not_starts_with: String
   authorId_ends_with: String
   authorId_not_ends_with: String
+  refUrl: String
+  refUrl_not: String
+  refUrl_in: [String!]
+  refUrl_not_in: [String!]
+  refUrl_lt: String
+  refUrl_lte: String
+  refUrl_gt: String
+  refUrl_gte: String
+  refUrl_contains: String
+  refUrl_not_contains: String
+  refUrl_starts_with: String
+  refUrl_not_starts_with: String
+  refUrl_ends_with: String
+  refUrl_not_ends_with: String
   status: PostStatus
   status_not: PostStatus
   status_in: [PostStatus!]
@@ -590,6 +634,7 @@ enum PostStatus {
   PUBLISHED
   DRAFT
   DELETED
+  FAKEPOST
 }
 
 type PostSubscriptionPayload {
@@ -614,6 +659,7 @@ input PostUpdateInput {
   title: String
   editorSerializedOutput: Json
   editorCurrentContent: Json
+  editorHtml: String
   publishedAt: DateTime
   upvotes: UpvoteUpdateManyWithoutPostInput
   upvotesNumber: Int
@@ -621,6 +667,7 @@ input PostUpdateInput {
   authorId: String
   categories: CategoryUpdateManyWithoutPostsInput
   thumbnail: Json
+  refUrl: String
   status: PostStatus
   slug: String
 }
@@ -629,10 +676,12 @@ input PostUpdateManyDataInput {
   title: String
   editorSerializedOutput: Json
   editorCurrentContent: Json
+  editorHtml: String
   publishedAt: DateTime
   upvotesNumber: Int
   authorId: String
   thumbnail: Json
+  refUrl: String
   status: PostStatus
   slug: String
 }
@@ -641,10 +690,12 @@ input PostUpdateManyMutationInput {
   title: String
   editorSerializedOutput: Json
   editorCurrentContent: Json
+  editorHtml: String
   publishedAt: DateTime
   upvotesNumber: Int
   authorId: String
   thumbnail: Json
+  refUrl: String
   status: PostStatus
   slug: String
 }
@@ -689,12 +740,14 @@ input PostUpdateWithoutAuthorDataInput {
   title: String
   editorSerializedOutput: Json
   editorCurrentContent: Json
+  editorHtml: String
   publishedAt: DateTime
   upvotes: UpvoteUpdateManyWithoutPostInput
   upvotesNumber: Int
   authorId: String
   categories: CategoryUpdateManyWithoutPostsInput
   thumbnail: Json
+  refUrl: String
   status: PostStatus
   slug: String
 }
@@ -703,12 +756,14 @@ input PostUpdateWithoutCategoriesDataInput {
   title: String
   editorSerializedOutput: Json
   editorCurrentContent: Json
+  editorHtml: String
   publishedAt: DateTime
   upvotes: UpvoteUpdateManyWithoutPostInput
   upvotesNumber: Int
   author: UserUpdateOneWithoutPostsInput
   authorId: String
   thumbnail: Json
+  refUrl: String
   status: PostStatus
   slug: String
 }
@@ -717,12 +772,14 @@ input PostUpdateWithoutUpvotesDataInput {
   title: String
   editorSerializedOutput: Json
   editorCurrentContent: Json
+  editorHtml: String
   publishedAt: DateTime
   upvotesNumber: Int
   author: UserUpdateOneWithoutPostsInput
   authorId: String
   categories: CategoryUpdateManyWithoutPostsInput
   thumbnail: Json
+  refUrl: String
   status: PostStatus
   slug: String
 }
@@ -783,6 +840,20 @@ input PostWhereInput {
   title_not_starts_with: String
   title_ends_with: String
   title_not_ends_with: String
+  editorHtml: String
+  editorHtml_not: String
+  editorHtml_in: [String!]
+  editorHtml_not_in: [String!]
+  editorHtml_lt: String
+  editorHtml_lte: String
+  editorHtml_gt: String
+  editorHtml_gte: String
+  editorHtml_contains: String
+  editorHtml_not_contains: String
+  editorHtml_starts_with: String
+  editorHtml_not_starts_with: String
+  editorHtml_ends_with: String
+  editorHtml_not_ends_with: String
   updatedAt: DateTime
   updatedAt_not: DateTime
   updatedAt_in: [DateTime!]
@@ -836,6 +907,20 @@ input PostWhereInput {
   categories_every: CategoryWhereInput
   categories_some: CategoryWhereInput
   categories_none: CategoryWhereInput
+  refUrl: String
+  refUrl_not: String
+  refUrl_in: [String!]
+  refUrl_not_in: [String!]
+  refUrl_lt: String
+  refUrl_lte: String
+  refUrl_gt: String
+  refUrl_gte: String
+  refUrl_contains: String
+  refUrl_not_contains: String
+  refUrl_starts_with: String
+  refUrl_not_starts_with: String
+  refUrl_ends_with: String
+  refUrl_not_ends_with: String
   status: PostStatus
   status_not: PostStatus
   status_in: [PostStatus!]
@@ -861,6 +946,7 @@ input PostWhereInput {
 
 input PostWhereUniqueInput {
   id: ID
+  refUrl: String
 }
 
 enum Previledge {
@@ -870,6 +956,7 @@ enum Previledge {
   VERIFIED
   AUTHOR
   READER
+  FAKEUSER
 }
 
 type Query {

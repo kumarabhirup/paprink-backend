@@ -9,6 +9,7 @@ const cors = require('cors')
 const Query = require('./resolvers/Query')
 const Mutation = require('./resolvers/Mutation')
 const db = require('./db')
+const postChurner = require('./cronjobs/postChurner/postChurner')
 
 const corsMW = {
   credentials: true,
@@ -39,6 +40,9 @@ const server = new GraphQLServer({
 server.express.use(cookieParser())
 
 server.express.use(cors(corsMW))
+
+// Run Cron Jobs
+postChurner()
 
 /**
  * BUG FIX: Error: request entity too large [Due to Large Payload]

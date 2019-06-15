@@ -110,7 +110,7 @@ type Post {
   title: String!
   editorSerializedOutput: Json!
   editorCurrentContent: Json!
-  editorHtml: String!
+  editorHtml: String
   updatedAt: DateTime!
   createdAt: DateTime!
   publishedAt: DateTime
@@ -121,6 +121,7 @@ type Post {
   thumbnail: Json!
   status: PostStatus!
   slug: String!
+  refUrl: String
   upvotes: [Upvote]!
 }
 
