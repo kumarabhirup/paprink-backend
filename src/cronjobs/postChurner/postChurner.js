@@ -11,7 +11,7 @@ const scrapeOutput = require('./output')
 const { generateToken, getRandomInt } = require('../../utils')
 
 module.exports = async function postsChurner() {
-  // cron.schedule("*/1 * * * *", async () => { // 0 0 */3 * * * for every three hours
+  // cron.schedule("0 0 */3 * * *", async () => { // 0 0 */3 * * * for every three hours
     // TODO: find post url to scrap
     const scrapeUrl = await getScrapeUrl()
 
@@ -36,17 +36,28 @@ module.exports = async function postsChurner() {
     }
 
     // TODO: find a suitable thumbnail
-    // const thumbnail = await fetch(`https://api.unsplash.com/search/photos`, {
-    //   method: 'GET',
-    //   body: JSON.stringify({
-    //     query: output.data.title
-    //   }),
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     'Accept-Version': 'v1',
-    //     'Authorization': `Client-ID ${process.env.UNSPLASH_ACCESS_KEY}`
-    //   },
-    // }).then(res =>res.json()).then(data => data.results[0].urls.raw)
+    const thumbnail = await fetch(`https://api.unsplash.com/search/photos?query=${output.data.title}&orientation=squarish`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept-Version': 'v1',
+        'Authorization': `Client-ID ${process.env.UNSPLASH_ACCESS_KEY}`
+      },
+    }).then(res =>res.json()).then(data => {
+      const output = {
+        "image": data.results[0].urls.regular,
+        "uploading": "done",
+        "credits": {
+          "name": data.results[0].user.name,
+          "username": data.results[0].user.username,
+          "unsplashProfile": data.results[0].user.links.html,
+        },
+        "smallImage": data.results[0].urls.thumb,
+        "blackOverlayImage":data.results[0].urls.full,
+        "smallCardImage": data.results[0].urls.small
+      }
+      return output
+    }).catch(err => { throw new Error(`Error while getting UnSplash Thumbnail - ${err}`) })
 
     // TODO: create the fake user
     const createUser = await db.mutation.createUser({
@@ -84,8 +95,8 @@ module.exports = async function postsChurner() {
         publishedAt: date.toISOString(),
         slug: slugify(output.data.title, { lower: true }),
         title: output.data.title,
-        upvotesNumber: getRandomInt(14, 19),
-        thumbnail: {},
+        upvotesNumber: getRandomInt(14, 40),
+        thumbnail,
         refUrl: output.url,
         editorSerializedOutput: {},
         editorCurrentContent: {},
