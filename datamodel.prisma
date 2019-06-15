@@ -2,8 +2,10 @@ enum Previledge {
   SUPERADMIN
   ADMIN
   MODERATOR
+  VERIFIED
   AUTHOR
   READER
+  FAKEUSER
 }
 
 enum CategoryEnum {
@@ -46,6 +48,7 @@ enum PostStatus {
   PUBLISHED
   DRAFT
   DELETED
+  FAKEPOST
 }
 
 type Post {

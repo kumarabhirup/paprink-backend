@@ -355,6 +355,7 @@ type Post {
   authorId: String!
   categories(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Category!]
   thumbnail: Json!
+  refUrl: String
   status: PostStatus!
   slug: String!
 }
@@ -377,6 +378,7 @@ input PostCreateInput {
   authorId: String!
   categories: CategoryCreateManyWithoutPostsInput
   thumbnail: Json!
+  refUrl: String
   status: PostStatus!
   slug: String!
 }
@@ -407,6 +409,7 @@ input PostCreateWithoutAuthorInput {
   authorId: String!
   categories: CategoryCreateManyWithoutPostsInput
   thumbnail: Json!
+  refUrl: String
   status: PostStatus!
   slug: String!
 }
@@ -422,6 +425,7 @@ input PostCreateWithoutCategoriesInput {
   author: UserCreateOneWithoutPostsInput
   authorId: String!
   thumbnail: Json!
+  refUrl: String
   status: PostStatus!
   slug: String!
 }
@@ -437,6 +441,7 @@ input PostCreateWithoutUpvotesInput {
   authorId: String!
   categories: CategoryCreateManyWithoutPostsInput
   thumbnail: Json!
+  refUrl: String
   status: PostStatus!
   slug: String!
 }
@@ -467,6 +472,8 @@ enum PostOrderByInput {
   authorId_DESC
   thumbnail_ASC
   thumbnail_DESC
+  refUrl_ASC
+  refUrl_DESC
   status_ASC
   status_DESC
   slug_ASC
@@ -484,6 +491,7 @@ type PostPreviousValues {
   upvotesNumber: Int
   authorId: String!
   thumbnail: Json!
+  refUrl: String
   status: PostStatus!
   slug: String!
 }
@@ -563,6 +571,20 @@ input PostScalarWhereInput {
   authorId_not_starts_with: String
   authorId_ends_with: String
   authorId_not_ends_with: String
+  refUrl: String
+  refUrl_not: String
+  refUrl_in: [String!]
+  refUrl_not_in: [String!]
+  refUrl_lt: String
+  refUrl_lte: String
+  refUrl_gt: String
+  refUrl_gte: String
+  refUrl_contains: String
+  refUrl_not_contains: String
+  refUrl_starts_with: String
+  refUrl_not_starts_with: String
+  refUrl_ends_with: String
+  refUrl_not_ends_with: String
   status: PostStatus
   status_not: PostStatus
   status_in: [PostStatus!]
@@ -590,6 +612,7 @@ enum PostStatus {
   PUBLISHED
   DRAFT
   DELETED
+  FAKEPOST
 }
 
 type PostSubscriptionPayload {
@@ -621,6 +644,7 @@ input PostUpdateInput {
   authorId: String
   categories: CategoryUpdateManyWithoutPostsInput
   thumbnail: Json
+  refUrl: String
   status: PostStatus
   slug: String
 }
@@ -633,6 +657,7 @@ input PostUpdateManyDataInput {
   upvotesNumber: Int
   authorId: String
   thumbnail: Json
+  refUrl: String
   status: PostStatus
   slug: String
 }
@@ -645,6 +670,7 @@ input PostUpdateManyMutationInput {
   upvotesNumber: Int
   authorId: String
   thumbnail: Json
+  refUrl: String
   status: PostStatus
   slug: String
 }
@@ -695,6 +721,7 @@ input PostUpdateWithoutAuthorDataInput {
   authorId: String
   categories: CategoryUpdateManyWithoutPostsInput
   thumbnail: Json
+  refUrl: String
   status: PostStatus
   slug: String
 }
@@ -709,6 +736,7 @@ input PostUpdateWithoutCategoriesDataInput {
   author: UserUpdateOneWithoutPostsInput
   authorId: String
   thumbnail: Json
+  refUrl: String
   status: PostStatus
   slug: String
 }
@@ -723,6 +751,7 @@ input PostUpdateWithoutUpvotesDataInput {
   authorId: String
   categories: CategoryUpdateManyWithoutPostsInput
   thumbnail: Json
+  refUrl: String
   status: PostStatus
   slug: String
 }
@@ -836,6 +865,20 @@ input PostWhereInput {
   categories_every: CategoryWhereInput
   categories_some: CategoryWhereInput
   categories_none: CategoryWhereInput
+  refUrl: String
+  refUrl_not: String
+  refUrl_in: [String!]
+  refUrl_not_in: [String!]
+  refUrl_lt: String
+  refUrl_lte: String
+  refUrl_gt: String
+  refUrl_gte: String
+  refUrl_contains: String
+  refUrl_not_contains: String
+  refUrl_starts_with: String
+  refUrl_not_starts_with: String
+  refUrl_ends_with: String
+  refUrl_not_ends_with: String
   status: PostStatus
   status_not: PostStatus
   status_in: [PostStatus!]
@@ -870,6 +913,7 @@ enum Previledge {
   VERIFIED
   AUTHOR
   READER
+  FAKEUSER
 }
 
 type Query {

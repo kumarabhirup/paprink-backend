@@ -5,6 +5,7 @@ enum Previledge {
   VERIFIED
   AUTHOR
   READER
+  FAKEUSER
 }
 
 enum Gender {
@@ -59,6 +60,7 @@ enum PostStatus {
   PUBLISHED
   DRAFT
   DELETED
+  FAKEPOST
 }
 
 type Post {
@@ -76,6 +78,7 @@ type Post {
   authorId: String!
   categories: [Category!]! @relation(name: "PostsCategories")
   thumbnail: Json!
+  refUrl: String
   status: PostStatus!
   slug: String!
 }

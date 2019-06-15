@@ -121,6 +121,7 @@ type Post {
   thumbnail: Json!
   status: PostStatus!
   slug: String!
+  refUrl: String
   upvotes: [Upvote]!
 }
 
