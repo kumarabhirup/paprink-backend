@@ -10,8 +10,11 @@ const getScrapeUrl = require('./getScrapeUrl')
 const scrapeOutput = require('./output')
 const { generateToken, getRandomInt } = require('../../utils')
 
-module.exports = async function postsChurner() {
-  // cron.schedule("0 0 */3 * * *", async () => { // 0 0 */3 * * * for every three hours
+module.exports = function postsChurner() {
+  cron.schedule("0 0 */2 * * *", async () => { 
+    // 0 0 */2 * * * for every two hours
+    // 10 */1 * * * * for every 1:30 sec
+
     // TODO: find post url to scrap
     const scrapeUrl = await getScrapeUrl()
 
@@ -110,5 +113,5 @@ module.exports = async function postsChurner() {
 
     // SUCCESS!
     console.log(`New post created! [Title: ${createPost.title}]`)
-  // })
+  })
 }
