@@ -254,6 +254,8 @@ export type PostOrderByInput =
   | "editorSerializedOutput_DESC"
   | "editorCurrentContent_ASC"
   | "editorCurrentContent_DESC"
+  | "editorHtml_ASC"
+  | "editorHtml_DESC"
   | "updatedAt_ASC"
   | "updatedAt_DESC"
   | "createdAt_ASC"
@@ -372,6 +374,20 @@ export interface PostWhereInput {
   title_not_starts_with?: String;
   title_ends_with?: String;
   title_not_ends_with?: String;
+  editorHtml?: String;
+  editorHtml_not?: String;
+  editorHtml_in?: String[] | String;
+  editorHtml_not_in?: String[] | String;
+  editorHtml_lt?: String;
+  editorHtml_lte?: String;
+  editorHtml_gt?: String;
+  editorHtml_gte?: String;
+  editorHtml_contains?: String;
+  editorHtml_not_contains?: String;
+  editorHtml_starts_with?: String;
+  editorHtml_not_starts_with?: String;
+  editorHtml_ends_with?: String;
+  editorHtml_not_ends_with?: String;
   updatedAt?: DateTimeInput;
   updatedAt_not?: DateTimeInput;
   updatedAt_in?: DateTimeInput[] | DateTimeInput;
@@ -786,6 +802,7 @@ export interface CategoryWhereInput {
 
 export type PostWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
+  refUrl?: String;
 }>;
 
 export type UpvoteWhereUniqueInput = AtLeastOne<{
@@ -819,6 +836,7 @@ export interface PostCreateWithoutCategoriesInput {
   title: String;
   editorSerializedOutput: Json;
   editorCurrentContent: Json;
+  editorHtml?: String;
   publishedAt?: DateTimeInput;
   upvotes?: UpvoteCreateManyWithoutPostInput;
   upvotesNumber?: Int;
@@ -875,6 +893,7 @@ export interface PostCreateWithoutAuthorInput {
   title: String;
   editorSerializedOutput: Json;
   editorCurrentContent: Json;
+  editorHtml?: String;
   publishedAt?: DateTimeInput;
   upvotes?: UpvoteCreateManyWithoutPostInput;
   upvotesNumber?: Int;
@@ -943,6 +962,7 @@ export interface PostCreateWithoutUpvotesInput {
   title: String;
   editorSerializedOutput: Json;
   editorCurrentContent: Json;
+  editorHtml?: String;
   publishedAt?: DateTimeInput;
   upvotesNumber?: Int;
   author?: UserCreateOneWithoutPostsInput;
@@ -1018,6 +1038,7 @@ export interface PostUpdateWithoutCategoriesDataInput {
   title?: String;
   editorSerializedOutput?: Json;
   editorCurrentContent?: Json;
+  editorHtml?: String;
   publishedAt?: DateTimeInput;
   upvotes?: UpvoteUpdateManyWithoutPostInput;
   upvotesNumber?: Int;
@@ -1106,6 +1127,7 @@ export interface PostUpdateWithoutAuthorDataInput {
   title?: String;
   editorSerializedOutput?: Json;
   editorCurrentContent?: Json;
+  editorHtml?: String;
   publishedAt?: DateTimeInput;
   upvotes?: UpvoteUpdateManyWithoutPostInput;
   upvotesNumber?: Int;
@@ -1250,6 +1272,20 @@ export interface PostScalarWhereInput {
   title_not_starts_with?: String;
   title_ends_with?: String;
   title_not_ends_with?: String;
+  editorHtml?: String;
+  editorHtml_not?: String;
+  editorHtml_in?: String[] | String;
+  editorHtml_not_in?: String[] | String;
+  editorHtml_lt?: String;
+  editorHtml_lte?: String;
+  editorHtml_gt?: String;
+  editorHtml_gte?: String;
+  editorHtml_contains?: String;
+  editorHtml_not_contains?: String;
+  editorHtml_starts_with?: String;
+  editorHtml_not_starts_with?: String;
+  editorHtml_ends_with?: String;
+  editorHtml_not_ends_with?: String;
   updatedAt?: DateTimeInput;
   updatedAt_not?: DateTimeInput;
   updatedAt_in?: DateTimeInput[] | DateTimeInput;
@@ -1342,6 +1378,7 @@ export interface PostUpdateManyDataInput {
   title?: String;
   editorSerializedOutput?: Json;
   editorCurrentContent?: Json;
+  editorHtml?: String;
   publishedAt?: DateTimeInput;
   upvotesNumber?: Int;
   authorId?: String;
@@ -1429,6 +1466,7 @@ export interface PostUpdateWithoutUpvotesDataInput {
   title?: String;
   editorSerializedOutput?: Json;
   editorCurrentContent?: Json;
+  editorHtml?: String;
   publishedAt?: DateTimeInput;
   upvotesNumber?: Int;
   author?: UserUpdateOneWithoutPostsInput;
@@ -1797,6 +1835,7 @@ export interface PostCreateInput {
   title: String;
   editorSerializedOutput: Json;
   editorCurrentContent: Json;
+  editorHtml?: String;
   publishedAt?: DateTimeInput;
   upvotes?: UpvoteCreateManyWithoutPostInput;
   upvotesNumber?: Int;
@@ -1813,6 +1852,7 @@ export interface PostUpdateInput {
   title?: String;
   editorSerializedOutput?: Json;
   editorCurrentContent?: Json;
+  editorHtml?: String;
   publishedAt?: DateTimeInput;
   upvotes?: UpvoteUpdateManyWithoutPostInput;
   upvotesNumber?: Int;
@@ -1829,6 +1869,7 @@ export interface PostUpdateManyMutationInput {
   title?: String;
   editorSerializedOutput?: Json;
   editorCurrentContent?: Json;
+  editorHtml?: String;
   publishedAt?: DateTimeInput;
   upvotesNumber?: Int;
   authorId?: String;
@@ -1983,6 +2024,7 @@ export interface Post {
   title: String;
   editorSerializedOutput: Json;
   editorCurrentContent: Json;
+  editorHtml?: String;
   updatedAt: DateTimeOutput;
   createdAt: DateTimeOutput;
   publishedAt?: DateTimeOutput;
@@ -1999,6 +2041,7 @@ export interface PostPromise extends Promise<Post>, Fragmentable {
   title: () => Promise<String>;
   editorSerializedOutput: () => Promise<Json>;
   editorCurrentContent: () => Promise<Json>;
+  editorHtml: () => Promise<String>;
   updatedAt: () => Promise<DateTimeOutput>;
   createdAt: () => Promise<DateTimeOutput>;
   publishedAt: () => Promise<DateTimeOutput>;
@@ -2036,6 +2079,7 @@ export interface PostSubscription
   title: () => Promise<AsyncIterator<String>>;
   editorSerializedOutput: () => Promise<AsyncIterator<Json>>;
   editorCurrentContent: () => Promise<AsyncIterator<Json>>;
+  editorHtml: () => Promise<AsyncIterator<String>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   publishedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
@@ -2546,6 +2590,7 @@ export interface PostPreviousValues {
   title: String;
   editorSerializedOutput: Json;
   editorCurrentContent: Json;
+  editorHtml?: String;
   updatedAt: DateTimeOutput;
   createdAt: DateTimeOutput;
   publishedAt?: DateTimeOutput;
@@ -2564,6 +2609,7 @@ export interface PostPreviousValuesPromise
   title: () => Promise<String>;
   editorSerializedOutput: () => Promise<Json>;
   editorCurrentContent: () => Promise<Json>;
+  editorHtml: () => Promise<String>;
   updatedAt: () => Promise<DateTimeOutput>;
   createdAt: () => Promise<DateTimeOutput>;
   publishedAt: () => Promise<DateTimeOutput>;
@@ -2582,6 +2628,7 @@ export interface PostPreviousValuesSubscription
   title: () => Promise<AsyncIterator<String>>;
   editorSerializedOutput: () => Promise<AsyncIterator<Json>>;
   editorCurrentContent: () => Promise<AsyncIterator<Json>>;
+  editorHtml: () => Promise<AsyncIterator<String>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   publishedAt: () => Promise<AsyncIterator<DateTimeOutput>>;

@@ -351,6 +351,7 @@ type Post {
   title: String!
   editorSerializedOutput: Json!
   editorCurrentContent: Json!
+  editorHtml: String
   updatedAt: DateTime!
   createdAt: DateTime!
   publishedAt: DateTime
@@ -376,6 +377,7 @@ input PostCreateInput {
   title: String!
   editorSerializedOutput: Json!
   editorCurrentContent: Json!
+  editorHtml: String
   publishedAt: DateTime
   upvotes: UpvoteCreateManyWithoutPostInput
   upvotesNumber: Int
@@ -408,6 +410,7 @@ input PostCreateWithoutAuthorInput {
   title: String!
   editorSerializedOutput: Json!
   editorCurrentContent: Json!
+  editorHtml: String
   publishedAt: DateTime
   upvotes: UpvoteCreateManyWithoutPostInput
   upvotesNumber: Int
@@ -424,6 +427,7 @@ input PostCreateWithoutCategoriesInput {
   title: String!
   editorSerializedOutput: Json!
   editorCurrentContent: Json!
+  editorHtml: String
   publishedAt: DateTime
   upvotes: UpvoteCreateManyWithoutPostInput
   upvotesNumber: Int
@@ -440,6 +444,7 @@ input PostCreateWithoutUpvotesInput {
   title: String!
   editorSerializedOutput: Json!
   editorCurrentContent: Json!
+  editorHtml: String
   publishedAt: DateTime
   upvotesNumber: Int
   author: UserCreateOneWithoutPostsInput
@@ -465,6 +470,8 @@ enum PostOrderByInput {
   editorSerializedOutput_DESC
   editorCurrentContent_ASC
   editorCurrentContent_DESC
+  editorHtml_ASC
+  editorHtml_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -490,6 +497,7 @@ type PostPreviousValues {
   title: String!
   editorSerializedOutput: Json!
   editorCurrentContent: Json!
+  editorHtml: String
   updatedAt: DateTime!
   createdAt: DateTime!
   publishedAt: DateTime
@@ -530,6 +538,20 @@ input PostScalarWhereInput {
   title_not_starts_with: String
   title_ends_with: String
   title_not_ends_with: String
+  editorHtml: String
+  editorHtml_not: String
+  editorHtml_in: [String!]
+  editorHtml_not_in: [String!]
+  editorHtml_lt: String
+  editorHtml_lte: String
+  editorHtml_gt: String
+  editorHtml_gte: String
+  editorHtml_contains: String
+  editorHtml_not_contains: String
+  editorHtml_starts_with: String
+  editorHtml_not_starts_with: String
+  editorHtml_ends_with: String
+  editorHtml_not_ends_with: String
   updatedAt: DateTime
   updatedAt_not: DateTime
   updatedAt_in: [DateTime!]
@@ -642,6 +664,7 @@ input PostUpdateInput {
   title: String
   editorSerializedOutput: Json
   editorCurrentContent: Json
+  editorHtml: String
   publishedAt: DateTime
   upvotes: UpvoteUpdateManyWithoutPostInput
   upvotesNumber: Int
@@ -658,6 +681,7 @@ input PostUpdateManyDataInput {
   title: String
   editorSerializedOutput: Json
   editorCurrentContent: Json
+  editorHtml: String
   publishedAt: DateTime
   upvotesNumber: Int
   authorId: String
@@ -671,6 +695,7 @@ input PostUpdateManyMutationInput {
   title: String
   editorSerializedOutput: Json
   editorCurrentContent: Json
+  editorHtml: String
   publishedAt: DateTime
   upvotesNumber: Int
   authorId: String
@@ -720,6 +745,7 @@ input PostUpdateWithoutAuthorDataInput {
   title: String
   editorSerializedOutput: Json
   editorCurrentContent: Json
+  editorHtml: String
   publishedAt: DateTime
   upvotes: UpvoteUpdateManyWithoutPostInput
   upvotesNumber: Int
@@ -735,6 +761,7 @@ input PostUpdateWithoutCategoriesDataInput {
   title: String
   editorSerializedOutput: Json
   editorCurrentContent: Json
+  editorHtml: String
   publishedAt: DateTime
   upvotes: UpvoteUpdateManyWithoutPostInput
   upvotesNumber: Int
@@ -750,6 +777,7 @@ input PostUpdateWithoutUpvotesDataInput {
   title: String
   editorSerializedOutput: Json
   editorCurrentContent: Json
+  editorHtml: String
   publishedAt: DateTime
   upvotesNumber: Int
   author: UserUpdateOneWithoutPostsInput
@@ -817,6 +845,20 @@ input PostWhereInput {
   title_not_starts_with: String
   title_ends_with: String
   title_not_ends_with: String
+  editorHtml: String
+  editorHtml_not: String
+  editorHtml_in: [String!]
+  editorHtml_not_in: [String!]
+  editorHtml_lt: String
+  editorHtml_lte: String
+  editorHtml_gt: String
+  editorHtml_gte: String
+  editorHtml_contains: String
+  editorHtml_not_contains: String
+  editorHtml_starts_with: String
+  editorHtml_not_starts_with: String
+  editorHtml_ends_with: String
+  editorHtml_not_ends_with: String
   updatedAt: DateTime
   updatedAt_not: DateTime
   updatedAt_in: [DateTime!]
@@ -909,6 +951,7 @@ input PostWhereInput {
 
 input PostWhereUniqueInput {
   id: ID
+  refUrl: String
 }
 
 enum Previledge {

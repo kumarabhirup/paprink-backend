@@ -7,6 +7,23 @@ function validateEmail(mail) {
   } return (false)
 }
 
+function getRandomInt(min, max) {
+  min = Math.ceil(min)
+  max = Math.floor(max)
+  return Math.floor(Math.random() * (max - min + 1)) + min
+}
+
+function generateToken(length){
+    // edit the token allowed characters
+    var a = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".split("");
+    var b = [];  
+    for (var i=0; i<length; i++) {
+        var j = (Math.random() * (a.length-1)).toFixed(0);
+        b[i] = a[j];
+    }
+    return b.join("");
+}
+
 async function isTokenValid(method, accessToken) {
 
   // Validate FB token
@@ -40,5 +57,7 @@ const postInfo = `{ id title slug authorId upvotesNumber categories { id text ca
 module.exports = {
   validateEmail,
   isTokenValid,
-  postInfo
+  postInfo,
+  generateToken,
+  getRandomInt
 }
