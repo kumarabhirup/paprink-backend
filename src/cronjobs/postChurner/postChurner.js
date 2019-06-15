@@ -66,6 +66,10 @@ module.exports = async function postsChurner() {
       }
     }, `{ id }`)
 
+    if (!createUser) {
+      throw new Error("Error while creating a fake user.")
+    }
+
     // TODO: create the fake post
     const date = new Date()
     const categories = ['WRITING', 'STORY']
@@ -87,6 +91,13 @@ module.exports = async function postsChurner() {
         editorCurrentContent: {},
         editorHtml: output.data.content
       }
-    }, `{ id }`)
+    }, `{ id title }`)
+
+    if (!createPost) {
+      throw new Error("Error while creating a fake post.")
+    }
+
+    // SUCCESS!
+    console.log(`New post created! [Title: ${createPost.title}]`)
   // })
 }
