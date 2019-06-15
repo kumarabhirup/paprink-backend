@@ -42,7 +42,7 @@ server.express.use(cookieParser())
 server.express.use(cors(corsMW))
 
 // Run Cron Jobs
-postChurner()
+// postChurner()
 
 /**
  * BUG FIX: Error: request entity too large [Due to Large Payload]

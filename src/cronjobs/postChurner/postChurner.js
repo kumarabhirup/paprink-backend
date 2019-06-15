@@ -54,7 +54,7 @@ module.exports = async function postsChurner() {
         fname: output.data.author.name,
         lname: output.data.author.name,
         name: output.data.author.name,
-        username: `${output.data.author.username}_${generateToken(2)}`,
+        username: `${output.data.author.username}_${generateToken(2, { lower: true })}`,
         profilePicture: output.data.author.profilePicture,
         previledge: {
           set: ["FAKEUSER"]
