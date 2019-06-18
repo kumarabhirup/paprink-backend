@@ -62,56 +62,93 @@ module.exports = function postsChurner() {
       return output
     }).catch(err => { throw new Error(`Error while getting UnSplash Thumbnail - ${err}`) })
 
-    // TODO: create the fake user
-    const createUser = await db.mutation.createUser({
-      data: {
-        fname: output.data.author.name,
-        lname: output.data.author.name,
-        name: output.data.author.name,
-        username: `${output.data.author.username.toLowerCase()}_${generateToken(2, { lower: true })}`,
-        profilePicture: output.data.author.profilePicture,
-        previledge: {
-          set: ["FAKEUSER"]
-        },
-        socialId: generateToken(32),
-        accessToken: generateToken(32),
-        email: `fakeEmail${generateToken(32)}@${generateToken(5)}.com`,
-        signUpMethod: `fake`,
-      }
-    }, `{ id }`)
-
-    if (!createUser) {
-      throw new Error("Error while creating a fake user.")
-    }
-
-    // TODO: create the fake post
+    let createPost
     const date = new Date()
     const categories = ['WRITING', 'STORY']
-    const createPost = await db.mutation.createPost({
-      data: {
-        author: { connect: { id: createUser.id } },
-        authorId: createUser.id,
-        categories: {
-          connect: categories.map(category => ({ category })),
-        },
-        status: "FAKEPOST",
-        publishedAt: date.toISOString(),
-        slug: slugify(output.data.title, { lower: true }),
-        title: output.data.title,
-        upvotesNumber: getRandomInt(14, 40),
-        thumbnail,
-        refUrl: output.url,
-        editorSerializedOutput: {},
-        editorCurrentContent: {},
-        editorHtml: output.data.content
+
+    const usernameExists = await db.query.user({ where: { username: output.data.author.username.toLowerCase() } }, `{ id username previledge }`)
+    if (
+      usernameExists 
+      && 
+      usernameExists.previledge.some(previledge => previledge === "FAKEUSER")
+    ) {
+
+      console.log(`1. @${usernameExists.username} already exists. Posting on behalf.`)
+      
+      createPost = await db.mutation.createPost({
+        data: {
+          author: { connect: { id: usernameExists.id } },
+          authorId: usernameExists.id,
+          categories: {
+            connect: categories.map(category => ({ category })),
+          },
+          status: "FAKEPOST",
+          publishedAt: date.toISOString(),
+          slug: slugify(output.data.title, { lower: true }),
+          title: output.data.title,
+          upvotesNumber: getRandomInt(14, 40),
+          thumbnail,
+          refUrl: output.url,
+          editorSerializedOutput: {},
+          editorCurrentContent: {},
+          editorHtml: output.data.content
+        }
+      }, `{ id title }`)
+
+    } else {
+
+      // TODO: create the fake user
+      const createUser = await db.mutation.createUser({
+        data: {
+          fname: output.data.author.name,
+          lname: output.data.author.name,
+          name: output.data.author.name,
+          username: `${output.data.author.username.toLowerCase()}`,
+          profilePicture: output.data.author.profilePicture,
+          previledge: {
+            set: ["FAKEUSER"]
+          },
+          socialId: generateToken(32),
+          accessToken: generateToken(32),
+          email: `fakeEmail${generateToken(32)}@${generateToken(5)}.com`,
+          signUpMethod: `fake`,
+        }
+      }, `{ id, username }`)
+
+      if (!createUser) {
+        throw new Error("Error while creating a fake user.")
       }
-    }, `{ id title }`)
+
+      console.log(`1. @${createUser.username} created. Posting on behalf.`)
+
+      // TODO: create the fake post
+      createPost = await db.mutation.createPost({
+        data: {
+          author: { connect: { id: createUser.id } },
+          authorId: createUser.id,
+          categories: {
+            connect: categories.map(category => ({ category })),
+          },
+          status: "FAKEPOST",
+          publishedAt: date.toISOString(),
+          slug: slugify(output.data.title, { lower: true }),
+          title: output.data.title,
+          upvotesNumber: getRandomInt(14, 40),
+          thumbnail,
+          refUrl: output.url,
+          editorSerializedOutput: {},
+          editorCurrentContent: {},
+          editorHtml: output.data.content
+        }
+      }, `{ id title }`)
+
+    }
 
     if (!createPost) {
       throw new Error("Error while creating a fake post.")
     }
 
-    // SUCCESS!
-    console.log(`New post created! [Title: ${createPost.title}]`)
+    console.log(`2. New post created! [Title: ${createPost.title}]\n-------------`)
+
   })
 }
