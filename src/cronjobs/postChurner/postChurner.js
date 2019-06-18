@@ -39,6 +39,7 @@ module.exports = function postsChurner() {
     }
 
     // TODO: find a suitable thumbnail
+    const resultNumber = getRandomInt(0, 2)
     const thumbnail = await fetch(`https://api.unsplash.com/search/photos?query=${output.data.title}&orientation=squarish`, {
       method: 'GET',
       headers: {
@@ -48,16 +49,16 @@ module.exports = function postsChurner() {
       },
     }).then(res =>res.json()).then(data => {
       const output = {
-        "image": data.results[0].urls.regular,
+        "image": data.results[resultNumber].urls.regular,
         "uploading": "done",
         "credits": {
-          "name": data.results[0].user.name,
-          "username": data.results[0].user.username,
-          "unsplashProfile": data.results[0].user.links.html,
+          "name": data.results[resultNumber].user.name,
+          "username": data.results[resultNumber].user.username,
+          "unsplashProfile": data.results[resultNumber].user.links.html,
         },
-        "smallImage": data.results[0].urls.thumb,
-        "blackOverlayImage":data.results[0].urls.full,
-        "smallCardImage": data.results[0].urls.small
+        "smallImage": data.results[resultNumber].urls.thumb,
+        "blackOverlayImage":data.results[resultNumber].urls.full,
+        "smallCardImage": data.results[resultNumber].urls.small
       }
       return output
     }).catch(err => { throw new Error(`Error while getting UnSplash Thumbnail - ${err}`) })
