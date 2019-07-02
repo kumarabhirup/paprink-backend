@@ -11,7 +11,7 @@ const scrapeOutput = require('./output')
 const { generateToken, getRandomInt } = require('../../utils')
 
 module.exports = async function postsChurner() {
-  cron.schedule("0 */45 * * * *", async () => { 
+  cron.schedule("0 */58 * * * *", async () => { 
     // 0 0 */2 * * * for every two hours
     // 10 */1 * * * * for every 1:30 sec
 
