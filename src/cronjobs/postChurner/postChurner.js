@@ -10,8 +10,8 @@ const getScrapeUrl = require('./getScrapeUrl')
 const scrapeOutput = require('./output')
 const { generateToken, getRandomInt } = require('../../utils')
 
-module.exports = async function postsChurner() {
-  cron.schedule("0 */58 * * * *", async () => { 
+module.exports = function postsChurner() {
+  cron.schedule("0 */55 * * * *", async () => { 
     // 0 0 */2 * * * for every two hours
     // 10 */1 * * * * for every 1:30 sec
 
@@ -34,7 +34,7 @@ module.exports = async function postsChurner() {
     const output = scrapeOutput(scrapeUrl.url, data)
 
     // TODO: check if needed data exists
-    if (output.data.title.length < 4 || output.data.content.length < 20 || output.data.author.name.length === 0 || output.data.author.username.length === 0) {
+    if (output.data.title.length < 4 || output.data.title.length > 55 || output.data.content.length < 205 || output.data.author.name.length === 0 || output.data.author.username.length === 0) {
       throw new Error(`Error scraping ${output.url}`)
     }
 

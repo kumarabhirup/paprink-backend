@@ -30,7 +30,7 @@ const twoHundredWordsADayArchive = {
 
 const redditBooks = {
   title: {
-    selector: "div[data-test-id='post-content'] div[data-redditstyle='true'] > h1"
+    selector: "div[data-test-id='post-content'] h1"
   },
   content: {
     selector: "div[data-test-id='post-content'] > div[data-click-id='text'] > div",
