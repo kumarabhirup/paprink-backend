@@ -289,7 +289,8 @@ async function updateUser(parent, args, context, info){
   const updateUser = await context.db.mutation.updateUser({
     where: { id: context.request.userId },
     data: {
-      ...args
+      ...args,
+      username: args.username.toLowerCase()
     }
   }, info)
 
